@@ -1,0 +1,12 @@
+file=rl_model_verify.bin
+time=2026-08-25 17:44:57
+state_dim=32
+action_dim=64
+samples=30000
+layout=train\models\layout_live.json
+data=E:\program\JAVA\touhou little maid - unknow sky area\prod_server\config\eftlm_stylish\trajectories
+zombie_dir=
+init=train\models\rl_model_v46.bin
+eval_acc=0.772
+eval_nll=0.7257
+elapsed_sec=18.2

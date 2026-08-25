@@ -1,0 +1,48 @@
+package com.pla.annoyingvillagers.item;
+
+import java.util.List;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+
+public class NullShovelItem extends ShovelItem {
+   public NullShovelItem() {
+      super(new Tier() {
+         public int m_6609_() {
+            return 100;
+         }
+
+         public float m_6624_() {
+            return 4.0F;
+         }
+
+         public float m_6631_() {
+            return 1.0F;
+         }
+
+         public int m_6604_() {
+            return 1;
+         }
+
+         public int m_6601_() {
+            return 2;
+         }
+
+         @NotNull
+         public Ingredient m_6282_() {
+            return Ingredient.m_151265_();
+         }
+      }, 3.0F, -3.0F, new Properties());
+   }
+
+   public void m_7373_(@NotNull ItemStack itemstack, Level level, @NotNull List<Component> list, @NotNull TooltipFlag tooltipflag) {
+      super.m_7373_(itemstack, level, list, tooltipflag);
+      list.add(Component.m_237115_("tooltip.annoyingvillagers.null_weapon"));
+   }
+}

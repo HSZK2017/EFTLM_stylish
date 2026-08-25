@@ -1,0 +1,23 @@
+{
+  "renderer": "epicmoonmod:dual_renderer",
+  "mesh1_texture": "epicmoonmod:textures/item/dual_skin.png",
+  "mesh2_texture": "epicmoonmod:textures/item/dual_skin.png",
+  "mesh3_texture": "epicmoonmod:textures/item/dual_skin2.png",
+  "mesh3_glowtexture": "epicmoonmod:textures/item/dual_skin_mang_glow.png",
+  "mesh5_texture": "epicmoonmod:textures/item/dual_skin5.png",
+  "mesh5_glowtexture": "epicmoonmod:textures/item/dual_skin_mang_glow5.png",
+  "mesh1":"epicmoonmod:animmodels/valencina_dual_swords.json",
+  "mesh2":"epicmoonmod:animmodels/valencina_dual_swords_2.json",
+  "mesh3":"epicmoonmod:animmodels/valencina_dual_swords_3.json",
+  "mesh4":"epicmoonmod:animmodels/valencina_dual_swords_4.json",
+  "mesh5":"epicmoonmod:animmodels/valencina_dual_swords_5.json",
+  "trail": {
+    "color": [155, 155, 155],
+    "begin_pos": [0.0, 0.15, -0.6],
+    "end_pos": [0.0, 0.27, -1.8],
+    "lifetime": 15,
+    "interpolations": 10,
+    "texture_path": "epicmoonmod:textures/particle/dual2.png",
+    "particle_type": "epicmoonmod:light_trail2"
+  }
+}

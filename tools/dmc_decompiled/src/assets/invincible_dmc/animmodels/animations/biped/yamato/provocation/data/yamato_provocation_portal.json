@@ -1,0 +1,75 @@
+{
+    "trail_effects": [
+        {
+            "start_time": 0.7,
+            "end_time": 1.1,
+            "joint": "Tool_R",
+            "item_skin_hand": "main_hand",
+            "particle_type": "invincible_dmc:static_air_trail"
+        },
+        {
+            "start_time": 1.2,
+            "end_time": 1.6,
+            "joint": "Tool_R",
+            "item_skin_hand": "main_hand",
+            "particle_type": "invincible_dmc:static_air_trail"
+        },
+        {
+            "start_time": 0.7,
+            "end_time": 1.1,
+            "fade_time": 0.001,
+            "joint": "Tool_R",
+            "item_skin_hand": "main_hand",
+            "color": [48, 48, 48],
+            "begin_pos": [-0.05, -0.1, -2.4],
+            "end_pos": [-0.15, -0.1, -2.5],
+            "lifetime": 8,
+            "texture_path": "invincible_dmc:textures/trail/power_trail2.png",
+            "particle_type": "invincible_dmc:static_air_trail"
+        },
+
+        {
+            "start_time": 0.7,
+            "end_time": 1.1,
+            "fade_time": 0.001,
+            "joint": "Tool_R",
+            "item_skin_hand": "main_hand",
+            "color": [96, 96, 96],
+            "begin_pos": [-0.35, -0.1, -0.5],
+            "end_pos": [0.15, 0.1, 1.9],
+            "lifetime": 12,
+            "interpolations": 4,
+            "texture_path": "invincible_dmc:textures/trail/power_trail5.png",
+            "particle_type": "invincible_dmc:static_air_trail"
+        },
+
+        {
+            "start_time": 1.2,
+            "end_time": 1.6,
+            "fade_time": 0.001,
+            "joint": "Tool_R",
+            "item_skin_hand": "main_hand",
+            "color": [48, 48, 48],
+            "begin_pos": [-0.05, -0.1, -2.5],
+            "end_pos": [-0.15, -0.1, -2.5],
+            "lifetime": 8,
+            "texture_path": "invincible_dmc:textures/trail/power_trail2.png",
+            "particle_type": "invincible_dmc:static_air_trail"
+        },
+
+        {
+            "start_time": 1.2,
+            "end_time": 1.6,
+            "fade_time": 0.001,
+            "joint": "Tool_R",
+            "item_skin_hand": "main_hand",
+            "color": [96, 96, 96],
+            "begin_pos": [-0.35, -0.1, -0.5],
+            "end_pos": [0.15, 0.1, 1.9],
+            "lifetime": 12,
+            "interpolations": 4,
+            "texture_path": "invincible_dmc:textures/trail/power_trail5.png",
+            "particle_type": "invincible_dmc:static_air_trail"
+        }
+    ]
+}

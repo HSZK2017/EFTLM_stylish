@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "epicmoonmod:valencina_dual_swords"
+    },
+    "title": {
+      "translate": "advancement.epicmoon.valencina_dual_swords.title"
+    },
+    "description": {
+      "translate": "advancement.epicmoon.valencina_dual_swords.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "epicmoonmod:epicmoon",
+  "criteria": {
+    "obtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["epicmoonmod:valencina_dual_swords"]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+	"trail_effects": [
+		{
+			"start_time": 0.13,
+			"end_time": 0.27,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.1, -0.1],
+			"end_pos": [0.0, 0.27, -1.8],
+			"lifetime": 10,
+			"interpolations": 10,
+			"color": [255, 230, 230],
+			"texture_path": "epicmoonmod:textures/particle/dual2.png",
+			"particle_type": "epicmoonmod:light_trail2"
+		},
+		{
+			"start_time": 0.13,
+			"end_time": 0.27,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.1, -0.1],
+			"end_pos": [0.0, 0.27, -1.8],
+			"lifetime": 5,
+			"interpolations": 10,
+			"color": [255, 230, 230],
+			"texture_path": "epicmoonmod:textures/particle/dual3.png",
+			"particle_type": "epicmoonmod:light_trail"
+		},
+		{
+			"start_time": 0.28,
+			"end_time": 0.5,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand"
+		},
+		{
+			"start_time": 0.28,
+			"end_time": 0.5,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.1, -0.1],
+			"end_pos": [0.0, 0.25, -1.6],
+			"lifetime": 10,
+			"interpolations": 10,
+			"color": [255, 230, 230],
+			"texture_path": "epicmoonmod:textures/particle/dual3.png",
+			"particle_type": "epicmoonmod:light_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.27,
+			"joint": "Tool_L",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.15, -0.6],
+			"end_pos": [0.0, 0.25, -1.6],
+			"lifetime": 10,
+			"interpolations": 10,
+			"color": [255, 255, 255],
+			"texture_path": "epicmoonmod:textures/particle/dual1.png",
+			"particle_type": "epicmoonmod:light_trail2"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.27,
+			"joint": "Tool_L",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.15, -0.6],
+			"end_pos": [0.0, 0.25, -1.6],
+			"lifetime": 5,
+			"interpolations": 10,
+			"color": [255, 255, 255],
+			"texture_path": "epicmoonmod:textures/particle/tiger2.png",
+			"particle_type": "epicmoonmod:light_trail"
+		},
+		{
+			"start_time": 0.28,
+			"end_time": 0.5,
+			"joint": "Tool_L",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.15, -0.6],
+			"end_pos": [0.0, 0.25, -1.6],
+			"lifetime": 15,
+			"interpolations": 10,
+			"color": [255, 255, 255],
+			"texture_path": "epicmoonmod:textures/particle/dual1.png",
+			"particle_type": "epicmoonmod:light_trail2"
+		},
+		{
+			"start_time": 0.28,
+			"end_time": 0.5,
+			"joint": "Tool_L",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.15, -0.6],
+			"end_pos": [0.0, 0.25, -1.6],
+			"lifetime": 10,
+			"interpolations": 10,
+			"color": [255, 255, 255],
+			"texture_path": "epicmoonmod:textures/particle/tiger2.png",
+			"particle_type": "epicmoonmod:light_trail"
+		}
+	]
+}

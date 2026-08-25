@@ -1,0 +1,35 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "srcalpha",
+    "dstrgb": "1-srcalpha"
+  },
+  "vertex": "invincible_dmc:blit",
+  "fragment": "invincible_dmc:black_white_simple",
+  "attributes": [ "Position" ],
+  "samplers": [
+    { "name": "DiffuseSampler" }
+  ],
+  "uniforms": [
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "OutSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] },
+    { "name": "Contrast", "type": "float", "count": 1, "values": [ 4.0 ] },
+    { "name": "Brightness", "type": "float", "count": 1, "values": [ 0.5 ] },
+    { "name": "Time", "type": "float", "count": 1, "values": [ 0.0 ] },
+    { "name": "Intensity", "type": "float", "count": 1, "values": [ 0.8 ] },
+    { "name": "Speed", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "Mode", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "ColorDark", "type": "float", "count": 3, "values": [ 0.008, 0.010, 0.016 ] },
+    { "name": "ColorLight", "type": "float", "count": 3, "values": [ 1.0, 0.992, 0.965 ] },
+    { "name": "ImpactThreshold", "type": "float", "count": 1, "values": [ 0.45 ] },
+    { "name": "ImpactThresholdLerp", "type": "float", "count": 1, "values": [ 0.15 ] },
+    { "name": "InvertFactor", "type": "float", "count": 1, "values": [ 0.0 ] },
+    { "name": "CappedGrayscale", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "FocalUV", "type": "float", "count": 2, "values": [ 0.5, 0.5 ] },
+    { "name": "FocalVisibility", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "RadialStrength", "type": "float", "count": 1, "values": [ 0.014 ] },
+    { "name": "Samples", "type": "int", "count": 1, "values": [ 16 ] },
+    { "name": "ChromaticStrength", "type": "float", "count": 1, "values": [ 0.003 ] },
+    { "name": "LensDistortStrength", "type": "float", "count": 1, "values": [ -0.25 ] }
+  ]
+}

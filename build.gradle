@@ -1,0 +1,107 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'java-library'
+    id 'net.minecraftforge.gradle' version '6.0.29'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+// P2.5：mixin 基础设施（第三方模组授权修复：EFN LinkAnimation 竞态 / DMC·epicmoon 玩家强转）
+mixin {
+    add sourceSets.main, 'eftlm_stylish.refmap.json'
+    config 'eftlm_stylish.mixins.json'
+}
+
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+
+    copyIdeResources = true
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                eftlm_stylish {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                eftlm_stylish {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    // 本地依赖（fg.deobf 需要通过 flatDir 仓库解析才能反混淆）
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    // 编译期依赖（运行时由玩家安装）：
+    // - EpicFight_TouhouLittleMaid(1.3): 提供 MaidPatch / MaidSkill / CombatBehaviorsEvent 等官方扩展 API
+    // - TouhouLittleMaid: 女仆本体
+    // - EpicFight: 动画 / 能力系统
+    implementation fg.deobf("libs:EpicFight_TouhouLittleMaid:1.3")
+    implementation fg.deobf("libs:TouhouLittleMaid:1.5.2")
+    implementation fg.deobf("libs:EpicFight:20.14.15.1")
+    // 奇迹武器（可选运行时联动；内置了原 EFTLM_WOM 的武器行为注册）
+    implementation fg.deobf("libs:WOM:2.0.164")
+
+    // mixin 注解处理（refmap 生成；第三方模组 target 用 targets 字符串，无编译期依赖）
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+
+    def replaceProps = [
+            "mod_version"    : mod_version,
+            "mod_id"         : mod_id,
+            "mod_name"       : mod_name,
+            "mod_license"    : mod_license,
+            "mod_authors"    : mod_authors,
+            "mod_description": mod_description
+    ]
+    inputs.properties replaceProps
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProps
+    }
+}
+
+jar {
+    finalizedBy 'reobfJar'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

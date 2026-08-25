@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "epicmoonmod:tentai_seitou"
+    },
+    "title": {
+      "translate": "advancement.epicmoon.epicmoonmod.title"
+    },
+    "description": {
+      "translate": "advancement.epicmoon.epicmoonmod.description"
+    },
+    "frame": "challenge",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/block/nether_bricks.png"
+  },
+  "criteria": {
+    "auto_unlock": {
+      "trigger": "minecraft:tick"
+    }
+  }
+}

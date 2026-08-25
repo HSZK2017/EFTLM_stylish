@@ -1,0 +1,7 @@
+{
+  "parent": "annoyingvillagers:custom/netherite_shield",
+  "textures": {
+    "0": "annoyingvillagers:item/netherite_shield",
+    "particle": "annoyingvillagers:item/netherite_shield"
+  }
+}

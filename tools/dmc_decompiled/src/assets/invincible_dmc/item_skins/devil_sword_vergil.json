@@ -1,0 +1,15 @@
+{
+  "renderer": "invincible_dmc:yamato_mesh",
+  "mesh1_texture": "invincible_dmc:textures/item/weapon/devil_sword_vergil.png",
+  "mesh1_texture_l": "invincible_dmc:textures/item/weapon/devil_sword_vergil_l.png",
+  "mesh1_main": "invincible_dmc:weapon/devil_sword/devil_sword_vergil_in_sheath",
+
+  "mesh2_texture": "invincible_dmc:textures/item/weapon/devil_sword_vergil.png",
+  "mesh2_texture_l": "invincible_dmc:textures/item/weapon/devil_sword_vergil_l.png",
+  "mesh2_main": "invincible_dmc:weapon/devil_sword/devil_sword_vergil_all",
+
+  "mesh3_texture": "invincible_dmc:textures/item/weapon/devil_sword_vergil.png",
+  "mesh3_texture_l": "invincible_dmc:textures/item/weapon/devil_sword_vergil_l.png",
+  "mesh3_main": "invincible_dmc:weapon/devil_sword/devil_sword_vergil_jc",
+  "appeared_in_afterimage":false
+}

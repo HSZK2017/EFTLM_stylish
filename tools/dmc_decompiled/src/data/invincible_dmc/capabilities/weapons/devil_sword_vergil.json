@@ -1,0 +1,12 @@
+{
+  "attributes":
+  {
+    "common":
+    {
+      "impact":1.0,
+      "max_strikes":10,
+      "armor_negation":200.0
+    }
+  },
+  "type":"invincible_dmc:yamato_dmc5"
+}

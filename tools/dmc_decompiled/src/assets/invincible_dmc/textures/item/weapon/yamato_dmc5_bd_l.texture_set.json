@@ -1,0 +1,8 @@
+{
+	"format_version": "1.16.100",
+	"minecraft:texture_set": {
+		"color": "yamato_dmc5_bd_l",
+		"metalness_emissive_roughness": "yamato_dmc5_bd_l_mer",
+		"normal": "yamato_dmc5_bd_l_normal"
+	}
+}

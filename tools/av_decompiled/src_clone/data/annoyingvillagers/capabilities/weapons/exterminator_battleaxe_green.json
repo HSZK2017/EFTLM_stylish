@@ -1,0 +1,12 @@
+{
+  "attributes":
+  {
+    "common":
+    {
+      "armor_negation": 30,
+      "impact": 2.4,
+      "max_strikes": 3
+    }
+  },
+  "type": "annoyingvillagers:exterminator_battleaxe"
+}

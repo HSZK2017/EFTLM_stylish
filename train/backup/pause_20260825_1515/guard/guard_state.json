@@ -1,0 +1,9 @@
+{
+  "seen_running": true,
+  "crash_counts": {
+    "client_class_on_server": 3,
+    "class_init_error": 3,
+    "tick_loop_exception": 4
+  },
+  "last_crash_scan": 1787223150.0407882
+}

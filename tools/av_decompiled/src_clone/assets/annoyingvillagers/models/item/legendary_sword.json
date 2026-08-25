@@ -1,0 +1,7 @@
+{
+  "parent": "annoyingvillagers:custom/legendary_sword",
+  "textures": {
+    "0": "annoyingvillagers:item/legendary_sword",
+    "particle": "annoyingvillagers:item/legendary_sword"
+  }
+}

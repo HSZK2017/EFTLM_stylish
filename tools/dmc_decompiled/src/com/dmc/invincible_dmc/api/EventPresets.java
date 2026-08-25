@@ -1,0 +1,90 @@
+package com.dmc.invincible_dmc.api;
+
+import com.dmc.invincible_dmc.api.events.BaseEvent;
+import com.dmc.invincible_dmc.api.skill.ComboNode;
+import com.dmc.invincible_dmc.api.skill.ComboType;
+import com.dmc.invincible_dmc.skill.weapon_innate.ComboBasicAttack;
+import java.util.function.Supplier;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import yesman.epicfight.skill.SkillContainer;
+import yesman.epicfight.skill.SkillSlot;
+import yesman.epicfight.skill.SkillSlots;
+import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
+
+public interface EventPresets {
+   static BaseEvent tryExecute(ComboNode node) {
+      return tryExecute(node, 1, 0L);
+   }
+
+   static BaseEvent tryExecute(ComboNode node, int pressedTime, long inputInterval) {
+      return BaseEvent.createServerEvent((playerPatch, target, invinciblePlayer) -> {
+         if (playerPatch instanceof ServerPlayerPatch serverPlayer) {
+            ComboBasicAttack.executeNodeOnServer(serverPlayer, node, pressedTime, inputInterval);
+         }
+      });
+   }
+
+   static BaseEvent simulateInput(ComboType type) {
+      return simulateInput(type, 1, 0L);
+   }
+
+   static BaseEvent simulateInput(ComboType type, int pressedTime, long inputInterval) {
+      return BaseEvent.createServerEvent((playerPatch, target, invinciblePlayer) -> {
+         if (playerPatch instanceof ServerPlayerPatch serverPlayerPatch) {
+            ComboBasicAttack.executeOnServer(serverPlayerPatch, type, pressedTime, inputInterval);
+         }
+      });
+   }
+
+   static BaseEvent consumeStamina(float consume) {
+      return BaseEvent.createServerEvent((playerPatch, entity, invinciblePlayer) -> playerPatch.setStamina(playerPatch.getStamina() - consume));
+   }
+
+   static BaseEvent setStamina(float value) {
+      return BaseEvent.createServerEvent((playerPatch, entity, invinciblePlayer) -> playerPatch.setStamina(value));
+   }
+
+   static BaseEvent setStack(int value) {
+      return setStack(value, SkillSlots.WEAPON_INNATE);
+   }
+
+   static BaseEvent setStack(int value, SkillSlot slot) {
+      return BaseEvent.createServerEvent(
+         (playerPatch, entity, invinciblePlayer) -> playerPatch.getSkill(slot).getSkill().setStackSynchronize(playerPatch.getSkill(slot), value)
+      );
+   }
+
+   static BaseEvent consumeStack(int consume) {
+      return consumeStack(consume, SkillSlots.WEAPON_INNATE);
+   }
+
+   static BaseEvent consumeStack(int consume, SkillSlot slot) {
+      return BaseEvent.createServerEvent((playerPatch, entity, invinciblePlayer) -> {
+         SkillContainer container = playerPatch.getSkill(slot);
+         container.getSkill().setStackSynchronize(container, Math.max(0, container.getStack() - consume));
+      });
+   }
+
+   static BaseEvent addMobEffect(Supplier<MobEffect> mobEffectSupplier, int duration, int amplifier, boolean onTarget) {
+      return BaseEvent.createServerEvent((playerPatch, entity, invinciblePlayer) -> {
+         if (onTarget) {
+            LivingEntity var10000 = (LivingEntity)playerPatch.getOriginal();
+         } else {
+            playerPatch.getTarget();
+         }
+
+         ((Player)playerPatch.getOriginal()).m_7292_(new MobEffectInstance(mobEffectSupplier.get(), duration, amplifier));
+      });
+   }
+
+   static BaseEvent setPhase(int phase) {
+      return BaseEvent.create((playerPatch, target, invinciblePlayer) -> invinciblePlayer.setPhase(phase));
+   }
+
+   static BaseEvent resetPhase() {
+      return BaseEvent.create((playerPatch, target, invinciblePlayer) -> invinciblePlayer.resetPhase());
+   }
+}

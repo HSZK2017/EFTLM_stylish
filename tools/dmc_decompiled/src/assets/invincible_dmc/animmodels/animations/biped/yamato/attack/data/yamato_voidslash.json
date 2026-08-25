@@ -1,0 +1,15 @@
+{
+	"trail_effects": [
+		{
+			"start_time": 0.45,
+			"end_time": 1.2,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.0, -0.2],
+			"end_pos": [0.0, 0.2, -2.5],
+			"color": [48, 48, 48],
+			"texture_path": "invincible_dmc:textures/trail/power_trail3.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		}
+	]
+}

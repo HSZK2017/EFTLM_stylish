@@ -1,0 +1,37 @@
+{
+  "MAINHAND": [
+    "diamond_dagger",
+    "diamond_greatsword",
+    "diamond_longsword",
+    "diamond_spear",
+    "diamond_tachi",
+    "glove",
+    "golden_dagger",
+    "golden_greatsword",
+    "golden_longsword",
+    "golden_spear",
+    "golden_tachi",
+    "iron_dagger",
+    "iron_greatsword",
+    "iron_longsword",
+    "iron_spear",
+    "iron_tachi",
+    "stone_greatsword",
+    "stone_spear",
+    "bokken",
+    "uchigatana"
+  ],
+  "OFFHAND": [
+  ],
+  "FEET": [
+  ],
+  "LEGS": [
+    "stray_pants"
+  ],
+  "CHEST": [
+    "stray_robe"
+  ],
+  "HEAD": [
+    "stray_hat"
+  ]
+}

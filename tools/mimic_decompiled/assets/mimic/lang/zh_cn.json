@@ -1,0 +1,24 @@
+{
+  "biome.mimic.the_lethean_sea": "遗忘之海",
+  "entity.mimic.proteus": "？？？",
+  "entity.mimic.proteus_1": "模仿者",
+  "entity.mimic.proteus_2": "？？？",
+  "entity.mimic.proteus_3": "普罗透斯",
+  "itemGroup.mimic.items": "模仿者",
+  "entity.mimic.shadow_mimic": "模仿者的虚影",
+  "item.mimic.mimic_invitation": "模仿者的邀请函",
+  "item.mimic.mimic_invitation.tip_1": "[来自遗忘之海的邀请函]",
+  "item.mimic.mimic_invitation.tip_2": "[使用后可前往遗忘之海,在遗忘之海中使用将召唤模仿者]",
+
+
+  "item.mimic.proteus_commendation": "普罗透斯的嘉奖",
+  "item.mimic.proteus_commendation.tip_1": "[记录了与普罗透斯的战斗]",
+  "item.mimic.proteus_commendation.tip_2": "[在遗忘之海中使用可返回重生点,在遗忘之海外使用则会召唤记录了该场战斗的虚影协助作战]",
+  "item.mimic.proteus_commendation.tip_3": "[虚影会攻击玩家锁定的目标]",
+  "item.mimic.proteus_commendation.tip_4": "[失去普罗透斯支配的虚影无法再模仿新的攻击]",
+  "item.mimic.proteus_commendation.tip_5": "[模仿攻击数]:",
+
+  "mod.mimic.tip_1": "你这把武器让我感到无趣",
+  "mod.mimic.tip_2": "我可不想被这样的武器玷污",
+  "mod.mimic.tip_3": "你这武器真令人失望"
+}

@@ -1,0 +1,39 @@
+{
+  "parent": "minecraft:story/root",
+  "display": {
+    "icon": {
+      "item": "invincible_dmc:yamato_dmc5"
+    },
+    "title": {
+      "translate": "advancement.invincible_dmc.obtain_any_yamato.title"
+    },
+    "description": {
+      "translate": "advancement.invincible_dmc.obtain_any_yamato.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "invincible_dmc:yamato_dmc4",
+              "invincible_dmc:yamato_dmc5",
+              "invincible_dmc:yamato_dmc5_bd",
+              "invincible_dmc:yamato_dmc5_mini",
+              "invincible_dmc:devil_sword_vergil"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 200
+  }
+}

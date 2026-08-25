@@ -1,0 +1,590 @@
+[138月2026 18:51:56.239] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserver, --fml.forgeVersion, 47.4.13, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, nogui]
+[138月2026 18:51:56.250] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.10 by Oracle Corporation; OS Windows 11 arch amd64 version 10.0
+[138月2026 18:51:56.841] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserver
+[138月2026 18:51:57.035] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/E:/program/JAVA/touhou%20little%20maid%20-%20unknow%20sky%20area/prod_server/libraries/org/spongepowered/mixin/0.8.5/mixin-0.8.5.jar%2365!/ Service=ModLauncher Env=SERVER
+[138月2026 18:51:57.754] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file E:\program\JAVA\touhou little maid - unknow sky area\prod_server\libraries\net\minecraftforge\fmlcore\1.20.1-47.4.13\fmlcore-1.20.1-47.4.13.jar is missing mods.toml file
+[138月2026 18:51:57.770] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file E:\program\JAVA\touhou little maid - unknow sky area\prod_server\libraries\net\minecraftforge\javafmllanguage\1.20.1-47.4.13\javafmllanguage-1.20.1-47.4.13.jar is missing mods.toml file
+[138月2026 18:51:57.787] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file E:\program\JAVA\touhou little maid - unknow sky area\prod_server\libraries\net\minecraftforge\lowcodelanguage\1.20.1-47.4.13\lowcodelanguage-1.20.1-47.4.13.jar is missing mods.toml file
+[138月2026 18:51:57.800] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file E:\program\JAVA\touhou little maid - unknow sky area\prod_server\libraries\net\minecraftforge\mclanguage\1.20.1-47.4.13\mclanguage-1.20.1-47.4.13.jar is missing mods.toml file
+[138月2026 18:51:58.358] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 12 dependencies adding them to mods collection
+[138月2026 18:52:01.736] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[138月2026 18:52:01.826] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserver' with arguments [nogui]
+[138月2026 18:52:04.344] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/renderer/RenderBuffers (java.lang.ClassNotFoundException: net.minecraft.client.renderer.RenderBuffers)
+[138月2026 18:52:04.344] [main/WARN] [mixin/]: @Mixin target net.minecraft.client.renderer.RenderBuffers was not found annoyingvillagers.mixins.json:RenderBuffersMixin
+[138月2026 18:52:04.428] [main/WARN] [mixin/]: Error loading class: com/simibubi/create/content/contraptions/ContraptionCollider (java.lang.ClassNotFoundException: com.simibubi.create.content.contraptions.ContraptionCollider)
+[138月2026 18:52:04.428] [main/WARN] [mixin/]: @Mixin target com.simibubi.create.content.contraptions.ContraptionCollider was not found mixins.ywzj_vehicle.json:create.ContraptionColliderMixin
+[138月2026 18:52:04.430] [main/WARN] [mixin/]: Error loading class: com/tacz/guns/util/EntityUtil (java.lang.ClassNotFoundException: com.tacz.guns.util.EntityUtil)
+[138月2026 18:52:04.525] [main/WARN] [mixin/]: Error loading class: com/mojang/blaze3d/platform/InputConstants$Key (java.lang.ClassNotFoundException: com.mojang.blaze3d.platform.InputConstants$Key)
+[138月2026 18:52:04.533] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/renderer/entity/EntityRendererProvider$Context (java.lang.ClassNotFoundException: net.minecraft.client.renderer.entity.EntityRendererProvider$Context)
+[138月2026 18:52:04.551] [main/WARN] [mixin/]: Error loading class: net/minecraft/client/renderer/entity/EntityRendererProvider$Context (java.lang.ClassNotFoundException: net.minecraft.client.renderer.entity.EntityRendererProvider$Context)
+[138月2026 18:52:05.945] [main/WARN] [oshi.driver.windows.perfmon.PerfmonDisabled/]: Invalid registry value type detected for PerfOS counters. Should be REG_DWORD. Ignoring: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PerfOS\Performance\Disable Performance Counters.
+[138月2026 18:52:08.140] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[138月2026 18:52:12.146] [main/WARN] [mixin/]: @Final field f_31427_:[I in mixins.epicfight.json:common.MixinWitherBoss should be final
+[138月2026 18:52:12.146] [main/WARN] [mixin/]: @Final field f_31428_:[I in mixins.epicfight.json:common.MixinWitherBoss should be final
+[138月2026 18:52:14.926] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.926] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.927] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.927] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.927] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.927] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.927] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.928] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.928] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.928] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.928] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:14.928] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.LivingEntity from class yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch
+[138月2026 18:52:16.764] [modloading-worker-0/INFO] [com.merlin204.avalon.main.AvalonMOD/]: 自动注册实体: SHAKE_WAVE -> shake_wave
+[138月2026 18:52:16.764] [modloading-worker-0/INFO] [com.merlin204.avalon.main.AvalonMOD/]: 自动注册实体: VFX -> vfx
+[138月2026 18:52:16.765] [modloading-worker-0/INFO] [com.merlin204.avalon.main.AvalonMOD/]: 自动注册实体: ANIMATION_TEXTURE_VFX -> animation_texture_vfx
+[138月2026 18:52:16.771] [modloading-worker-0/INFO] [YSM-GEO Compat/]: YSM-GEO Compat: Initialized successfully
+[138月2026 18:52:16.774] [modloading-worker-0/INFO] [org.eftlm.stylish.EFTLMStylish/]: EFTLM Stylish Combat loaded!
+[138月2026 18:52:16.779] [modloading-worker-0/INFO] [eftlm_stylish/]: [DIAG] ===== EFTLM Stylish environment =====
+[138月2026 18:52:16.782] [modloading-worker-0/INFO] [eftlm_stylish/]: [DIAG] ef_tlm version: 1.3.2
+[138月2026 18:52:16.783] [modloading-worker-0/INFO] [eftlm_stylish/]: [DIAG] epicfight version: 20.14.17
+[138月2026 18:52:16.783] [modloading-worker-0/INFO] [eftlm_stylish/]: [DIAG] touhou_little_maid version: 1.5.3-forge+mc1.20.1
+[138月2026 18:52:16.783] [modloading-worker-0/INFO] [eftlm_stylish/]: [DIAG] wom loaded: true version: 2.0.164
+[138月2026 18:52:16.783] [modloading-worker-0/INFO] [eftlm_stylish/]: [DIAG] =======================================
+[138月2026 18:52:16.850] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.13, for MC 1.20.1 with MCP 20230612.114412
+[138月2026 18:52:16.850] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.13 Initialized
+[138月2026 18:52:16.851] [modloading-worker-0/INFO] [org.ywzj.vehicle.YwzjVehicle/VehiclePackFinder]: Start scanning for vehicle packs in E:\program\JAVA\touhou little maid - unknow sky area\prod_server\limitless_vehicle
+[138月2026 18:52:16.859] [modloading-worker-0/INFO] [org.ywzj.vehicle.YwzjVehicle/VehiclePackFinder]: - default_vehicle, Main namespace: ywzj_vehicle
+[138月2026 18:52:16.860] [modloading-worker-0/INFO] [org.ywzj.vehicle.YwzjVehicle/VehiclePackFinder]: Found 1 possible vehicle pack(s)
+[138月2026 18:52:17.152] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id architectury:sync_ids
+[138月2026 18:52:17.226] [modloading-worker-0/INFO] [epicfight/]: Loaded mod compat: GeckolibCompat
+[138月2026 18:52:17.581] [modloading-worker-0/INFO] [touhou_little_maid/]: common default pack init start...
+[138月2026 18:52:21.182] [modloading-worker-0/INFO] [touhou_little_maid/]: common default pack init finished, cost time: 3598.018 ms
+[138月2026 18:52:23.336] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.player.Player from class yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch
+[138月2026 18:52:23.347] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.TamableAnimal from class reascer.wom.world.entity.mob.EnderHand
+[138月2026 18:52:23.347] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.TamableAnimal from class reascer.wom.world.entity.mob.TargetingHelper
+[138月2026 18:52:23.412] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.412] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.413] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.413] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.413] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.413] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.413] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.413] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.413] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class net.minecraft.world.entity.boss.wither.WitherBoss from class yesman.epicfight.world.capabilities.entitypatch.boss.WitherPatch
+[138月2026 18:52:23.417] [main/WARN] [net.minecraft.network.syncher.SynchedEntityData/]: defineId called for: class com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid from class net.EFTLM.EF.Capability.MaidPatch
+[138月2026 18:52:23.749] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [player_mobs] Starting version check at https://raw.githubusercontent.com/GoryMoon/PlayerMobs/update/versions.json
+[138月2026 18:52:23.826] [main/INFO] [eftlm_stylish/]: [DIAG] MaidSkillBuildEvent registered: stylish_combat (tab=ef_tlm:skills)
+[138月2026 18:52:23.999] [Forge Version Check/WARN] [net.minecraftforge.fml.VersionChecker/]: Failed to process update information
+javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at jdk.internal.net.http.HttpClientImpl.send(HttpClientImpl.java:578) ~[java.net.http:?]
+	at jdk.internal.net.http.HttpClientFacade.send(HttpClientFacade.java:123) ~[java.net.http:?]
+	at net.minecraftforge.fml.VersionChecker$1.openUrlString(VersionChecker.java:142) ~[fmlcore-1.20.1-47.4.13.jar%23130!/:?]
+	at net.minecraftforge.fml.VersionChecker$1.process(VersionChecker.java:180) ~[fmlcore-1.20.1-47.4.13.jar%23130!/:?]
+	at java.lang.Iterable.forEach(Iterable.java:75) ~[?:?]
+	at net.minecraftforge.fml.VersionChecker$1.run(VersionChecker.java:117) ~[fmlcore-1.20.1-47.4.13.jar%23130!/:?]
+Caused by: javax.net.ssl.SSLHandshakeException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.ssl.Alert.createSSLException(Alert.java:131) ~[?:?]
+	at sun.security.ssl.TransportContext.fatal(TransportContext.java:378) ~[?:?]
+	at sun.security.ssl.TransportContext.fatal(TransportContext.java:321) ~[?:?]
+	at sun.security.ssl.TransportContext.fatal(TransportContext.java:316) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1351) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(CertificateMessage.java:1226) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(CertificateMessage.java:1169) ~[?:?]
+	at sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:396) ~[?:?]
+	at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:480) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1277) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1264) ~[?:?]
+	at java.security.AccessController.doPrivileged(AccessController.java:712) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1209) ~[?:?]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1118) ~[java.net.http:?]
+	at jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:157) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1113) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1079) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:484) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:268) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:205) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:347) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:230) ~[java.net.http:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
+	at java.lang.Thread.run(Thread.java:842) ~[?:?]
+Caused by: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:439) ~[?:?]
+	at sun.security.validator.PKIXValidator.engineValidate(PKIXValidator.java:306) ~[?:?]
+	at sun.security.validator.Validator.validate(Validator.java:264) ~[?:?]
+	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:285) ~[?:?]
+	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1329) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(CertificateMessage.java:1226) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(CertificateMessage.java:1169) ~[?:?]
+	at sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:396) ~[?:?]
+	at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:480) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1277) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1264) ~[?:?]
+	at java.security.AccessController.doPrivileged(AccessController.java:712) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1209) ~[?:?]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1118) ~[java.net.http:?]
+	at jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:157) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1113) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1079) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:484) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:268) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:205) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:347) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:230) ~[java.net.http:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
+	at java.lang.Thread.run(Thread.java:842) ~[?:?]
+Caused by: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
+	at sun.security.provider.certpath.SunCertPathBuilder.build(SunCertPathBuilder.java:148) ~[?:?]
+	at sun.security.provider.certpath.SunCertPathBuilder.engineBuild(SunCertPathBuilder.java:129) ~[?:?]
+	at java.security.cert.CertPathBuilder.build(CertPathBuilder.java:297) ~[?:?]
+	at sun.security.validator.PKIXValidator.doBuild(PKIXValidator.java:434) ~[?:?]
+	at sun.security.validator.PKIXValidator.engineValidate(PKIXValidator.java:306) ~[?:?]
+	at sun.security.validator.Validator.validate(Validator.java:264) ~[?:?]
+	at sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:285) ~[?:?]
+	at sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.checkServerCerts(CertificateMessage.java:1329) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.onConsumeCertificate(CertificateMessage.java:1226) ~[?:?]
+	at sun.security.ssl.CertificateMessage$T13CertificateConsumer.consume(CertificateMessage.java:1169) ~[?:?]
+	at sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:396) ~[?:?]
+	at sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:480) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1277) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1264) ~[?:?]
+	at java.security.AccessController.doPrivileged(AccessController.java:712) ~[?:?]
+	at sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1209) ~[?:?]
+	at java.util.ArrayList.forEach(ArrayList.java:1511) ~[?:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1118) ~[java.net.http:?]
+	at jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:157) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1113) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1079) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:484) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:268) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:205) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:347) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151) ~[java.net.http:?]
+	at jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:230) ~[java.net.http:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[?:?]
+	at java.lang.Thread.run(Thread.java:842) ~[?:?]
+[138月2026 18:52:24.003] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [forge] Starting version check at https://files.minecraftforge.net/net/minecraftforge/forge/promotions_slim.json
+[138月2026 18:52:24.945] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [forge] Found status: OUTDATED Current: 47.4.13 Target: 47.4.22
+[138月2026 18:52:25.501] [main/INFO] [epicfight/]: Data keys [invincible:down, invincible:parry_timer, invincible:up, invincible:dodge_success_timer, invincible:left, invincible:right, invincible:cooldown] for invincible:combo_demo
+[138月2026 18:52:25.502] [main/INFO] [epicfight/]: Data keys [epicfight:combo_counter, epicfight:basic_attack_active] for epicfight:basic_attack
+[138月2026 18:52:25.502] [main/INFO] [epicfight/]: Data keys [epicfight:penalty_restore_counter, epicfight:penalty] for epicfight:guard
+[138月2026 18:52:25.502] [main/INFO] [epicfight/]: Data keys [epicfight:parry_motion_counter, epicfight:last_active, epicfight:penalty_restore_counter, epicfight:penalty] for epicfight:parrying
+[138月2026 18:52:25.503] [main/INFO] [epicfight/]: Data keys [epicfight:penalty_restore_counter, epicfight:penalty] for epicfight:impact_guard
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:stacks, epicfight:tick_record, epicfight:resisting_damage_type] for epicfight:adaptive_skin
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:tick_record] for epicfight:adrenaline_fiend
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:entity_id, epicfight:stacks] for epicfight:bonebreaker
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:entity_id, epicfight:tick_record] for epicfight:vengeance
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:fall_distance, epicfight:slam_protect_next_fall] for epicfight:meteor_slam
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:stacks] for epicfight:revelation
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:slam_protect_next_fall] for epicfight:demolition_leap
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:jump_count, epicfight:slam_protect_next_fall, epicfight:jump_key_pressed_last_tick] for epicfight:phantom_ascent
+[138月2026 18:52:25.504] [main/INFO] [epicfight/]: Data keys [epicfight:last_hit_count] for epicfight:grasping_spire
+[138月2026 18:52:25.505] [main/INFO] [epicfight/]: Data keys [epicfight:sheath] for epicfight:battojutsu_passive
+[138月2026 18:52:25.505] [main/INFO] [epicfight/]: Data keys [epicfight:sheath] for epicfight:battojutsu
+[138月2026 18:52:25.505] [main/INFO] [epicfight/]: Data keys [epicfight:combo_counter] for epicfight:blade_rush
+[138月2026 18:52:25.505] [main/INFO] [epicfight/]: Data keys [epicfight:thrown_trident_entity_id] for epicfight:everlasting_allegiance
+[138月2026 18:52:25.505] [main/INFO] [epicfight/]: Data keys [wom:target_id] for wom:ender_obscuris
+[138月2026 18:52:25.505] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:dodge, wom:timer_refresh] for wom:dodge_master
+[138月2026 18:52:25.505] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:registered_health, wom:cooldown, wom:registered_position, wom:active, wom:dodge, wom:timer_refresh] for wom:time_travel
+[138月2026 18:52:25.505] [main/INFO] [epicfight/]: Data keys [wom:cooldown] for wom:punishment_kick
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:last_active, epicfight:penalty_restore_counter, wom:parrying, epicfight:penalty, wom:consumprion_value, wom:holding_rmb] for wom:counter_attack
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:cooldown, epicfight:penalty_restore_counter, epicfight:penalty, wom:consumprion_value, wom:charge, wom:holding_stance, wom:timer_refresh, wom:vengence_duration] for wom:vengeful_parry
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:cooldown, epicfight:penalty_restore_counter, wom:parrying, epicfight:penalty, wom:charge, wom:holding_rmb] for wom:perfect_bulwark
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:cycle, wom:charge] for wom:soul_protection
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:cycle, wom:charge] for wom:shulker_cloak
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:timer, epicfight:penalty_restore_counter, wom:active, epicfight:penalty, wom:holding_rmb] for wom:buster_parade
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active, wom:duree, wom:timer_refresh] for wom:pain_anticipation
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active, wom:duree, wom:timer_refresh] for wom:latent_retribution
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:power, wom:rate] for wom:critical_knowledge
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:recovery_rate, wom:max_shield] for wom:heart_shield
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:saved_elapsed_time, wom:melody_index, wom:step] for wom:dancing_blade
+[138月2026 18:52:25.506] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active, wom:duree, wom:cycle, wom:stage, wom:timer_refresh] for wom:meditation
+[138月2026 18:52:25.508] [main/INFO] [epicfight/]: Data keys [wom:cooldown] for wom:dopamine
+[138月2026 18:52:25.508] [main/INFO] [epicfight/]: Data keys [wom:last_active] for wom:manipulator
+[138月2026 18:52:25.509] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:stack, wom:power, wom:rate] for wom:lethal_focus
+[138月2026 18:52:25.514] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:jump_key_up, wom:angle, wom:wall_glide, wom:wall_running, wom:timer_refresh] for wom:spider_techniques
+[138月2026 18:52:25.514] [main/INFO] [epicfight/]: Data keys [wom:crawling, wom:jump_key_up, wom:cooldown, wom:diving, wom:mermaid_movement, wom:water_dashing, wom:consumprion_value] for wom:aqua_maneuvre
+[138月2026 18:52:25.515] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:verso, wom:wall_glide, wom:active, wom:wall_running, wom:consumprion_value, wom:stage, wom:buffing] for wom:natural_sprinter
+[138月2026 18:52:25.515] [main/INFO] [epicfight/]: Data keys [wom:timer] for wom:lunatic_vivacity
+[138月2026 18:52:25.517] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:registered_health, wom:consumprion_value] for wom:voodoo_magic
+[138月2026 18:52:25.517] [main/INFO] [epicfight/]: Data keys [wom:target_id, wom:target_distance] for wom:back_and_forth
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:combo] for wom:shooting_style
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active] for wom:proximity_exploiter
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:stack] for wom:all_eyes_on_you
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:stack] for wom:all_eyes_on_me
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:cooldown] for wom:avatar_of_might
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:attacks, wom:active, wom:stack] for wom:agony_plunge
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:movespeed, wom:saved_charge, wom:active, wom:charging_time, wom:charging, wom:charged, wom:charged_attack, wom:holding_rmb, wom:timer_refresh] for wom:torment_passive
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active, wom:timer_refresh] for wom:true_berserk
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:stack] for wom:herrscher_passive
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:redemptioon, wom:verso, wom:buffed, wom:buffing, wom:strenght, wom:timer_refresh, wom:expiation] for wom:plunder_perdition
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:sheath] for wom:satsujin_passive
+[138月2026 18:52:25.518] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:cooldown, wom:attacks, wom:active, wom:stack, wom:charging, wom:charge, wom:holding_rmb, wom:frequency, wom:timer_refresh, wom:damage, wom:saved_charge, wom:timedslash, wom:holding_stance, wom:second_draw] for wom:sakura_state
+[138月2026 18:52:25.520] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:combo, wom:zoom_cooldown, wom:nofalldamage, wom:shoot, wom:reload_cooldown, wom:using_item, wom:zoom, wom:holding_rmb] for wom:ender_blast
+[138月2026 18:52:25.520] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:combo, wom:zoom_cooldown, wom:nofalldamage, wom:shoot, wom:reload_cooldown, wom:side, wom:using_item, wom:zoom, wom:holding_rmb] for wom:ender_fusion
+[138月2026 18:52:25.520] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:combo, wom:gesetz_sprengkopf, wom:parrying, wom:charging_time, wom:guard_point_result, wom:guard_point, wom:charged, wom:holding_stance, wom:holding_rmb] for wom:regierung
+[138月2026 18:52:25.520] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:echo, wom:lunar_eclipse_stack, wom:timer_refresh, wom:crescent] for wom:lunar_eclipse
+[138月2026 18:52:25.520] [main/INFO] [epicfight/]: Data keys [wom:verso, wom:idle] for wom:lunar_echo_passive
+[138月2026 18:52:25.521] [main/INFO] [epicfight/]: Data keys [wom:witheraftereffect, wom:zoom_cooldown, wom:darkness_target_reaped, wom:darkness_target, wom:darkness_target_vec, wom:zoom, wom:blackhole_vec, wom:blackhole_active, wom:ascending, wom:shoot_cooldown, wom:shoot, wom:timer, wom:witherccatharsis, wom:active, wom:serius_focus_cooldown, wom:serius_focus, wom:darkness_portal_angle, wom:holding_rmb, wom:timer_refresh, wom:blackhole, wom:darkness_portal_vec, wom:blackhole_timer, wom:darkness_target_hited, wom:darkness_activate_portal, wom:darkness_portal_timer] for wom:demonic_ascension
+[138月2026 18:52:25.521] [main/INFO] [epicfight/]: Data keys [wom:catharsis, wom:blink, wom:basic_attack, wom:particle, wom:lapse, wom:idle, wom:withercurse] for wom:demon_mark_passive
+[138月2026 18:52:25.522] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:heat_level, wom:particle, wom:charging, wom:timed_attack, wom:cycle, wom:charge, wom:holding_rmb, wom:timer_refresh, wom:stored_heat_level, wom:solar_obscuridad, wom:solar_infernio, wom:heating_speed, wom:solar_crematorio, wom:solar_obscuridad_ta_timer] for wom:solar_arcano
+[138月2026 18:52:25.522] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:heat_level, wom:particle, wom:charging, wom:timed_attack, wom:cycle, wom:charge, wom:timer_refresh, wom:stored_heat_level, wom:solar_obscuridad, wom:solar_infernio, wom:heating_speed, wom:solar_crematorio, wom:solar_obscuridad_ta_timer] for wom:solar_passive
+[138月2026 18:52:25.522] [main/INFO] [epicfight/]: Data keys [wom:serius_focus_cooldown, wom:serius_focus] for wom:rechargement
+[138月2026 18:52:25.522] [main/INFO] [epicfight/]: Data keys [wom:shell_delay, wom:active, wom:bullet_overloaded, wom:cycle, wom:super_reload, wom:charged, wom:bullet_loaded_old, wom:charge, wom:bullet_loaded, wom:shell_anim, wom:shell_number] for wom:napoleon_passive
+[138月2026 18:52:25.522] [main/INFO] [epicfight/]: Data keys [efn:scythe_sheath, efn:scythe_blood_power] for efn:scythe_skill
+[138月2026 18:52:25.522] [main/INFO] [epicfight/]: Data keys [efn:thornwheel_loop, efn:thornwheel_loop_available, efn:press_innate] for efn:thornwheel
+[138月2026 18:52:25.523] [main/INFO] [epicfight/]: Data keys [efn:jump_key_pressed_last_tick, efn:jump_count, efn:murasama_forward_dodge] for efn:murasama_dodge
+[138月2026 18:52:25.523] [main/INFO] [epicfight/]: Data keys [efn:puncture_increment, efn:max_puncture_chance, efn:current_puncture_chance, efn:base_puncture_chance] for efn:parry_master
+[138月2026 18:52:25.524] [main/INFO] [epicfight/]: Data keys [efn:defense_start_tick, efn:buff_active, efn:buff_end_tick] for efn:precise_parry
+[138月2026 18:52:25.524] [main/INFO] [epicfight/]: Data keys [efn:cooldown_1, efn:cooldown, efn:cooldown_2] for efn:judgementcutend
+[138月2026 18:52:25.524] [main/INFO] [epicfight/]: Data keys [efn:cooldown_1, efn:cooldown, efn:cooldown_2] for efn:stomp
+[138月2026 18:52:25.524] [main/INFO] [epicfight/]: Data keys [efn:murasama_pair_flag, efn:arts_key, efn:murasama_zandatsu_end_time, efn:murasama_zansetsu_active, efn:murasama_zansetsu_timer, efn:murasama_zansetsu_end_time, efn:murasama_zandatsu_available, efn:murasama_key_right_down, efn:murasama_zansetsu_input_mode, efn:murasama_input_mode_switch_pressed, efn:murasama_last_triggered_sector, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:murasama_zandatsu_start_time, efn:arts_key_pressed, efn:murasama_zansetsu_slash_release, efn:murasama_key_left_down, efn:murasama_opposite_triggered, efn:murasama_zansetsu_attack_counter, efn:murasama_zansetsu_start_time] for efn:zansetsu
+[138月2026 18:52:25.525] [main/INFO] [epicfight/]: Data keys [efn:cooldown_1, efn:cooldown, efn:cooldown_2] for efn:execution
+[138月2026 18:52:25.525] [main/INFO] [epicfight/]: Data keys [efn:efn_first_shake, efn:efn_parry_motion_counter, efn:efn_shake_detected, efn:efn_last_active, epicfight:penalty_restore_counter, efn:efn_last_parry_time, efn:efn_delay_protection_end, efn:efn_last_guard_start_tick, efn:efn_last_successful_defense_tick, efn:efn_starting_parry, efn:efn_shake_penalty_count, epicfight:penalty] for efn:efn_parry
+[138月2026 18:52:25.525] [main/INFO] [epicfight/]: Data keys [efn:efn_first_shake, efn:efn_parry_motion_counter, efn:efn_shake_detected, efn:efn_last_active, epicfight:penalty_restore_counter, efn:efn_last_parry_time, efn:efn_delay_protection_end, efn:efn_last_guard_start_tick, efn:efn_last_successful_defense_tick, efn:efn_starting_parry, efn:efn_shake_penalty_count, epicfight:penalty] for efn:murasama_parry
+[138月2026 18:52:25.525] [main/INFO] [epicfight/]: Data keys [efn:arts_key, efn:arts_input_buffer, efn:sekiro_art_index, efn:arts_key_pressed, efn:cooldown_1, efn:cooldown, efn:cooldown_2] for efn:mortal_blade
+[138月2026 18:52:25.526] [main/INFO] [epicfight/]: Data keys [efn:have_doppelganger, invincible:up, efn:pressing_key1, invincible:left, efn:angel_key, invincible:right, efn:charge_stage, efn:press_innate, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_message, efn:pressing_key3, efn:doppelganger_style, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:sneak_key, efn:press_key4, efn:key3_press_timer, efn:doppelganger_delay, efn:sprint_key, efn:up_key, invincible:down, efn:cooldown_2, efn:pressing_innate, efn:press_key1, efn:guard_key, efn:is_charging, efn:energy_check, efn:down_key, efn:doppelganger_tick, efn:full_charge_message, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_doppelganger, efn:press_key3, efn:jump_key, efn:press_summon_sword, efn:demon_key, efn:key4_press_timer, efn:force_release, invincible:parry_timer, invincible:dodge_success_timer] for efn:yamato
+[138月2026 18:52:25.526] [main/INFO] [epicfight/]: Data keys [efn:doppelganger_delay, efn:doppelganger_style, efn:have_doppelganger, efn:parry_cooldown, efn:stun_cooldown, efn:doppelganger_tick] for efn:yamato_passive
+[138月2026 18:52:25.527] [main/INFO] [epicfight/]: Data keys [invincible:up, efn:pressing_key1, invincible:left, efn:angel_key, invincible:right, efn:is_replay_damage, efn:charge_stage, efn:press_innate, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:replay_enhanced, efn:charge_message, efn:pressing_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:sneak_key, efn:press_key4, efn:key3_press_timer, efn:sprint_key, efn:up_key, invincible:down, efn:cooldown_2, efn:pressing_innate, efn:press_key1, efn:guard_key, efn:is_charging, efn:energy_check, efn:down_key, efn:full_charge_message, efn:damage_history, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:jump_key, efn:press_summon_sword, efn:demon_key, efn:key4_press_timer, efn:force_release, invincible:parry_timer, invincible:dodge_success_timer] for efn:shortsword
+[138月2026 18:52:25.529] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:ruinsgreatsword
+[138月2026 18:52:25.529] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:pioneer
+[138月2026 18:52:25.530] [main/INFO] [epicfight/]: Data keys [invincible:up, efn:manual_unsheath, efn:pressing_key1, invincible:left, efn:murasama_zansetsu_active, efn:angel_key, invincible:right, efn:murasama_zansetsu_input_mode, efn:charge_stage, efn:press_innate, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:murasama_key_left_down, efn:charge_message, efn:pressing_key3, efn:murasama_zansetsu_attack_counter, efn:murasama_zandatsu_end_time, efn:key2_press_timer, efn:murasama_zansetsu_timer, efn:pressing_key2, efn:murasama_zandatsu_available, efn:cooldown, efn:murasama_air_borne, efn:was_long_pressed, efn:sneak_key, efn:press_key4, efn:key3_press_timer, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:sprint_key, efn:up_key, invincible:down, efn:cooldown_2, efn:pressing_innate, efn:murasama_forward_dodge, efn:murasama_pair_flag, efn:press_key1, efn:guard_key, efn:is_charging, efn:energy_check, efn:down_key, efn:murasama_key_right_down, efn:full_charge_message, efn:murasama_zandatsu_start_time, efn:murasama_sheath_timer, efn:murasama_zansetsu_slash_release, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:murasama_sheath, efn:murasama_zansetsu_end_time, efn:jump_key, efn:murasama_input_mode_switch_pressed, efn:press_summon_sword, efn:murasama_last_triggered_sector, efn:demon_key, efn:key4_press_timer, efn:force_release, invincible:parry_timer, invincible:dodge_success_timer, efn:sprint_sheath_timer, efn:murasama_opposite_triggered, efn:murasama_zansetsu_start_time] for efn:murasama
+[138月2026 18:52:25.532] [main/INFO] [epicfight/]: Data keys [efn:murasama_pair_flag, efn:forward_backward_success, efn:forward_backward_timer, efn:manual_unsheath, efn:jump_key_pressed_last_tick, efn:murasama_zansetsu_active, efn:forward_pressed_last_tick, efn:is_double_tap_sprint, efn:murasama_key_right_down, efn:murasama_zansetsu_input_mode, efn:murasama_zandatsu_start_time, efn:up_key_pressed_last_tick, efn:forward_backward_end_tick, efn:murasama_sheath_timer, efn:murasama_zansetsu_slash_release, efn:murasama_key_left_down, efn:murasama_zansetsu_attack_counter, efn:jump_count, efn:was_double_tap_sprint, efn:backward_pressed_last_tick, efn:forward_backward_remaining_ticks, efn:murasama_zandatsu_end_time, efn:murasama_sheath, efn:forward_backward_window_active, efn:murasama_zansetsu_timer, efn:murasama_zansetsu_end_time, efn:murasama_zandatsu_available, efn:murasama_input_mode_switch_pressed, efn:murasama_last_triggered_sector, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:double_tap_timer, efn:sprint_sheath_timer, efn:murasama_opposite_triggered, efn:murasama_zansetsu_start_time, efn:murasama_forward_dodge] for efn:murasama_passive
+[138月2026 18:52:25.533] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:meenlance
+[138月2026 18:52:25.544] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:kusabimaru
+[138月2026 18:52:25.545] [main/INFO] [epicfight/]: Data keys [invincible:up, efn:manual_unsheath, efn:pressing_key1, invincible:left, efn:murasama_zansetsu_active, efn:angel_key, invincible:right, efn:murasama_zansetsu_input_mode, efn:charge_stage, efn:press_innate, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:murasama_key_left_down, efn:charge_message, efn:pressing_key3, efn:murasama_zansetsu_attack_counter, efn:murasama_zandatsu_end_time, efn:key2_press_timer, efn:murasama_zansetsu_timer, efn:pressing_key2, efn:murasama_zandatsu_available, efn:cooldown, efn:murasama_air_borne, efn:was_long_pressed, efn:sneak_key, efn:press_key4, efn:key3_press_timer, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:sprint_key, efn:up_key, invincible:down, efn:cooldown_2, efn:pressing_innate, efn:murasama_forward_dodge, efn:murasama_pair_flag, efn:press_key1, efn:guard_key, efn:is_charging, efn:energy_check, efn:down_key, efn:murasama_key_right_down, efn:full_charge_message, efn:murasama_zandatsu_start_time, efn:murasama_sheath_timer, efn:murasama_zansetsu_slash_release, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:murasama_sheath, efn:murasama_zansetsu_end_time, efn:jump_key, efn:murasama_input_mode_switch_pressed, efn:press_summon_sword, efn:murasama_last_triggered_sector, efn:demon_key, efn:key4_press_timer, efn:force_release, invincible:parry_timer, invincible:dodge_success_timer, efn:sprint_sheath_timer, efn:murasama_opposite_triggered, efn:murasama_zansetsu_start_time] for efn:hf_blade
+[138月2026 18:52:25.546] [main/INFO] [epicfight/]: Data keys [efn:murasama_pair_flag, efn:forward_backward_success, efn:forward_backward_timer, efn:manual_unsheath, efn:jump_key_pressed_last_tick, efn:murasama_zansetsu_active, efn:forward_pressed_last_tick, efn:is_double_tap_sprint, efn:murasama_key_right_down, efn:murasama_zansetsu_input_mode, efn:murasama_zandatsu_start_time, efn:up_key_pressed_last_tick, efn:forward_backward_end_tick, efn:murasama_sheath_timer, efn:murasama_zansetsu_slash_release, efn:murasama_key_left_down, efn:murasama_zansetsu_attack_counter, efn:jump_count, efn:was_double_tap_sprint, efn:backward_pressed_last_tick, efn:forward_backward_remaining_ticks, efn:murasama_zandatsu_end_time, efn:murasama_sheath, efn:forward_backward_window_active, efn:murasama_zansetsu_timer, efn:murasama_zansetsu_end_time, efn:murasama_zandatsu_available, efn:murasama_input_mode_switch_pressed, efn:murasama_last_triggered_sector, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:double_tap_timer, efn:sprint_sheath_timer, efn:murasama_opposite_triggered, efn:murasama_zansetsu_start_time, efn:murasama_forward_dodge] for efn:hf_blade_passive
+[138月2026 18:52:25.546] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:exsiliumgladius
+[138月2026 18:52:25.547] [main/INFO] [epicfight/]: Data keys [invincible:down, invincible:parry_timer, invincible:up, invincible:dodge_success_timer, invincible:left, invincible:right, invincible:cooldown] for efn:examplecombo
+[138月2026 18:52:25.547] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:crescentmoon
+[138月2026 18:52:25.547] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:broadblade
+[138月2026 18:52:25.547] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:bloodlust
+[138月2026 18:52:25.548] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:beastclaw
+[138月2026 18:52:25.551] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:aetherialdusk
+[138月2026 18:52:25.554] [main/INFO] [epicfight/]: Data keys [annoyingvillagers:is_trident_ranged_mode, annoyingvillagers:trident_amount] for annoyingvillagers:trident_festival
+[138月2026 18:52:25.639] [main/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[138月2026 18:52:26.635] [main/INFO] [epicfight/]: Data keys [invincible:down, invincible:parry_timer, invincible:up, invincible:dodge_success_timer, invincible:left, invincible:right, invincible:cooldown] for invincible:combo_demo
+[138月2026 18:52:26.635] [main/INFO] [epicfight/]: Data keys [epicfight:combo_counter, epicfight:basic_attack_active] for epicfight:basic_attack
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:penalty_restore_counter, epicfight:penalty] for epicfight:guard
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:parry_motion_counter, epicfight:last_active, epicfight:penalty_restore_counter, epicfight:penalty] for epicfight:parrying
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:penalty_restore_counter, epicfight:penalty] for epicfight:impact_guard
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:stacks, epicfight:tick_record, epicfight:resisting_damage_type] for epicfight:adaptive_skin
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:tick_record] for epicfight:adrenaline_fiend
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:entity_id, epicfight:stacks] for epicfight:bonebreaker
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:entity_id, epicfight:tick_record] for epicfight:vengeance
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:fall_distance, epicfight:slam_protect_next_fall] for epicfight:meteor_slam
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:stacks] for epicfight:revelation
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:slam_protect_next_fall] for epicfight:demolition_leap
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:jump_count, epicfight:slam_protect_next_fall, epicfight:jump_key_pressed_last_tick] for epicfight:phantom_ascent
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:last_hit_count] for epicfight:grasping_spire
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:sheath] for epicfight:battojutsu_passive
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:sheath] for epicfight:battojutsu
+[138月2026 18:52:26.636] [main/INFO] [epicfight/]: Data keys [epicfight:combo_counter] for epicfight:blade_rush
+[138月2026 18:52:26.637] [main/INFO] [epicfight/]: Data keys [epicfight:thrown_trident_entity_id] for epicfight:everlasting_allegiance
+[138月2026 18:52:26.637] [main/INFO] [epicfight/]: Data keys [wom:target_id] for wom:ender_obscuris
+[138月2026 18:52:26.637] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:dodge, wom:timer_refresh] for wom:dodge_master
+[138月2026 18:52:26.637] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:registered_health, wom:cooldown, wom:registered_position, wom:active, wom:dodge, wom:timer_refresh] for wom:time_travel
+[138月2026 18:52:26.637] [main/INFO] [epicfight/]: Data keys [wom:cooldown] for wom:punishment_kick
+[138月2026 18:52:26.637] [main/INFO] [epicfight/]: Data keys [wom:last_active, epicfight:penalty_restore_counter, wom:parrying, epicfight:penalty, wom:consumprion_value, wom:holding_rmb] for wom:counter_attack
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:cooldown, epicfight:penalty_restore_counter, epicfight:penalty, wom:consumprion_value, wom:charge, wom:holding_stance, wom:timer_refresh, wom:vengence_duration] for wom:vengeful_parry
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:cooldown, epicfight:penalty_restore_counter, wom:parrying, epicfight:penalty, wom:charge, wom:holding_rmb] for wom:perfect_bulwark
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:cycle, wom:charge] for wom:soul_protection
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:cycle, wom:charge] for wom:shulker_cloak
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:timer, epicfight:penalty_restore_counter, wom:active, epicfight:penalty, wom:holding_rmb] for wom:buster_parade
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active, wom:duree, wom:timer_refresh] for wom:pain_anticipation
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active, wom:duree, wom:timer_refresh] for wom:latent_retribution
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:power, wom:rate] for wom:critical_knowledge
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:recovery_rate, wom:max_shield] for wom:heart_shield
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:saved_elapsed_time, wom:melody_index, wom:step] for wom:dancing_blade
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active, wom:duree, wom:cycle, wom:stage, wom:timer_refresh] for wom:meditation
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:cooldown] for wom:dopamine
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:last_active] for wom:manipulator
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:stack, wom:power, wom:rate] for wom:lethal_focus
+[138月2026 18:52:26.638] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:jump_key_up, wom:angle, wom:wall_glide, wom:wall_running, wom:timer_refresh] for wom:spider_techniques
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:crawling, wom:jump_key_up, wom:cooldown, wom:diving, wom:mermaid_movement, wom:water_dashing, wom:consumprion_value] for wom:aqua_maneuvre
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:verso, wom:wall_glide, wom:active, wom:wall_running, wom:consumprion_value, wom:stage, wom:buffing] for wom:natural_sprinter
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:timer] for wom:lunatic_vivacity
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:registered_health, wom:consumprion_value] for wom:voodoo_magic
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:target_id, wom:target_distance] for wom:back_and_forth
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:combo] for wom:shooting_style
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active] for wom:proximity_exploiter
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:stack] for wom:all_eyes_on_you
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:stack] for wom:all_eyes_on_me
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:cooldown] for wom:avatar_of_might
+[138月2026 18:52:26.639] [main/INFO] [epicfight/]: Data keys [wom:attacks, wom:active, wom:stack] for wom:agony_plunge
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:movespeed, wom:saved_charge, wom:active, wom:charging_time, wom:charging, wom:charged, wom:charged_attack, wom:holding_rmb, wom:timer_refresh] for wom:torment_passive
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:active, wom:timer_refresh] for wom:true_berserk
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:stack] for wom:herrscher_passive
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:redemptioon, wom:verso, wom:buffed, wom:buffing, wom:strenght, wom:timer_refresh, wom:expiation] for wom:plunder_perdition
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:sheath] for wom:satsujin_passive
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:cooldown, wom:attacks, wom:active, wom:stack, wom:charging, wom:charge, wom:holding_rmb, wom:frequency, wom:timer_refresh, wom:damage, wom:saved_charge, wom:timedslash, wom:holding_stance, wom:second_draw] for wom:sakura_state
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:combo, wom:zoom_cooldown, wom:nofalldamage, wom:shoot, wom:reload_cooldown, wom:using_item, wom:zoom, wom:holding_rmb] for wom:ender_blast
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:combo, wom:zoom_cooldown, wom:nofalldamage, wom:shoot, wom:reload_cooldown, wom:side, wom:using_item, wom:zoom, wom:holding_rmb] for wom:ender_fusion
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:cooldown, wom:combo, wom:gesetz_sprengkopf, wom:parrying, wom:charging_time, wom:guard_point_result, wom:guard_point, wom:charged, wom:holding_stance, wom:holding_rmb] for wom:regierung
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:echo, wom:lunar_eclipse_stack, wom:timer_refresh, wom:crescent] for wom:lunar_eclipse
+[138月2026 18:52:26.640] [main/INFO] [epicfight/]: Data keys [wom:verso, wom:idle] for wom:lunar_echo_passive
+[138月2026 18:52:26.641] [main/INFO] [epicfight/]: Data keys [wom:witheraftereffect, wom:zoom_cooldown, wom:darkness_target_reaped, wom:darkness_target, wom:darkness_target_vec, wom:zoom, wom:blackhole_vec, wom:blackhole_active, wom:ascending, wom:shoot_cooldown, wom:shoot, wom:timer, wom:witherccatharsis, wom:active, wom:serius_focus_cooldown, wom:serius_focus, wom:darkness_portal_angle, wom:holding_rmb, wom:timer_refresh, wom:blackhole, wom:darkness_portal_vec, wom:blackhole_timer, wom:darkness_target_hited, wom:darkness_activate_portal, wom:darkness_portal_timer] for wom:demonic_ascension
+[138月2026 18:52:26.641] [main/INFO] [epicfight/]: Data keys [wom:catharsis, wom:blink, wom:basic_attack, wom:particle, wom:lapse, wom:idle, wom:withercurse] for wom:demon_mark_passive
+[138月2026 18:52:26.642] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:heat_level, wom:particle, wom:charging, wom:timed_attack, wom:cycle, wom:charge, wom:holding_rmb, wom:timer_refresh, wom:stored_heat_level, wom:solar_obscuridad, wom:solar_infernio, wom:heating_speed, wom:solar_crematorio, wom:solar_obscuridad_ta_timer] for wom:solar_arcano
+[138月2026 18:52:26.642] [main/INFO] [epicfight/]: Data keys [wom:timer, wom:heat_level, wom:particle, wom:charging, wom:timed_attack, wom:cycle, wom:charge, wom:timer_refresh, wom:stored_heat_level, wom:solar_obscuridad, wom:solar_infernio, wom:heating_speed, wom:solar_crematorio, wom:solar_obscuridad_ta_timer] for wom:solar_passive
+[138月2026 18:52:26.642] [main/INFO] [epicfight/]: Data keys [wom:serius_focus_cooldown, wom:serius_focus] for wom:rechargement
+[138月2026 18:52:26.642] [main/INFO] [epicfight/]: Data keys [wom:shell_delay, wom:active, wom:bullet_overloaded, wom:cycle, wom:super_reload, wom:charged, wom:bullet_loaded_old, wom:charge, wom:bullet_loaded, wom:shell_anim, wom:shell_number] for wom:napoleon_passive
+[138月2026 18:52:26.642] [main/INFO] [epicfight/]: Data keys [efn:scythe_sheath, efn:scythe_blood_power] for efn:scythe_skill
+[138月2026 18:52:26.642] [main/INFO] [epicfight/]: Data keys [efn:thornwheel_loop, efn:thornwheel_loop_available, efn:press_innate] for efn:thornwheel
+[138月2026 18:52:26.642] [main/INFO] [epicfight/]: Data keys [efn:jump_key_pressed_last_tick, efn:jump_count, efn:murasama_forward_dodge] for efn:murasama_dodge
+[138月2026 18:52:26.642] [main/INFO] [epicfight/]: Data keys [efn:puncture_increment, efn:max_puncture_chance, efn:current_puncture_chance, efn:base_puncture_chance] for efn:parry_master
+[138月2026 18:52:26.643] [main/INFO] [epicfight/]: Data keys [efn:defense_start_tick, efn:buff_active, efn:buff_end_tick] for efn:precise_parry
+[138月2026 18:52:26.643] [main/INFO] [epicfight/]: Data keys [efn:cooldown_1, efn:cooldown, efn:cooldown_2] for efn:judgementcutend
+[138月2026 18:52:26.643] [main/INFO] [epicfight/]: Data keys [efn:cooldown_1, efn:cooldown, efn:cooldown_2] for efn:stomp
+[138月2026 18:52:26.643] [main/INFO] [epicfight/]: Data keys [efn:murasama_pair_flag, efn:arts_key, efn:murasama_zandatsu_end_time, efn:murasama_zansetsu_active, efn:murasama_zansetsu_timer, efn:murasama_zansetsu_end_time, efn:murasama_zandatsu_available, efn:murasama_key_right_down, efn:murasama_zansetsu_input_mode, efn:murasama_input_mode_switch_pressed, efn:murasama_last_triggered_sector, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:murasama_zandatsu_start_time, efn:arts_key_pressed, efn:murasama_zansetsu_slash_release, efn:murasama_key_left_down, efn:murasama_opposite_triggered, efn:murasama_zansetsu_attack_counter, efn:murasama_zansetsu_start_time] for efn:zansetsu
+[138月2026 18:52:26.643] [main/INFO] [epicfight/]: Data keys [efn:cooldown_1, efn:cooldown, efn:cooldown_2] for efn:execution
+[138月2026 18:52:26.644] [main/INFO] [epicfight/]: Data keys [efn:efn_first_shake, efn:efn_parry_motion_counter, efn:efn_shake_detected, efn:efn_last_active, epicfight:penalty_restore_counter, efn:efn_last_parry_time, efn:efn_delay_protection_end, efn:efn_last_guard_start_tick, efn:efn_last_successful_defense_tick, efn:efn_starting_parry, efn:efn_shake_penalty_count, epicfight:penalty] for efn:efn_parry
+[138月2026 18:52:26.644] [main/INFO] [epicfight/]: Data keys [efn:efn_first_shake, efn:efn_parry_motion_counter, efn:efn_shake_detected, efn:efn_last_active, epicfight:penalty_restore_counter, efn:efn_last_parry_time, efn:efn_delay_protection_end, efn:efn_last_guard_start_tick, efn:efn_last_successful_defense_tick, efn:efn_starting_parry, efn:efn_shake_penalty_count, epicfight:penalty] for efn:murasama_parry
+[138月2026 18:52:26.644] [main/INFO] [epicfight/]: Data keys [efn:arts_key, efn:arts_input_buffer, efn:sekiro_art_index, efn:arts_key_pressed, efn:cooldown_1, efn:cooldown, efn:cooldown_2] for efn:mortal_blade
+[138月2026 18:52:26.644] [main/INFO] [epicfight/]: Data keys [efn:have_doppelganger, invincible:up, efn:pressing_key1, invincible:left, efn:angel_key, invincible:right, efn:charge_stage, efn:press_innate, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_message, efn:pressing_key3, efn:doppelganger_style, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:sneak_key, efn:press_key4, efn:key3_press_timer, efn:doppelganger_delay, efn:sprint_key, efn:up_key, invincible:down, efn:cooldown_2, efn:pressing_innate, efn:press_key1, efn:guard_key, efn:is_charging, efn:energy_check, efn:down_key, efn:doppelganger_tick, efn:full_charge_message, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_doppelganger, efn:press_key3, efn:jump_key, efn:press_summon_sword, efn:demon_key, efn:key4_press_timer, efn:force_release, invincible:parry_timer, invincible:dodge_success_timer] for efn:yamato
+[138月2026 18:52:26.644] [main/INFO] [epicfight/]: Data keys [efn:doppelganger_delay, efn:doppelganger_style, efn:have_doppelganger, efn:parry_cooldown, efn:stun_cooldown, efn:doppelganger_tick] for efn:yamato_passive
+[138月2026 18:52:26.644] [main/INFO] [epicfight/]: Data keys [invincible:up, efn:pressing_key1, invincible:left, efn:angel_key, invincible:right, efn:is_replay_damage, efn:charge_stage, efn:press_innate, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:replay_enhanced, efn:charge_message, efn:pressing_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:sneak_key, efn:press_key4, efn:key3_press_timer, efn:sprint_key, efn:up_key, invincible:down, efn:cooldown_2, efn:pressing_innate, efn:press_key1, efn:guard_key, efn:is_charging, efn:energy_check, efn:down_key, efn:full_charge_message, efn:damage_history, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:jump_key, efn:press_summon_sword, efn:demon_key, efn:key4_press_timer, efn:force_release, invincible:parry_timer, invincible:dodge_success_timer] for efn:shortsword
+[138月2026 18:52:26.644] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:ruinsgreatsword
+[138月2026 18:52:26.644] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:pioneer
+[138月2026 18:52:26.645] [main/INFO] [epicfight/]: Data keys [invincible:up, efn:manual_unsheath, efn:pressing_key1, invincible:left, efn:murasama_zansetsu_active, efn:angel_key, invincible:right, efn:murasama_zansetsu_input_mode, efn:charge_stage, efn:press_innate, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:murasama_key_left_down, efn:charge_message, efn:pressing_key3, efn:murasama_zansetsu_attack_counter, efn:murasama_zandatsu_end_time, efn:key2_press_timer, efn:murasama_zansetsu_timer, efn:pressing_key2, efn:murasama_zandatsu_available, efn:cooldown, efn:murasama_air_borne, efn:was_long_pressed, efn:sneak_key, efn:press_key4, efn:key3_press_timer, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:sprint_key, efn:up_key, invincible:down, efn:cooldown_2, efn:pressing_innate, efn:murasama_forward_dodge, efn:murasama_pair_flag, efn:press_key1, efn:guard_key, efn:is_charging, efn:energy_check, efn:down_key, efn:murasama_key_right_down, efn:full_charge_message, efn:murasama_zandatsu_start_time, efn:murasama_sheath_timer, efn:murasama_zansetsu_slash_release, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:murasama_sheath, efn:murasama_zansetsu_end_time, efn:jump_key, efn:murasama_input_mode_switch_pressed, efn:press_summon_sword, efn:murasama_last_triggered_sector, efn:demon_key, efn:key4_press_timer, efn:force_release, invincible:parry_timer, invincible:dodge_success_timer, efn:sprint_sheath_timer, efn:murasama_opposite_triggered, efn:murasama_zansetsu_start_time] for efn:murasama
+[138月2026 18:52:26.645] [main/INFO] [epicfight/]: Data keys [efn:murasama_pair_flag, efn:forward_backward_success, efn:forward_backward_timer, efn:manual_unsheath, efn:jump_key_pressed_last_tick, efn:murasama_zansetsu_active, efn:forward_pressed_last_tick, efn:is_double_tap_sprint, efn:murasama_key_right_down, efn:murasama_zansetsu_input_mode, efn:murasama_zandatsu_start_time, efn:up_key_pressed_last_tick, efn:forward_backward_end_tick, efn:murasama_sheath_timer, efn:murasama_zansetsu_slash_release, efn:murasama_key_left_down, efn:murasama_zansetsu_attack_counter, efn:jump_count, efn:was_double_tap_sprint, efn:backward_pressed_last_tick, efn:forward_backward_remaining_ticks, efn:murasama_zandatsu_end_time, efn:murasama_sheath, efn:forward_backward_window_active, efn:murasama_zansetsu_timer, efn:murasama_zansetsu_end_time, efn:murasama_zandatsu_available, efn:murasama_input_mode_switch_pressed, efn:murasama_last_triggered_sector, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:double_tap_timer, efn:sprint_sheath_timer, efn:murasama_opposite_triggered, efn:murasama_zansetsu_start_time, efn:murasama_forward_dodge] for efn:murasama_passive
+[138月2026 18:52:26.645] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:meenlance
+[138月2026 18:52:26.645] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:kusabimaru
+[138月2026 18:52:26.645] [main/INFO] [epicfight/]: Data keys [invincible:up, efn:manual_unsheath, efn:pressing_key1, invincible:left, efn:murasama_zansetsu_active, efn:angel_key, invincible:right, efn:murasama_zansetsu_input_mode, efn:charge_stage, efn:press_innate, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:murasama_key_left_down, efn:charge_message, efn:pressing_key3, efn:murasama_zansetsu_attack_counter, efn:murasama_zandatsu_end_time, efn:key2_press_timer, efn:murasama_zansetsu_timer, efn:pressing_key2, efn:murasama_zandatsu_available, efn:cooldown, efn:murasama_air_borne, efn:was_long_pressed, efn:sneak_key, efn:press_key4, efn:key3_press_timer, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:sprint_key, efn:up_key, invincible:down, efn:cooldown_2, efn:pressing_innate, efn:murasama_forward_dodge, efn:murasama_pair_flag, efn:press_key1, efn:guard_key, efn:is_charging, efn:energy_check, efn:down_key, efn:murasama_key_right_down, efn:full_charge_message, efn:murasama_zandatsu_start_time, efn:murasama_sheath_timer, efn:murasama_zansetsu_slash_release, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:murasama_sheath, efn:murasama_zansetsu_end_time, efn:jump_key, efn:murasama_input_mode_switch_pressed, efn:press_summon_sword, efn:murasama_last_triggered_sector, efn:demon_key, efn:key4_press_timer, efn:force_release, invincible:parry_timer, invincible:dodge_success_timer, efn:sprint_sheath_timer, efn:murasama_opposite_triggered, efn:murasama_zansetsu_start_time] for efn:hf_blade
+[138月2026 18:52:26.645] [main/INFO] [epicfight/]: Data keys [efn:murasama_pair_flag, efn:forward_backward_success, efn:forward_backward_timer, efn:manual_unsheath, efn:jump_key_pressed_last_tick, efn:murasama_zansetsu_active, efn:forward_pressed_last_tick, efn:is_double_tap_sprint, efn:murasama_key_right_down, efn:murasama_zansetsu_input_mode, efn:murasama_zandatsu_start_time, efn:up_key_pressed_last_tick, efn:forward_backward_end_tick, efn:murasama_sheath_timer, efn:murasama_zansetsu_slash_release, efn:murasama_key_left_down, efn:murasama_zansetsu_attack_counter, efn:jump_count, efn:was_double_tap_sprint, efn:backward_pressed_last_tick, efn:forward_backward_remaining_ticks, efn:murasama_zandatsu_end_time, efn:murasama_sheath, efn:forward_backward_window_active, efn:murasama_zansetsu_timer, efn:murasama_zansetsu_end_time, efn:murasama_zandatsu_available, efn:murasama_input_mode_switch_pressed, efn:murasama_last_triggered_sector, efn:murasama_left_mouse_pressed, efn:murasama_zansetsu_sector, efn:double_tap_timer, efn:sprint_sheath_timer, efn:murasama_opposite_triggered, efn:murasama_zansetsu_start_time, efn:murasama_forward_dodge] for efn:hf_blade_passive
+[138月2026 18:52:26.645] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:exsiliumgladius
+[138月2026 18:52:26.645] [main/INFO] [epicfight/]: Data keys [invincible:down, invincible:parry_timer, invincible:up, invincible:dodge_success_timer, invincible:left, invincible:right, invincible:cooldown] for efn:examplecombo
+[138月2026 18:52:26.646] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:crescentmoon
+[138月2026 18:52:26.646] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:broadblade
+[138月2026 18:52:26.646] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:bloodlust
+[138月2026 18:52:26.646] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:beastclaw
+[138月2026 18:52:26.646] [main/INFO] [epicfight/]: Data keys [efn:press_key1, efn:guard_key, invincible:up, efn:pressing_key1, efn:is_charging, efn:energy_check, invincible:left, efn:angel_key, invincible:right, efn:down_key, efn:charge_stage, efn:press_innate, efn:full_charge_message, efn:is_pressing, efn:charge_ticks, efn:arts_key_pressed, efn:charge_power, efn:cooldown_1, efn:combo_counter, efn:press_key2, efn:innate_press_timer, efn:charge_message, efn:pressing_key3, efn:pressing_key4, efn:key1_press_timer, invincible:cooldown, efn:arts_key, efn:press_key3, efn:key2_press_timer, efn:pressing_key2, efn:cooldown, efn:was_long_pressed, efn:jump_key, efn:sneak_key, efn:press_key4, efn:press_summon_sword, efn:demon_key, efn:key3_press_timer, efn:key4_press_timer, efn:sprint_key, efn:up_key, efn:force_release, invincible:down, invincible:parry_timer, invincible:dodge_success_timer, efn:cooldown_2, efn:pressing_innate] for efn:aetherialdusk
+[138月2026 18:52:26.646] [main/INFO] [epicfight/]: Data keys [annoyingvillagers:is_trident_ranged_mode, annoyingvillagers:trident_amount] for annoyingvillagers:trident_festival
+[138月2026 18:52:26.721] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/E:/program/JAVA/touhou%20little%20maid%20-%20unknow%20sky%20area/prod_server/libraries/net/minecraft/server/1.20.1-20230612.114412/server-1.20.1-20230612.114412-srg.jar%23129!/assets/.mcassetsroot' uses unexpected schema
+[138月2026 18:52:26.721] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/E:/program/JAVA/touhou%20little%20maid%20-%20unknow%20sky%20area/prod_server/libraries/net/minecraft/server/1.20.1-20230612.114412/server-1.20.1-20230612.114412-srg.jar%23129!/data/.mcassetsroot' uses unexpected schema
+[138月2026 18:52:28.305] [Worker-Main-12/ERROR] [simplebedrockmodel/]: Not found model file: ywzj_vehicle:models/bedrock/entity/grenade_40mm.json
+[138月2026 18:52:28.306] [Worker-Main-12/ERROR] [simplebedrockmodel/]: Not found model file: ywzj_vehicle:models/bedrock/entity/aerial_bomb.json
+[138月2026 18:52:28.307] [Worker-Main-12/ERROR] [simplebedrockmodel/]: Not found model file: ywzj_vehicle:models/bedrock/block/machine_max_block.json
+[138月2026 18:52:28.309] [Worker-Main-12/ERROR] [simplebedrockmodel/]: Not found model file: ywzj_vehicle:models/bedrock/entity/missile_akd10.json
+[138月2026 18:52:28.309] [Worker-Main-12/ERROR] [simplebedrockmodel/]: Not found model file: ywzj_vehicle:models/bedrock/entity/basic_bullet.json
+[138月2026 18:52:28.310] [Worker-Main-12/ERROR] [simplebedrockmodel/]: Not found model file: ywzj_vehicle:models/bedrock/entity/rocket_57mm.json
+[138月2026 18:52:29.185] [Worker-Main-1/ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element loot_tables:touhou_little_maid:grant_book_on_first_join
+com.google.gson.JsonSyntaxException: Expected name to be an item, was unknown string 'patchouli:guide_book'
+	at net.minecraft.util.GsonHelper.m_13866_(GsonHelper.java:145) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at java.util.Optional.orElseThrow(Optional.java:403) ~[?:?]
+	at net.minecraft.util.GsonHelper.m_13874_(GsonHelper.java:145) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.util.GsonHelper.m_13909_(GsonHelper.java:153) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.entries.LootItem$Serializer.m_7267_(LootItem.java:55) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.entries.LootItem$Serializer.m_7267_(LootItem.java:40) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer$Serializer.m_5921_(LootPoolSingletonContainer.java:151) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer$Serializer.m_5921_(LootPoolSingletonContainer.java:129) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer$Serializer.m_7561_(LootPoolEntryContainer.java:86) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer$Serializer.m_7561_(LootPoolEntryContainer.java:74) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.GsonAdapterFactory$JsonAdapter.deserialize(GsonAdapterFactory.java:102) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at com.google.gson.internal.bind.TreeTypeAdapter.read(TreeTypeAdapter.java:76) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.internal.bind.TypeAdapterRuntimeTypeWrapper.read(TypeAdapterRuntimeTypeWrapper.java:40) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.internal.bind.ArrayTypeAdapter.read(ArrayTypeAdapter.java:72) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1214) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1319) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1290) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.internal.bind.TreeTypeAdapter$GsonContextImpl.deserialize(TreeTypeAdapter.java:179) ~[gson-2.10.jar%2372!/:?]
+	at net.minecraft.util.GsonHelper.m_13808_(GsonHelper.java:463) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.util.GsonHelper.m_13836_(GsonHelper.java:471) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.LootPool$Serializer.deserialize(LootPool.java:192) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.LootPool$Serializer.deserialize(LootPool.java:189) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at com.google.gson.internal.bind.TreeTypeAdapter.read(TreeTypeAdapter.java:76) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.internal.bind.TypeAdapterRuntimeTypeWrapper.read(TypeAdapterRuntimeTypeWrapper.java:40) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.internal.bind.ArrayTypeAdapter.read(ArrayTypeAdapter.java:72) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1214) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1319) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1290) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.internal.bind.TreeTypeAdapter$GsonContextImpl.deserialize(TreeTypeAdapter.java:179) ~[gson-2.10.jar%2372!/:?]
+	at net.minecraft.util.GsonHelper.m_13808_(GsonHelper.java:463) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.util.GsonHelper.m_13845_(GsonHelper.java:481) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.LootTable$Serializer.deserialize(LootTable.java:294) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.LootTable$Serializer.deserialize(LootTable.java:291) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at com.google.gson.internal.bind.TreeTypeAdapter.read(TreeTypeAdapter.java:76) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1214) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1319) ~[gson-2.10.jar%2372!/:?]
+	at com.google.gson.Gson.fromJson(Gson.java:1261) ~[gson-2.10.jar%2372!/:?]
+	at net.minecraftforge.common.ForgeHooks.loadLootTable(ForgeHooks.java:872) ~[forge-1.20.1-47.4.13-universal.jar%23134!/:?]
+	at net.minecraftforge.common.ForgeHooks.lambda$getLootTableDeserializer$3(ForgeHooks.java:849) ~[forge-1.20.1-47.4.13-universal.jar%23134!/:?]
+	at net.minecraft.world.level.storage.loot.LootDataType.deserialize(LootDataType.java:45) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.storage.loot.LootDataManager.lambda$scheduleElementParse$4(LootDataManager.java:56) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at java.util.HashMap.forEach(HashMap.java:1421) ~[?:?]
+	at net.minecraft.world.level.storage.loot.LootDataManager.m_278660_(LootDataManager.java:55) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at java.util.concurrent.CompletableFuture$AsyncRun.run(CompletableFuture.java:1804) ~[?:?]
+	at java.util.concurrent.CompletableFuture$AsyncRun.exec(CompletableFuture.java:1796) ~[?:?]
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:373) ~[?:?]
+	at java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1182) ~[?:?]
+	at java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655) ~[?:?]
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622) ~[?:?]
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165) ~[?:?]
+[138月2026 18:52:29.495] [main/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Skipping loading recipe touhou_little_maid:memorizable_gensokyo as it's serializer returned null
+[138月2026 18:52:29.525] [main/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Loaded 9 recipes
+[138月2026 18:52:29.657] [main/INFO] [net.minecraft.advancements.AdvancementList/]: Loaded 1353 advancements
+[138月2026 18:52:44.448] [main/WARN] [epicfight/]: Skill efn:example doesn't exist in the registry.
+[138月2026 18:52:44.533] [main/WARN] [epicfight/]: Item Capability Exception: No item named annoyingvillagers:air
+[138月2026 18:52:44.604] [main/WARN] [epicfight/]: Can't find a particle type epicfight:entity.hit.blunt in invincible:custom_combo_demo
+[138月2026 18:52:44.619] [main/WARN] [epicfight/]: Item Capability Exception: No item named efn:scythe
+[138月2026 18:52:44.637] [main/WARN] [epicfight/]: Item Capability Exception: No item named annoyingvillagers:diamond_durandal
+[138月2026 18:52:46.076] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer/]: Starting minecraft server version 1.20.1
+[138月2026 18:52:46.077] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer/]: Loading properties
+[138月2026 18:52:46.077] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer/]: Default game type: SURVIVAL
+[138月2026 18:52:46.077] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Generating keypair
+[138月2026 18:52:46.174] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer/]: Starting Minecraft server on *:25565
+[138月2026 18:52:46.210] [Server thread/INFO] [net.minecraft.server.network.ServerConnectionListener/]: Using default channel type
+[138月2026 18:52:46.967] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer/]: Preparing level "maid_pilot_world"
+[138月2026 18:52:47.404] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Preparing start region for dimension minecraft:overworld
+[138月2026 18:52:50.335] [Worker-Main-7/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[138月2026 18:52:50.336] [Worker-Main-7/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[138月2026 18:52:50.337] [Worker-Main-8/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[138月2026 18:52:50.338] [Worker-Main-7/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[138月2026 18:52:50.338] [Worker-Main-7/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[138月2026 18:52:50.339] [Worker-Main-7/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[138月2026 18:52:50.405] [Worker-Main-12/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 0%
+[138月2026 18:52:50.863] [Server thread/INFO] [eftlm_stylish/]: [DIAG] WOM behaviors registered: 19 items, 2 style-mapped items
+[138月2026 18:52:50.900] [Server thread/INFO] [eftlm_stylish/]: [DIAG] EFN behaviors registered: 51 items
+[138月2026 18:52:50.900] [Server thread/INFO] [eftlm_stylish/]: [DIAG] CombatBehaviorsEvent registered: 8 weapon categories + WOM behaviors (wom=true)
+[138月2026 18:52:50.905] [Worker-Main-11/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 4%
+[138月2026 18:52:51.337] [Server thread/INFO] [eftlm_stylish/]: [DIAG] WOM behaviors registered: 19 items, 2 style-mapped items
+[138月2026 18:52:51.338] [Server thread/INFO] [eftlm_stylish/]: [DIAG] EFN behaviors registered: 51 items
+[138月2026 18:52:51.338] [Server thread/INFO] [eftlm_stylish/]: [DIAG] CombatBehaviorsEvent registered: 8 weapon categories + WOM behaviors (wom=true)
+[138月2026 18:52:51.404] [Worker-Main-5/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 64%
+[138月2026 18:52:51.791] [Server thread/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Time elapsed: 4388 ms
+[138月2026 18:52:51.791] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer/]: Done (4.942s)! For help, type "help"
+[138月2026 18:52:51.792] [Server thread/INFO] [net.minecraft.server.dedicated.DedicatedServer/]: Starting remote control listener
+[138月2026 18:52:51.797] [Server thread/INFO] [net.minecraft.server.rcon.thread.GenericThread/]: Thread RCON Listener started
+[138月2026 18:52:51.798] [Server thread/INFO] [net.minecraft.server.rcon.thread.RconThread/]: RCON running on 0.0.0.0:25575
+[138月2026 18:52:51.852] [Server thread/INFO] [net.minecraftforge.server.permission.PermissionAPI/]: Successfully initialized permission handler forge:default_handler
+[138月2026 18:52:51.856] [Server thread/INFO] [eftlm_stylish/]: [SKILL] test mode OFF
+[138月2026 18:52:51.860] [Server thread/INFO] [eftlm_stylish/]: [Arena] cleared 0 leftover maids, 0 leftover mobs
+[138月2026 18:52:51.887] [Server thread/INFO] [eftlm_stylish/]: [Arena] platform built: 21x21 stone at y=-60, world border 21x21 (25ms)
+[138月2026 18:52:51.887] [Server thread/INFO] [eftlm_stylish/]: [Arena] enabled: center=(8,-59,8) entities=annoyingvillagers:herobrine_warden,annoyingvillagers:armored_herobrine,annoyingvillagers:glaive_herobrine,annoyingvillagers:herobrine_7,annoyingvillagers:swordsman_herobrine,annoyingvillagers:sledgehammer_herobrine,annoyingvillagers:null count=1 interval=400
+[138月2026 18:52:52.045] [Server thread/INFO] [eftlm_stylish/]: [DIAG] Maid join world: name=model.touhou_little_maid.hakurei_reimu.name patch=MaidPatch
+[138月2026 18:52:52.053] [Server thread/INFO] [eftlm_stylish/]: [DIAG] Maid join world: name=model.touhou_little_maid.hakurei_reimu.name patch=MaidPatch
+[138月2026 18:52:52.118] [Server thread/INFO] [eftlm_stylish/]: [RL] config loaded: enable_all_maids=true epsilon=0.08 arbitration=hybrid model_file=rl_model.bin
+[138月2026 18:52:52.126] [Server thread/INFO] [eftlm_stylish/]: [RL] model loaded: sizes=[18, 64, 64, 27] dims=18->27
+[138月2026 18:52:52.149] [Server thread/ERROR] [net.minecraftforge.eventbus.EventBus/EVENTBUS]: Exception caught during firing event: Operand stack overflow
+Exception Details:
+  Location:
+    com/hm/efn/util/EffekUnits.VFXENABLE()Z @0: iconst_0
+  Reason:
+    Exceeded max stack size.
+  Current Frame:
+    bci: @0
+    flags: { }
+    locals: { }
+    stack: { }
+  Bytecode:
+    0000000: 03ac                                   
+
+	Index: 14
+	Listeners:
+		0: HIGHEST
+		1: ASM: class com.hm.efn.mobeffects.BattleContinuationEffect onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		2: ASM: class com.hm.efn.mobeffects.InvincibilityEffect onPotionEffect(Lnet/minecraftforge/event/entity/living/LivingEvent;)V
+		3: NORMAL
+		4: ASM: class yesman.epicfight.events.EntityEvents effectExpiryEvent(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		5: ASM: class com.hm.efn.mobeffects.Yamato onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		6: ASM: class com.hm.efn.mobeffects.VulnerabilityEffect onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		7: ASM: class com.hm.efn.mobeffects.StaminaEnhance onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		8: ASM: class com.hm.efn.mobeffects.MeenLance onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		9: ASM: class com.hm.efn.mobeffects.KnockBackResistanceEffect onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		10: ASM: class com.hm.efn.mobeffects.InvincibilityEffect onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		11: ASM: class com.hm.efn.mobeffects.GradualHeal$EffectEvents onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		12: ASM: class com.hm.efn.mobeffects.ClawEnhance onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		13: ASM: class com.hm.efn.mobeffects.BloodlustEnhance onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+		14: ASM: class com.hm.efn.client.events.AddTriggerEvent onEffectExpired(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V
+java.lang.VerifyError: Operand stack overflow
+Exception Details:
+  Location:
+    com/hm/efn/util/EffekUnits.VFXENABLE()Z @0: iconst_0
+  Reason:
+    Exceeded max stack size.
+  Current Frame:
+    bci: @0
+    flags: { }
+    locals: { }
+    stack: { }
+  Bytecode:
+    0000000: 03ac                                   
+
+	at TRANSFORMER/efn@3.4.0/com.hm.efn.client.events.AddTriggerEvent.onEffectExpired(AddTriggerEvent.java:88)
+	at TRANSFORMER/efn@3.4.0/com.hm.efn.client.events.__AddTriggerEvent_onEffectExpired_Expired.invoke(.dynamic)
+	at MC-BOOTSTRAP/net.minecraftforge.eventbus/net.minecraftforge.eventbus.ASMEventHandler.invoke(ASMEventHandler.java:73)
+	at MC-BOOTSTRAP/net.minecraftforge.eventbus/net.minecraftforge.eventbus.EventBus.post(EventBus.java:315)
+	at MC-BOOTSTRAP/net.minecraftforge.eventbus/net.minecraftforge.eventbus.EventBus.post(EventBus.java:296)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.world.entity.LivingEntity.m_21217_(LivingEntity.java:761)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.world.entity.LivingEntity.m_6075_(LivingEntity.java:432)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.world.entity.Mob.m_6075_(Mob.java:271)
+	at TRANSFORMER/touhou_little_maid@1.5.3-forge+mc1.20.1/com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid.m_6075_(EntityMaid.java:564)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.world.entity.Entity.m_8119_(Entity.java:422)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.world.entity.LivingEntity.m_8119_(LivingEntity.java:2259)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.world.entity.Mob.m_8119_(Mob.java:337)
+	at TRANSFORMER/touhou_little_maid@1.5.3-forge+mc1.20.1/com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid.m_8119_(EntityMaid.java:533)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.level.ServerLevel.m_8647_(ServerLevel.java:694)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.world.level.Level.m_46653_(Level.java:479)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.level.ServerLevel.m_184063_(ServerLevel.java:343)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.world.level.entity.EntityTickList.m_156910_(EntityTickList.java:54)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.level.ServerLevel.m_8793_(ServerLevel.java:323)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.MinecraftServer.m_5703_(MinecraftServer.java:893)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.dedicated.DedicatedServer.m_5703_(DedicatedServer.java:283)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.MinecraftServer.m_5705_(MinecraftServer.java:814)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.MinecraftServer.m_130011_(MinecraftServer.java:661)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.MinecraftServer.m_206580_(MinecraftServer.java:251)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+[138月2026 18:52:52.452] [Server thread/ERROR] [net.minecraft.server.MinecraftServer/]: Encountered an unexpected exception
+net.minecraft.ReportedException: Ticking entity
+	at net.minecraft.server.MinecraftServer.m_5703_(MinecraftServer.java:897) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.server.dedicated.DedicatedServer.m_5703_(DedicatedServer.java:283) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.server.MinecraftServer.m_5705_(MinecraftServer.java:814) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.server.MinecraftServer.m_130011_(MinecraftServer.java:661) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.server.MinecraftServer.m_206580_(MinecraftServer.java:251) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at java.lang.Thread.run(Thread.java:842) ~[?:?]
+Caused by: java.lang.VerifyError: Operand stack overflow
+Exception Details:
+  Location:
+    com/hm/efn/util/EffekUnits.VFXENABLE()Z @0: iconst_0
+  Reason:
+    Exceeded max stack size.
+  Current Frame:
+    bci: @0
+    flags: { }
+    locals: { }
+    stack: { }
+  Bytecode:
+    0000000: 03ac                                   
+
+	at com.hm.efn.client.events.AddTriggerEvent.onEffectExpired(AddTriggerEvent.java:88) ~[%5B史诗战斗：夜幕%5D%20EpicFight%20Nightfall-3.4.0.jar%23116!/:3.4.0]
+	at com.hm.efn.client.events.__AddTriggerEvent_onEffectExpired_Expired.invoke(.dynamic) ~[%5B史诗战斗：夜幕%5D%20EpicFight%20Nightfall-3.4.0.jar%23116!/:3.4.0]
+	at net.minecraftforge.eventbus.ASMEventHandler.invoke(ASMEventHandler.java:73) ~[eventbus-6.0.5.jar%2352!/:?]
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:315) ~[eventbus-6.0.5.jar%2352!/:?]
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:296) ~[eventbus-6.0.5.jar%2352!/:?]
+	at net.minecraft.world.entity.LivingEntity.m_21217_(LivingEntity.java:761) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.entity.LivingEntity.m_6075_(LivingEntity.java:432) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.entity.Mob.m_6075_(Mob.java:271) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid.m_6075_(EntityMaid.java:564) ~[%5B车万女仆%5D%20touhoulittlemaid-1.5.3-forge+mc1.20.1.jar%23121!/:1.5.3-forge+mc1.20.1]
+	at net.minecraft.world.entity.Entity.m_8119_(Entity.java:422) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.entity.LivingEntity.m_8119_(LivingEntity.java:2259) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.entity.Mob.m_8119_(Mob.java:337) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid.m_8119_(EntityMaid.java:533) ~[%5B车万女仆%5D%20touhoulittlemaid-1.5.3-forge+mc1.20.1.jar%23121!/:1.5.3-forge+mc1.20.1]
+	at net.minecraft.server.level.ServerLevel.m_8647_(ServerLevel.java:694) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.Level.m_46653_(Level.java:479) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.server.level.ServerLevel.m_184063_(ServerLevel.java:343) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.world.level.entity.EntityTickList.m_156910_(EntityTickList.java:54) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.server.level.ServerLevel.m_8793_(ServerLevel.java:323) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	at net.minecraft.server.MinecraftServer.m_5703_(MinecraftServer.java:893) ~[server-1.20.1-20230612.114412-srg.jar%23129!/:?]
+	... 5 more
+[138月2026 18:52:52.502] [Server thread/FATAL] [net.minecraftforge.common.ForgeMod/]: Preparing crash report with UUID 299cadb4-78db-4f29-a164-9321e45eaa03
+[138月2026 18:52:52.503] [Server thread/ERROR] [net.minecraft.server.MinecraftServer/]: This crash report has been saved to: E:\program\JAVA\touhou little maid - unknow sky area\prod_server\.\crash-reports\crash-2026-08-13_18.52.52-server.txt
+[138月2026 18:52:52.504] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
+[138月2026 18:52:52.506] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
+[138月2026 18:52:52.506] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
+[138月2026 18:52:54.290] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[maid_pilot_world]'/minecraft:overworld

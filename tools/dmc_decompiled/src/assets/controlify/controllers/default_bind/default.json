@@ -1,0 +1,10 @@
+{
+  "defaults": {
+    "invincible_dmc:primary_action": {
+      "axis": "controlify:axis/right_trigger"
+    },
+    "invincible_dmc:secondary_action": {
+      "axis": "controlify:axis/left_trigger"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "MAINHAND": [
+    "diamond_axe",
+    "diamond_sword",
+    "golden_axe",
+    "golden_sword",
+    "iron_axe",
+    "iron_sword",
+    "stone_axe",
+    "stone_sword"
+  ],
+  "OFFHAND": [
+    "torch",
+    "lantern"
+  ],
+  "FEET": [
+    "chainmail_boots",
+    "diamond_boots",
+    "golden_boots",
+    "iron_boots",
+    "leather_boots"
+  ],
+  "LEGS": [
+    "chainmail_leggings",
+    "diamond_leggings",
+    "golden_leggings",
+    "iron_leggings",
+    "leather_leggings"
+  ],
+  "CHEST": [
+    "chainmail_chestplate",
+    "diamond_chestplate",
+    "golden_chestplate",
+    "iron_chestplate",
+    "leather_chestplate"
+  ],
+  "HEAD": [
+    "chainmail_helmet",
+    "diamond_helmet",
+    "golden_helmet",
+    "iron_helmet",
+    "leather_helmet",
+    "turtle_helmet"
+  ]
+}

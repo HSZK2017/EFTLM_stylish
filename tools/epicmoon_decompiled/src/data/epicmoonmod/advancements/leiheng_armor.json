@@ -1,0 +1,59 @@
+{
+  "display": {
+    "icon": {
+      "item": "epicmoonmod:leiheng_hat"
+    },
+    "title": {
+      "translate": "advancement.epicmoon.leiheng_armor.title"
+    },
+    "description": {
+      "translate": "advancement.epicmoon.leiheng_armor.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "epicmoonmod:epicmoon",
+  "criteria": {
+    "item1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["epicmoonmod:leiheng_hat"]
+          }
+        ]
+      }
+    },
+    "item2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["epicmoonmod:leiheng_suit"]
+          }
+        ]
+      }
+    },
+    "item3": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["epicmoonmod:leiheng_pants"]
+          }
+        ]
+      }
+    },
+    "item4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["epicmoonmod:leiheng_shoes"]
+          }
+        ]
+      }
+    }
+  }
+}

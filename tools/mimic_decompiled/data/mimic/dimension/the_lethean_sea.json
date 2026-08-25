@@ -1,0 +1,11 @@
+{
+  "type": "mimic:the_lethean_sea_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "mimic:the_lethean_sea"
+    },
+    "settings": "mimic:air"
+  }
+}

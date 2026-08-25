@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Specification-Title: epicmoonmod
+Specification-Vendor: Yujin
+Specification-Version: 1
+Implementation-Title: EpicMoon
+Implementation-Version: 1.2.1
+Implementation-Vendor: Yujin
+Implementation-Timestamp: 2026-07-19T22:31:48+0900
+MixinConfigs: mixins.epicmoonmod.json
+

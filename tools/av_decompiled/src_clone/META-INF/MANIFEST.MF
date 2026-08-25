@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Specification-Title: annoyingvillagers
+Specification-Vendor: pla_is_me
+Specification-Version: 1
+Implementation-Title: AnnoyingVillagers
+Implementation-Version: 1.4.7
+Implementation-Vendor: pla_is_me
+Implementation-Timestamp: 2026-07-01T20:00:53+0700
+MixinConfigs: annoyingvillagers.mixins.json
+

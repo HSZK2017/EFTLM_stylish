@@ -1,0 +1,70 @@
+﻿To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.9/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Neither the 'eclipse' nor the 'idea' plugins were found, but IDE resource copy has been enabled.
+
+> Task :compileJava
+.\gradlew.bat : E:\program\JAVA\EFTLM-example\src\main\java\org\eftlm\stylish\arena\AutoArena.java:86: 閿欒: 瀵逛簬getEntit
+ies(Class<EntityMaid>,Predicate<EntityMaid>), 鎵句笉鍒板悎閫傜殑鏂规硶
+所在位置 行:1 字符: 55
++ ... atest\jdk-21"; .\gradlew.bat compileJava --console=plain 2>&1 | Out-F ...
++                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (E:\program\JAVA...), 鎵句笉鍒板悎閫傜殑鏂规硶:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+        List<EntityMaid> leftovers = level.getEntities(EntityMaid.class, wild);
+                                          ^
+    鏂规硶 EntityGetter.getEntities(Entity,AABB)涓嶉€傜敤
+      (鍙傛暟涓嶅尮閰? Class<EntityMaid>鏃犳硶杞崲涓篍ntity)
+    鏂规硶 Level.<T#1>getEntities(EntityTypeTest<Entity,T#1>,AABB,Predicate<? super T#1>)涓嶉€傜敤
+      (鏃犳硶鎺ㄦ柇绫诲瀷鍙橀噺 T#1
+        (瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?)
+    鏂规硶 Level.<T#2>getEntities(EntityTypeTest<Entity,T#2>,AABB,Predicate<? super T#2>,List<? super T#2>)涓嶉€傜敤
+      (鏃犳硶鎺ㄦ柇绫诲瀷鍙橀噺 T#2
+        (瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?)
+    鏂规硶 Level.<T#3>getEntities(EntityTypeTest<Entity,T#3>,AABB,Predicate<? super T#3>,List<? super T#3>,int)涓嶉€傜敤
+      (鏃犳硶鎺ㄦ柇绫诲瀷鍙橀噺 T#3
+        (瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?)
+    鏂规硶 ServerLevel.<T#4>getEntities(EntityTypeTest<Entity,T#4>,Predicate<? super T#4>)涓嶉€傜敤
+      (鏃犳硶鎺ㄦ柇绫诲瀷鍙橀噺 T#4
+        (鍙傛暟涓嶅尮閰? Class<EntityMaid>鏃犳硶杞崲涓篍ntityTypeTest<Entity,T#4>))
+    鏂规硶 ServerLevel.<T#5>getEntities(EntityTypeTest<Entity,T#5>,Predicate<? super T#5>,List<? super T#5>)涓嶉€傜敤
+      (鏃犳硶鎺ㄦ柇绫诲瀷鍙橀噺 T#5
+        (瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?)
+    鏂规硶 ServerLevel.<T#6>getEntities(EntityTypeTest<Entity,T#6>,Predicate<? super T#6>,List<? super T#6>,int)涓嶉€傜敤
+      (鏃犳硶鎺ㄦ柇绫诲瀷鍙橀噺 T#6
+        (瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?)
+  鍏朵腑, T#1,T#2,T#3,T#4,T#5,T#6鏄被鍨嬪彉閲?
+    T#1鎵╁睍宸插湪鏂规硶 <T#1>getEntities(EntityTypeTest<Entity,T#1>,AABB,Predicate<? super T#1>)涓０鏄庣殑Entity
+    T#2鎵╁睍宸插湪鏂规硶 <T#2>getEntities(EntityTypeTest<Entity,T#2>,AABB,Predicate<? super T#2>,List<? super T#2>)涓０鏄庣殑Entity
+    T#3鎵╁睍宸插湪鏂规硶 <T#3>getEntities(EntityTypeTest<Entity,T#3>,AABB,Predicate<? super T#3>,List<? super T#3>,int)涓０鏄庣殑En
+tity
+    T#4鎵╁睍宸插湪鏂规硶 <T#4>getEntities(EntityTypeTest<Entity,T#4>,Predicate<? super T#4>)涓０鏄庣殑Entity
+    T#5鎵╁睍宸插湪鏂规硶 <T#5>getEntities(EntityTypeTest<Entity,T#5>,Predicate<? super T#5>,List<? super T#5>)涓０鏄庣殑Entity
+    T#6鎵╁睍宸插湪鏂规硶 <T#6>getEntities(EntityTypeTest<Entity,T#6>,Predicate<? super T#6>,List<? super T#6>,int)涓０鏄庣殑Entity
+娉? E:\program\JAVA\EFTLM-example\src\main\java\org\eftlm\stylish\arena\AutoArena.java浣跨敤鎴栬鐩栦簡宸茶繃鏃剁殑 API銆?
+娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:deprecation 閲嶆柊缂栬瘧銆?
+娉? 鏌愪簺娑堟伅宸茬粡杩囩畝鍖? 璇蜂娇鐢?-Xdiags:verbose 閲嶆柊缂栬瘧浠ヨ幏寰楀畬鏁磋緭鍑?
+1 涓敊璇?
+
+> Task :compileJava FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 20s
+1 actionable task: 1 executed

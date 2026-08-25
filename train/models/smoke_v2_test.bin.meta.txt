@@ -1,0 +1,12 @@
+file=smoke_v2_test.bin
+time=2026-08-25 17:19:08
+state_dim=18
+action_dim=64
+samples=10025
+layout=
+data=train\smoke_data
+zombie_dir=
+init=
+eval_acc=0.674
+eval_nll=0.9903
+elapsed_sec=5.1

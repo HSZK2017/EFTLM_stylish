@@ -1,0 +1,216 @@
+{
+  "mappings": {
+    "com/pla/annoyingvillagers/mixin/client/ArrowLayerMixin": {
+      "renderStuckItem": "Lnet/minecraft/client/renderer/entity/layers/ArrowLayer;m_5558_(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/Entity;FFFF)V"
+    },
+    "com/pla/annoyingvillagers/mixin/AbstractArrowBreakMixin": {
+      "tick": "Lnet/minecraft/world/entity/projectile/AbstractArrow;m_8119_()V",
+      "Lnet/minecraft/world/level/Level;clip(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;": "Lnet/minecraft/world/level/Level;m_45547_(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;"
+    },
+    "com/pla/annoyingvillagers/mixin/ExplosionMixin": {
+      "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V": "Lnet/minecraft/world/level/Level;m_7785_(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V",
+      "Lnet/minecraft/world/level/Level;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z": "Lnet/minecraft/world/level/Level;m_46597_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z",
+      "Lnet/minecraft/world/entity/Entity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V": "Lnet/minecraft/world/entity/Entity;m_20256_(Lnet/minecraft/world/phys/Vec3;)V",
+      "explode": "Lnet/minecraft/world/level/Explosion;m_46061_()V",
+      "finalizeExplosion(Z)V": "Lnet/minecraft/world/level/Explosion;m_46075_(Z)V"
+    },
+    "com/pla/annoyingvillagers/mixin/ZombieMixin": {
+      "finalizeSpawn": "Lnet/minecraft/world/entity/monster/Zombie;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;",
+      "registerGoals": "Lnet/minecraft/world/entity/monster/Zombie;m_8099_()V"
+    },
+    "com/pla/annoyingvillagers/mixin/AbstractArrowMixin": {
+      "Lnet/minecraft/world/damagesource/DamageSources;arrow(Lnet/minecraft/world/entity/projectile/AbstractArrow;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;": "Lnet/minecraft/world/damagesource/DamageSources;m_269418_(Lnet/minecraft/world/entity/projectile/AbstractArrow;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+      "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V": "Lnet/minecraft/world/entity/projectile/AbstractArrow;m_5790_(Lnet/minecraft/world/phys/EntityHitResult;)V"
+    },
+    "com/pla/annoyingvillagers/mixin/VillagerMixin": {
+      "finalizeSpawn": "Lnet/minecraft/world/entity/npc/AbstractVillager;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
+    },
+    "com/pla/annoyingvillagers/mixin/FishingHookReturnMixin": {
+      "tick": "Lnet/minecraft/world/entity/projectile/FishingHook;m_8119_()V",
+      "recreateFromPacket": "Lnet/minecraft/world/entity/projectile/FishingHook;m_141965_(Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;)V",
+      "Lnet/minecraft/world/entity/projectile/FishingHook;getPlayerOwner()Lnet/minecraft/world/entity/player/Player;": "Lnet/minecraft/world/entity/projectile/FishingHook;m_37168_()Lnet/minecraft/world/entity/player/Player;",
+      "remove": "Lnet/minecraft/world/entity/projectile/FishingHook;m_142687_(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+      "Lnet/minecraft/world/entity/projectile/Projectile;tick()V": "Lnet/minecraft/world/entity/projectile/Projectile;m_8119_()V",
+      "canHitEntity": "Lnet/minecraft/world/entity/projectile/FishingHook;m_5603_(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    "com/pla/annoyingvillagers/mixin/BasicAttackMixin": {
+      "Lnet/minecraft/server/level/ServerPlayer;isPassenger()Z": "Lnet/minecraft/server/level/ServerPlayer;m_20159_()Z"
+    },
+    "com/pla/annoyingvillagers/mixin/client/ModelPartMixin": {
+      "translateAndRotate(Lcom/mojang/blaze3d/vertex/PoseStack;)V": "Lnet/minecraft/client/model/geom/ModelPart;m_104299_(Lcom/mojang/blaze3d/vertex/PoseStack;)V"
+    },
+    "com/pla/annoyingvillagers/mixin/MobMixin": {
+      "finalizeSpawn": "Lnet/minecraft/world/entity/Mob;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
+    },
+    "com/pla/annoyingvillagers/mixin/RenderBuffersMixin": {
+      "put": "Lnet/minecraft/client/renderer/RenderBuffers;m_110101_(Lit/unimi/dsi/fastutil/objects/Object2ObjectLinkedOpenHashMap;Lnet/minecraft/client/renderer/RenderType;)V"
+    },
+    "com/pla/annoyingvillagers/mixin/RaiderMixin": {
+      "registerGoals": "Lnet/minecraft/world/entity/raid/Raider;m_8099_()V"
+    },
+    "com/pla/annoyingvillagers/mixin/BoatMixin": {
+      "canAddPassenger": "Lnet/minecraft/world/entity/vehicle/Boat;m_7310_(Lnet/minecraft/world/entity/Entity;)Z"
+    },
+    "com/pla/annoyingvillagers/mixin/EnsureSafeFlyingVehicleMixin": {
+      "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;clientVehicleIsFloating:Z": "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;f_9738_:Z",
+      "handleMoveVehicle(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V": "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;m_5659_(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V"
+    },
+    "com/pla/annoyingvillagers/mixin/SkeletonMixin": {
+      "finalizeSpawn": "Lnet/minecraft/world/entity/monster/AbstractSkeleton;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;",
+      "registerGoals": "Lnet/minecraft/world/entity/monster/AbstractSkeleton;m_8099_()V"
+    },
+    "com/pla/annoyingvillagers/mixin/PlayerMixin": {
+      "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z": "Lnet/minecraft/world/entity/player/Player;m_6469_(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+      "Lnet/minecraft/world/damagesource/DamageSource;is(Lnet/minecraft/tags/TagKey;)Z": "Lnet/minecraft/world/damagesource/DamageSource;m_269533_(Lnet/minecraft/tags/TagKey;)Z"
+    },
+    "com/pla/annoyingvillagers/mixin/FishingHookAccessor": {
+      "setHookedEntity": "m_150157_(Lnet/minecraft/world/entity/Entity;)V"
+    },
+    "com/pla/annoyingvillagers/mixin/PlayerMobMixin": {
+      "isBaby": "Lse/gory_moon/player_mobs/entity/PlayerMobEntity;m_6162_()Z",
+      "setBaby": "Lse/gory_moon/player_mobs/entity/PlayerMobEntity;m_6863_(Z)V"
+    },
+    "com/pla/annoyingvillagers/mixin/ItemCooldownsMixin": {
+      "isOnCooldown": "Lnet/minecraft/world/item/ItemCooldowns;m_41519_(Lnet/minecraft/world/item/Item;)Z"
+    },
+    "com/pla/annoyingvillagers/mixin/client/FishingHookRendererMixin": {
+      "render(Lnet/minecraft/world/entity/projectile/FishingHook;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "Lnet/minecraft/client/renderer/entity/FishingHookRenderer;m_7392_(Lnet/minecraft/world/entity/projectile/FishingHook;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"
+    },
+    "com/pla/annoyingvillagers/mixin/client/WearableItemLayerMixin": {
+      "Lnet/minecraft/world/item/ItemStack;hasFoil()Z": "Lnet/minecraft/world/item/ItemStack;m_41790_()Z",
+      "Lnet/minecraft/client/renderer/RenderType;armorEntityGlint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110484_()Lnet/minecraft/client/renderer/RenderType;"
+    },
+    "com/pla/annoyingvillagers/mixin/client/HumanoidArmorLayerMixin": {
+      "renderArmorPiece(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;)V": "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;m_117118_(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;)V",
+      "Lnet/minecraft/client/renderer/RenderType;armorEntityGlint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110484_()Lnet/minecraft/client/renderer/RenderType;"
+    },
+    "com/pla/annoyingvillagers/mixin/IllagerMixin": {
+      "registerGoals": "Lnet/minecraft/world/entity/monster/AbstractIllager;m_8099_()V"
+    },
+    "com/pla/annoyingvillagers/mixin/client/ItemRendererMixin": {
+      "Lnet/minecraft/client/renderer/RenderType;entityGlintDirect()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110499_()Lnet/minecraft/client/renderer/RenderType;",
+      "Lnet/minecraft/client/renderer/RenderType;glintDirect()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110493_()Lnet/minecraft/client/renderer/RenderType;",
+      "Lnet/minecraft/client/renderer/RenderType;entityGlint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110496_()Lnet/minecraft/client/renderer/RenderType;",
+      "Lnet/minecraft/client/renderer/RenderType;glint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110490_()Lnet/minecraft/client/renderer/RenderType;",
+      "getArmorFoilBuffer": "Lnet/minecraft/client/renderer/entity/ItemRenderer;m_115184_(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/renderer/RenderType;ZZ)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+      "render": "Lnet/minecraft/client/renderer/entity/ItemRenderer;m_115143_(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/client/resources/model/BakedModel;)V",
+      "Lnet/minecraft/client/renderer/RenderType;armorEntityGlint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110484_()Lnet/minecraft/client/renderer/RenderType;",
+      "getFoilBufferDirect": "Lnet/minecraft/client/renderer/entity/ItemRenderer;m_115222_(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/renderer/RenderType;ZZ)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+      "getFoilBuffer": "Lnet/minecraft/client/renderer/entity/ItemRenderer;m_115211_(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/renderer/RenderType;ZZ)Lcom/mojang/blaze3d/vertex/VertexConsumer;"
+    },
+    "com/pla/annoyingvillagers/mixin/EnderHandMixin": {
+      "customServerAiStep": "Lreascer/wom/world/entity/mob/EnderHand;m_8024_()V"
+    },
+    "com/pla/annoyingvillagers/mixin/VindicatorMixin": {
+      "finalizeSpawn": "Lnet/minecraft/world/entity/monster/Vindicator;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
+    }
+  },
+  "data": {
+    "searge": {
+      "com/pla/annoyingvillagers/mixin/client/ArrowLayerMixin": {
+        "renderStuckItem": "Lnet/minecraft/client/renderer/entity/layers/ArrowLayer;m_5558_(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/Entity;FFFF)V"
+      },
+      "com/pla/annoyingvillagers/mixin/AbstractArrowBreakMixin": {
+        "tick": "Lnet/minecraft/world/entity/projectile/AbstractArrow;m_8119_()V",
+        "Lnet/minecraft/world/level/Level;clip(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;": "Lnet/minecraft/world/level/Level;m_45547_(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;"
+      },
+      "com/pla/annoyingvillagers/mixin/ExplosionMixin": {
+        "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V": "Lnet/minecraft/world/level/Level;m_7785_(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V",
+        "Lnet/minecraft/world/level/Level;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z": "Lnet/minecraft/world/level/Level;m_46597_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z",
+        "Lnet/minecraft/world/entity/Entity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V": "Lnet/minecraft/world/entity/Entity;m_20256_(Lnet/minecraft/world/phys/Vec3;)V",
+        "explode": "Lnet/minecraft/world/level/Explosion;m_46061_()V",
+        "finalizeExplosion(Z)V": "Lnet/minecraft/world/level/Explosion;m_46075_(Z)V"
+      },
+      "com/pla/annoyingvillagers/mixin/ZombieMixin": {
+        "finalizeSpawn": "Lnet/minecraft/world/entity/monster/Zombie;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;",
+        "registerGoals": "Lnet/minecraft/world/entity/monster/Zombie;m_8099_()V"
+      },
+      "com/pla/annoyingvillagers/mixin/AbstractArrowMixin": {
+        "Lnet/minecraft/world/damagesource/DamageSources;arrow(Lnet/minecraft/world/entity/projectile/AbstractArrow;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;": "Lnet/minecraft/world/damagesource/DamageSources;m_269418_(Lnet/minecraft/world/entity/projectile/AbstractArrow;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/damagesource/DamageSource;",
+        "onHitEntity(Lnet/minecraft/world/phys/EntityHitResult;)V": "Lnet/minecraft/world/entity/projectile/AbstractArrow;m_5790_(Lnet/minecraft/world/phys/EntityHitResult;)V"
+      },
+      "com/pla/annoyingvillagers/mixin/VillagerMixin": {
+        "finalizeSpawn": "Lnet/minecraft/world/entity/npc/AbstractVillager;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
+      },
+      "com/pla/annoyingvillagers/mixin/FishingHookReturnMixin": {
+        "tick": "Lnet/minecraft/world/entity/projectile/FishingHook;m_8119_()V",
+        "recreateFromPacket": "Lnet/minecraft/world/entity/projectile/FishingHook;m_141965_(Lnet/minecraft/network/protocol/game/ClientboundAddEntityPacket;)V",
+        "Lnet/minecraft/world/entity/projectile/FishingHook;getPlayerOwner()Lnet/minecraft/world/entity/player/Player;": "Lnet/minecraft/world/entity/projectile/FishingHook;m_37168_()Lnet/minecraft/world/entity/player/Player;",
+        "remove": "Lnet/minecraft/world/entity/projectile/FishingHook;m_142687_(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+        "Lnet/minecraft/world/entity/projectile/Projectile;tick()V": "Lnet/minecraft/world/entity/projectile/Projectile;m_8119_()V",
+        "canHitEntity": "Lnet/minecraft/world/entity/projectile/FishingHook;m_5603_(Lnet/minecraft/world/entity/Entity;)Z"
+      },
+      "com/pla/annoyingvillagers/mixin/BasicAttackMixin": {
+        "Lnet/minecraft/server/level/ServerPlayer;isPassenger()Z": "Lnet/minecraft/server/level/ServerPlayer;m_20159_()Z"
+      },
+      "com/pla/annoyingvillagers/mixin/client/ModelPartMixin": {
+        "translateAndRotate(Lcom/mojang/blaze3d/vertex/PoseStack;)V": "Lnet/minecraft/client/model/geom/ModelPart;m_104299_(Lcom/mojang/blaze3d/vertex/PoseStack;)V"
+      },
+      "com/pla/annoyingvillagers/mixin/MobMixin": {
+        "finalizeSpawn": "Lnet/minecraft/world/entity/Mob;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
+      },
+      "com/pla/annoyingvillagers/mixin/RenderBuffersMixin": {
+        "put": "Lnet/minecraft/client/renderer/RenderBuffers;m_110101_(Lit/unimi/dsi/fastutil/objects/Object2ObjectLinkedOpenHashMap;Lnet/minecraft/client/renderer/RenderType;)V"
+      },
+      "com/pla/annoyingvillagers/mixin/RaiderMixin": {
+        "registerGoals": "Lnet/minecraft/world/entity/raid/Raider;m_8099_()V"
+      },
+      "com/pla/annoyingvillagers/mixin/BoatMixin": {
+        "canAddPassenger": "Lnet/minecraft/world/entity/vehicle/Boat;m_7310_(Lnet/minecraft/world/entity/Entity;)Z"
+      },
+      "com/pla/annoyingvillagers/mixin/EnsureSafeFlyingVehicleMixin": {
+        "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;clientVehicleIsFloating:Z": "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;f_9738_:Z",
+        "handleMoveVehicle(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V": "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;m_5659_(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V"
+      },
+      "com/pla/annoyingvillagers/mixin/SkeletonMixin": {
+        "finalizeSpawn": "Lnet/minecraft/world/entity/monster/AbstractSkeleton;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;",
+        "registerGoals": "Lnet/minecraft/world/entity/monster/AbstractSkeleton;m_8099_()V"
+      },
+      "com/pla/annoyingvillagers/mixin/PlayerMixin": {
+        "hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z": "Lnet/minecraft/world/entity/player/Player;m_6469_(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
+        "Lnet/minecraft/world/damagesource/DamageSource;is(Lnet/minecraft/tags/TagKey;)Z": "Lnet/minecraft/world/damagesource/DamageSource;m_269533_(Lnet/minecraft/tags/TagKey;)Z"
+      },
+      "com/pla/annoyingvillagers/mixin/FishingHookAccessor": {
+        "setHookedEntity": "m_150157_(Lnet/minecraft/world/entity/Entity;)V"
+      },
+      "com/pla/annoyingvillagers/mixin/PlayerMobMixin": {
+        "isBaby": "Lse/gory_moon/player_mobs/entity/PlayerMobEntity;m_6162_()Z",
+        "setBaby": "Lse/gory_moon/player_mobs/entity/PlayerMobEntity;m_6863_(Z)V"
+      },
+      "com/pla/annoyingvillagers/mixin/ItemCooldownsMixin": {
+        "isOnCooldown": "Lnet/minecraft/world/item/ItemCooldowns;m_41519_(Lnet/minecraft/world/item/Item;)Z"
+      },
+      "com/pla/annoyingvillagers/mixin/client/FishingHookRendererMixin": {
+        "render(Lnet/minecraft/world/entity/projectile/FishingHook;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V": "Lnet/minecraft/client/renderer/entity/FishingHookRenderer;m_7392_(Lnet/minecraft/world/entity/projectile/FishingHook;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V"
+      },
+      "com/pla/annoyingvillagers/mixin/client/WearableItemLayerMixin": {
+        "Lnet/minecraft/world/item/ItemStack;hasFoil()Z": "Lnet/minecraft/world/item/ItemStack;m_41790_()Z",
+        "Lnet/minecraft/client/renderer/RenderType;armorEntityGlint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110484_()Lnet/minecraft/client/renderer/RenderType;"
+      },
+      "com/pla/annoyingvillagers/mixin/client/HumanoidArmorLayerMixin": {
+        "renderArmorPiece(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;)V": "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;m_117118_(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;ILnet/minecraft/client/model/HumanoidModel;)V",
+        "Lnet/minecraft/client/renderer/RenderType;armorEntityGlint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110484_()Lnet/minecraft/client/renderer/RenderType;"
+      },
+      "com/pla/annoyingvillagers/mixin/IllagerMixin": {
+        "registerGoals": "Lnet/minecraft/world/entity/monster/AbstractIllager;m_8099_()V"
+      },
+      "com/pla/annoyingvillagers/mixin/client/ItemRendererMixin": {
+        "Lnet/minecraft/client/renderer/RenderType;entityGlintDirect()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110499_()Lnet/minecraft/client/renderer/RenderType;",
+        "Lnet/minecraft/client/renderer/RenderType;glintDirect()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110493_()Lnet/minecraft/client/renderer/RenderType;",
+        "Lnet/minecraft/client/renderer/RenderType;entityGlint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110496_()Lnet/minecraft/client/renderer/RenderType;",
+        "Lnet/minecraft/client/renderer/RenderType;glint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110490_()Lnet/minecraft/client/renderer/RenderType;",
+        "getArmorFoilBuffer": "Lnet/minecraft/client/renderer/entity/ItemRenderer;m_115184_(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/renderer/RenderType;ZZ)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+        "render": "Lnet/minecraft/client/renderer/entity/ItemRenderer;m_115143_(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/client/resources/model/BakedModel;)V",
+        "Lnet/minecraft/client/renderer/RenderType;armorEntityGlint()Lnet/minecraft/client/renderer/RenderType;": "Lnet/minecraft/client/renderer/RenderType;m_110484_()Lnet/minecraft/client/renderer/RenderType;",
+        "getFoilBufferDirect": "Lnet/minecraft/client/renderer/entity/ItemRenderer;m_115222_(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/renderer/RenderType;ZZ)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+        "getFoilBuffer": "Lnet/minecraft/client/renderer/entity/ItemRenderer;m_115211_(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/renderer/RenderType;ZZ)Lcom/mojang/blaze3d/vertex/VertexConsumer;"
+      },
+      "com/pla/annoyingvillagers/mixin/EnderHandMixin": {
+        "customServerAiStep": "Lreascer/wom/world/entity/mob/EnderHand;m_8024_()V"
+      },
+      "com/pla/annoyingvillagers/mixin/VindicatorMixin": {
+        "finalizeSpawn": "Lnet/minecraft/world/entity/monster/Vindicator;m_6518_(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;"
+      }
+    }
+  }
+}

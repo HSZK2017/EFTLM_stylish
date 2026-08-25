@@ -1,0 +1,45 @@
+package com.pla.annoyingvillagers.skill;
+
+import com.pla.annoyingvillagers.gameasset.AnimsEpicFight;
+import java.util.Random;
+import net.minecraft.network.FriendlyByteBuf;
+import yesman.epicfight.skill.SkillBuilder;
+import yesman.epicfight.skill.SkillContainer;
+import yesman.epicfight.skill.weaponinnate.WeaponInnateSkill;
+
+public class HookSwordSkill extends WeaponInnateSkill {
+   public HookSwordSkill(SkillBuilder<? extends WeaponInnateSkill> builder) {
+      super(builder);
+   }
+
+   public void executeOnServer(SkillContainer skillContainer, FriendlyByteBuf friendlyByteBuf) {
+      if (!this.isActivated(skillContainer)) {
+         super.executeOnServer(skillContainer, friendlyByteBuf);
+         skillContainer.activate();
+         if (new Random().nextBoolean()) {
+            skillContainer.getExecutor().playAnimationSynchronized(AnimsEpicFight.HOOK_AXE_AUTO1, 0.0F);
+         } else {
+            skillContainer.getExecutor().playAnimationSynchronized(AnimsEpicFight.HOOK_AXE_AUTO2, 0.0F);
+         }
+      }
+   }
+
+   public void cancelOnServer(SkillContainer skillContainer, FriendlyByteBuf friendlyByteBuf) {
+      skillContainer.deactivate();
+      super.cancelOnServer(skillContainer, friendlyByteBuf);
+   }
+
+   public void executeOnClient(SkillContainer container, FriendlyByteBuf args) {
+      super.executeOnClient(container, args);
+      container.activate();
+   }
+
+   public void cancelOnClient(SkillContainer container, FriendlyByteBuf args) {
+      super.cancelOnClient(container, args);
+      container.deactivate();
+   }
+
+   public void updateContainer(SkillContainer container) {
+      super.updateContainer(container);
+   }
+}

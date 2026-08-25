@@ -1,0 +1,12 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"armor_negation": 30,
+			"impact": 2.2,
+			"max_strikes": 2
+		}
+	},
+	"type": "annoyingvillagers:greataxe"
+}

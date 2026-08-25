@@ -1,0 +1,20 @@
+{
+  "phase_1": {
+    "subtitle": "sounds.mimic.phase_1",
+    "sounds": [
+      "mimic:phase_1"
+    ]
+  },
+  "phase_2": {
+    "subtitle": "sounds.mimic.phase_2",
+    "sounds": [
+      "mimic:phase_2"
+    ]
+  },
+  "phase_3": {
+    "subtitle": "sounds.mimic.phase_3",
+    "sounds": [
+      "mimic:phase_3"
+    ]
+  }
+}

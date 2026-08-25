@@ -1,0 +1,25 @@
+{
+  "renderer": "invincible_dmc:yamato_mesh",
+  "mesh1_texture": "invincible_dmc:textures/item/weapon/yamato_dmc4.png",
+  "mesh1_texture_l": "invincible_dmc:textures/item/weapon/yamato_dmc4_l.png",
+  "mesh1_main": "invincible_dmc:weapon/yamato_dmc4_in_sheath",
+
+  "mesh2_texture": "invincible_dmc:textures/item/weapon/yamato_dmc4.png",
+  "mesh2_texture_l": "invincible_dmc:textures/item/weapon/yamato_dmc4_l.png",
+  "mesh2_main": "invincible_dmc:weapon/yamato_dmc4",
+
+  "mesh3_texture": "invincible_dmc:textures/item/weapon/yamato_dmc4.png",
+  "mesh3_texture_l": "invincible_dmc:textures/item/weapon/yamato_dmc4_l.png",
+  "mesh3_main": "invincible_dmc:weapon/yamato_dmc4_jc",
+  "appeared_in_afterimage":false,
+
+  "trail": {
+    "color": [32, 32, 32],
+    "begin_pos": [0.0, 0.0, -0.2],
+    "end_pos": [0.0, 0.2, -2.0],
+    "lifetime": 4,
+    "interpolations": 4,
+    "texture_path": "invincible_dmc:textures/trail/power_trail1.png",
+    "particle_type": "invincible_dmc:bloom_trail"
+  }
+}

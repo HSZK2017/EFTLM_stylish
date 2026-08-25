@@ -1,0 +1,7 @@
+{
+  "parent": "annoyingvillagers:custom/ruby_longsword",
+  "textures": {
+    "0": "annoyingvillagers:item/ruby_longsword",
+    "particle": "annoyingvillagers:item/ruby_longsword"
+  }
+}

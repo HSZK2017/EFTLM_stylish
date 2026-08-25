@@ -1,0 +1,21 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "invincible_dmc:blit",
+  "fragment": "invincible_dmc:cold_gray",
+  "attributes": [ "Position" ],
+  "samplers": [
+    { "name": "DiffuseSampler" }
+  ],
+  "uniforms": [
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "OutSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] },
+    { "name": "Intensity", "type": "float", "count": 1, "values": [ 0.9 ] },
+    { "name": "Coldness", "type": "float", "count": 1, "values": [ 0.6 ] },
+    { "name": "Grayness", "type": "float", "count": 1, "values": [ 0.95 ] },
+    { "name": "Progress", "type": "float", "count": 1, "values": [ 0.0 ] }
+  ]
+}

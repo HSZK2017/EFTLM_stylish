@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:smithing_transform",
+    "base": {
+        "item": "minecraft:netherite_chestplate"
+    },
+    "addition": {
+        "item" : "minecraft:gold_ingot"
+    },
+    "result": {
+        "item": "epicmoonmod:leiheng_suit"
+    },
+    "template": {
+      "item": "minecraft:red_dye"
+    }
+}

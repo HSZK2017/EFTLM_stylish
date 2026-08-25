@@ -1,0 +1,118 @@
+---- Minecraft Crash Report ----
+// Daisy, daisy...
+
+Time: 2026-08-20 18:49:54
+Description: Exception in server tick loop
+
+java.lang.NullPointerException: Cannot invoke "com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid.m_20270_(net.minecraft.world.entity.Entity)" because "maid" is null
+	at org.eftlm.stylish.arena.AutoArena.pullStrayTargets(AutoArena.java:624) ~[eftlm_stylish-1.0.0.jar%23125!/:?] {re:classloading}
+	at org.eftlm.stylish.arena.AutoArena.onServerTick(AutoArena.java:435) ~[eftlm_stylish-1.0.0.jar%23125!/:?] {re:classloading}
+	at org.eftlm.stylish.arena.__AutoArena_onServerTick_ServerTickEvent.invoke(.dynamic) ~[eftlm_stylish-1.0.0.jar%23125!/:?] {re:classloading,pl:eventbus:B}
+	at net.minecraftforge.eventbus.ASMEventHandler.invoke(ASMEventHandler.java:73) ~[eventbus-6.0.5.jar%2352!/:?] {}
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:315) ~[eventbus-6.0.5.jar%2352!/:?] {}
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:296) ~[eventbus-6.0.5.jar%2352!/:?] {}
+	at net.minecraftforge.event.ForgeEventFactory.onPostServerTick(ForgeEventFactory.java:975) ~[forge-1.20.1-47.4.13-universal.jar%23136!/:?] {re:mixin,re:classloading}
+	at net.minecraft.server.MinecraftServer.m_5705_(MinecraftServer.java:835) ~[server-1.20.1-20230612.114412-srg.jar%23131!/:?] {re:classloading,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.m_130011_(MinecraftServer.java:661) ~[server-1.20.1-20230612.114412-srg.jar%23131!/:?] {re:classloading,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.m_206580_(MinecraftServer.java:251) ~[server-1.20.1-20230612.114412-srg.jar%23131!/:?] {re:classloading,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:842) ~[?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.20.1
+	Minecraft Version ID: 1.20.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 17.0.10, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+	Memory: 744432960 bytes (709 MiB) / 2130706432 bytes (2032 MiB) up to 8434745344 bytes (8044 MiB)
+	CPUs: 16
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 7 4800H with Radeon Graphics         
+	Identifier: AuthenticAMD Family 23 Model 96 Stepping 1
+	Microarchitecture: unknown
+	Frequency (GHz): 2.89
+	Number of physical packages: 1
+	Number of physical CPUs: 8
+	Number of logical CPUs: 16
+	Graphics card #0 name: MuMu Virtual Display Adapter
+	Graphics card #0 vendor: MuMu
+	Graphics card #0 VRAM (MB): 0.00
+	Graphics card #0 deviceId: unknown
+	Graphics card #0 versionInfo: DriverVersion=20.36.41.498
+	Graphics card #1 name: NVIDIA GeForce RTX 2060
+	Graphics card #1 vendor: NVIDIA (0x10de)
+	Graphics card #1 VRAM (MB): 4095.00
+	Graphics card #1 deviceId: 0x1f15
+	Graphics card #1 versionInfo: DriverVersion=32.0.16.1074
+	Graphics card #2 name: AMD Radeon(TM) Graphics
+	Graphics card #2 vendor: Advanced Micro Devices, Inc. (0x1002)
+	Graphics card #2 VRAM (MB): 512.00
+	Graphics card #2 deviceId: 0x1636
+	Graphics card #2 versionInfo: DriverVersion=31.0.21925.1001
+	Memory slot #0 capacity (MB): 16384.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MB): 16384.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Virtual memory max (MB): 60401.97
+	Virtual memory used (MB): 44007.99
+	Swap memory total (MB): 28228.57
+	Swap memory used (MB): 14896.96
+	JVM Flags: 0 total; 
+	Server Running: true
+	Player Count: 0 / 20; []
+	Data Packs: vanilla, mod:invincible, mod:mixinsquared (incompatible), mod:geckolib, mod:combat_evolution, mod:touhou_little_maid, mod:simplebedrockmodel, mod:epicfight, mod:wom, mod:epic_fight_avalon, mod:player_mobs, mod:mixinextras (incompatible), mod:vix, mod:architectury (incompatible), mod:efn, mod:annoyingvillagers, mod:efclash_blade, mod:ywzj_vehicle, mod:ef_tlm, mod:ysm_geo_compat, mod:forge, mod:eftlm_stylish, ywzj_vehicle_resources_ywzj_vehicle, mod:maid_weapon_refill
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Stable
+	Is Modded: Definitely; Server brand changed to 'forge'
+	Type: Dedicated Server (map_server.txt)
+	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
+	ModLauncher launch target: forgeserver
+	ModLauncher naming: srg
+	ModLauncher services: 
+		mixin-0.8.5.jar mixin PLUGINSERVICE 
+		eventbus-6.0.5.jar eventbus PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.13.jar slf4jfixer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.13.jar object_holder_definalize PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.13.jar runtime_enum_extender PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.13.jar capability_token_subclass PLUGINSERVICE 
+		accesstransformers-8.0.4.jar accesstransformer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.13.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		minecraft@1.0
+		lowcodefml@null
+		javafml@null
+	Mod List: 
+		server-1.20.1-20230612.114412-srg.jar             |Minecraft                     |minecraft                     |1.20.1              |DONE      |Manifest: NOSIGNATURE
+		[无坚不摧] epic-fight-invincible-lib-20.14.8.2-mc1.20.|Epic Fight - Invincible       |invincible                    |20.14.8.2           |DONE      |Manifest: NOSIGNATURE
+		mixinsquared-forge-0.2.0-beta.6.jar               |MixinSquared                  |mixinsquared                  |0.2.0-beta.6        |DONE      |Manifest: NOSIGNATURE
+		geckolib-388172-7025129.jar                       |GeckoLib 4                    |geckolib                      |4.8.2               |DONE      |Manifest: NOSIGNATURE
+		CombatEvolution-2.1.10.jar                        |Combat Evolution              |combat_evolution              |2.1.10              |DONE      |Manifest: NOSIGNATURE
+		maid_weapon_refill-1.0.0.jar                      |Maid Weapon Refill            |maid_weapon_refill            |1.0.0               |DONE      |Manifest: NOSIGNATURE
+		[车万女仆] touhoulittlemaid-1.5.3-forge+mc1.20.1.jar  |Touhou Little Maid            |touhou_little_maid            |1.5.3-forge+mc1.20.1|DONE      |Manifest: NOSIGNATURE
+		simplebedrockmodel-2.5.1-forge-mc1.20.1.jar       |SimpleBedrockModel            |simplebedrockmodel            |2.5.1-forge-mc1.20.1|DONE      |Manifest: NOSIGNATURE
+		[史诗战斗] epic-fight-20.14.17-mc1.20.1-forge.jar     |Epic Fight                    |epicfight                     |20.14.17            |DONE      |Manifest: NOSIGNATURE
+		[奇迹武器] WeaponsOfMiracles-2.0.164-mc1.20.1-forge.ja|Weapons of miracle            |wom                           |2.0.164             |DONE      |Manifest: NOSIGNATURE
+		epic_fight_avalon-20.12.6.4.jar                   |Epic fight - Avalon           |epic_fight_avalon             |20.12.6.4           |DONE      |Manifest: NOSIGNATURE
+		PlayerMobs-1.20.1-4.1.0.37.jar                    |Player Mobs                   |player_mobs                   |4.1.0.37            |DONE      |Manifest: NOSIGNATURE
+		mixinextras-forge-0.4.1.jar                       |MixinExtras                   |mixinextras                   |0.4.1               |DONE      |Manifest: NOSIGNATURE
+		guhaos-vix-1531111-8258354.jar                    |VIX                           |vix                           |1.0.9               |DONE      |Manifest: NOSIGNATURE
+		architectury-9.2.14-forge.jar                     |Architectury                  |architectury                  |9.2.14              |DONE      |Manifest: NOSIGNATURE
+		[史诗战斗：夜幕] EpicFight Nightfall-3.4.0.jar           |EpicFight Nightfall           |efn                           |3.4.0               |DONE      |Manifest: NOSIGNATURE
+		[烦人的村民] AnnoyingVillagers-1.20.1-1.4.7.jar        |Annoying Villagers            |annoyingvillagers             |1.4.7               |DONE      |Manifest: NOSIGNATURE
+		[史诗战斗：冲击之刃] Epicfight-ClashBlade-1.20.1-2.1.jar   |Epicfight Clash Blade         |efclash_blade                 |2.1                 |DONE      |Manifest: NOSIGNATURE
+		ywzj_vehicle-1.20.1-0.5.8.jar                     |Limitless Vehicle             |ywzj_vehicle                  |0.5.8               |DONE      |Manifest: NOSIGNATURE
+		[史诗战斗：车万女仆] [史诗战斗：车万女仆]EpicFight_TouhouLittleMaid-|史诗战斗：车万女仆                     |ef_tlm                        |1.3.2               |DONE      |Manifest: NOSIGNATURE
+		YSM_GEO_Compat.jar                                |YSM GEO Compat                |ysm_geo_compat                |1.0.0               |DONE      |Manifest: NOSIGNATURE
+		forge-1.20.1-47.4.13-universal.jar                |Forge                         |forge                         |47.4.13             |DONE      |Manifest: NOSIGNATURE
+		eftlm_stylish-1.0.0.jar                           |史诗战斗:车万女仆[华丽连段]               |eftlm_stylish                 |1.0.0               |DONE      |Manifest: NOSIGNATURE
+	Crash Report UUID: b25e2454-92c9-4215-a6a9-adea400443f1
+	FML: 47.4
+	Forge: net.minecraftforge:47.4.13

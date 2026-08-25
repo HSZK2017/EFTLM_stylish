@@ -1,0 +1,9 @@
+EFTLM shutdown backup manifest - 2026-08-15 05:21
+=================================================
+trajectories/: 4209 files, 64166772 bytes
+rl_model.bin: 38164 bytes (deployed v16)
+rl_model_v16.bin: 38164 bytes
+rl_model_v16.bin.meta.txt: 558 bytes
+rl_model_version.txt: version=16
+file=rl_model_v16.bin
+time=2026-08-15 05:12:06

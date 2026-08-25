@@ -1,0 +1,33 @@
+{
+  "textures": [
+    "invincible_dmc:portal_switch_00",
+    "invincible_dmc:portal_switch_01",
+    "invincible_dmc:portal_switch_02",
+    "invincible_dmc:portal_switch_03",
+    "invincible_dmc:portal_switch_04",
+    "invincible_dmc:portal_switch_05",
+    "invincible_dmc:portal_switch_06",
+    "invincible_dmc:portal_switch_07",
+    "invincible_dmc:portal_switch_08",
+    "invincible_dmc:portal_switch_09",
+    "invincible_dmc:portal_switch_10",
+    "invincible_dmc:portal_switch_11",
+    "invincible_dmc:portal_switch_12",
+    "invincible_dmc:portal_idle_00",
+    "invincible_dmc:portal_idle_01",
+    "invincible_dmc:portal_idle_02",
+    "invincible_dmc:portal_idle_03",
+    "invincible_dmc:portal_idle_04",
+    "invincible_dmc:portal_idle_05",
+    "invincible_dmc:portal_idle_06",
+    "invincible_dmc:portal_idle_07",
+    "invincible_dmc:portal_idle_08",
+    "invincible_dmc:portal_idle_09",
+    "invincible_dmc:portal_idle_10",
+    "invincible_dmc:portal_idle_11",
+    "invincible_dmc:portal_idle_12",
+    "invincible_dmc:portal_idle_13",
+    "invincible_dmc:portal_idle_14",
+    "invincible_dmc:portal_idle_15"
+  ]
+}

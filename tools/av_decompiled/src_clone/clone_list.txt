@@ -1,0 +1,6 @@
+com\pla\annoyingvillagers\entity\HerobrineCloneEntity
+com\pla\annoyingvillagers\entity\ShadowHerobrineCloneEntity
+com\pla\annoyingvillagers\entity\LowHerobrineCloneEntity
+com\pla\annoyingvillagers\entity\LowShadowHerobrineCloneEntity
+com\pla\annoyingvillagers\mobpatch\HerobrineClonePatch
+com\pla\annoyingvillagers\mobpatch\ShadowHerobrineClonePatch

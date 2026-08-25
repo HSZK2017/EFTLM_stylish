@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-08-25 17:19:15",
+  "metrics": {
+    "trajectories": 29,
+    "steps": 11436,
+    "hurt_rate": 0.02509618747813921,
+    "knockdown_rate": 0.02212311997201819,
+    "ranged_ratio": 0.191063308849248,
+    "rejected_rate": 0.928471493529206,
+    "kill_rate": 0.015739769150052464,
+    "avg_steps": 394.3448275862069,
+    "action_entropy": 3.0139951953671993
+  },
+  "weakness": [
+    "rejected_high"
+  ],
+  "notes": [
+    "检查 /rl dump 的 res 列（BUSY 占比）与 Commitment 帧数据"
+  ],
+  "suggested_entities": [
+    "annoyingvillagers:alex"
+  ],
+  "arena_overrides": {
+    "entity": "annoyingvillagers:alex"
+  }
+}

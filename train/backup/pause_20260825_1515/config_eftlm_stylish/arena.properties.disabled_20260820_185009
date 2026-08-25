@@ -1,0 +1,13 @@
+enabled=true
+entity=minecraft:warden,annoyingvillagers:armored_herobrine,annoyingvillagers:glaive_herobrine,annoyingvillagers:herobrine_7,annoyingvillagers:swordsman_herobrine,annoyingvillagers:sledgehammer_herobrine,annoyingvillagers:null
+count=1
+interval=400
+spawn_distance=12
+maid_main=efn:yamato_dmc4
+maid_melee=efn:kusabimaru
+maid_melee2=efn:meen_spear
+maid_ranged=
+cage_enabled=true
+cage_radius=8
+cage_growth_minutes=30
+test_skills=false

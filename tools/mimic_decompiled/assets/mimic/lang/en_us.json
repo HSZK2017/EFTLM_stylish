@@ -1,0 +1,24 @@
+{
+  "biome.mimic.the_lethean_sea": "The Lethean Sea",
+  "entity.mimic.proteus": "???",
+  "entity.mimic.proteus_1": "The Mimic",
+  "entity.mimic.proteus_2": "???",
+  "entity.mimic.proteus_3": "Proteus",
+  "itemGroup.mimic.items": "The Mimic",
+  "entity.mimic.shadow_mimic": "Mimic's Phantom",
+  "item.mimic.mimic_invitation": "Mimic's Invitation",
+
+  "item.mimic.mimic_invitation.tip_1": "[An Invitation from the Lethean Sea]",
+  "item.mimic.mimic_invitation.tip_2": "[Use outside to travel to the Lethean Sea; use within to summon The Mimic]",
+
+  "item.mimic.proteus_commendation": "Proteus's Commendation",
+  "item.mimic.proteus_commendation.tip_1": "[Records the battle with Proteus]",
+  "item.mimic.proteus_commendation.tip_2": "[Using it in the Lethean Sea returns you to the spawn point; using it outside summons a phantom that recorded this battle to assist in combat]",
+  "item.mimic.proteus_commendation.tip_3": "[The phantom will attack targets locked by the player]",
+  "item.mimic.proteus_commendation.tip_4": "[Phantoms that have lost Proteus's dominion can no longer mimic new attacks]",
+  "item.mimic.proteus_commendation.tip_5": "[Mimicked Attack Count]:",
+
+  "mod.mimic.tip_1": "Your pathetic weapon bores me.",
+  "mod.mimic.tip_2": "As if I'd let myself be tainted by that scrap of yours.",
+  "mod.mimic.tip_3": "What a truly disappointing excuse for a weapon."
+}

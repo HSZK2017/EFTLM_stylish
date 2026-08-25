@@ -1,0 +1,70 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="Custom License"
+[[mods]]
+modId="annoyingvillagers"
+version="1.4.7"
+displayName="Annoying Villagers"
+authors="pla_is_me"
+credits="Photon VFX by Sidtheplayer"
+description='''Annoying Villagers Full features from the original series !!!.'''
+[[dependencies.annoyingvillagers]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47.4.4,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="epicfight"
+    mandatory=true
+    versionRange="[20.13, )"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="wom"
+    mandatory=true
+    versionRange="[2.0, )"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="combat_evolution"
+    mandatory=true
+    versionRange="[1.1.7, )"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="player_mobs"
+    mandatory=true
+    versionRange="[4.1, )"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="efn"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="epicfightx"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="dualaxes"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"
+[[dependencies.annoyingvillagers]]
+    modId="dualgreatswords"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"

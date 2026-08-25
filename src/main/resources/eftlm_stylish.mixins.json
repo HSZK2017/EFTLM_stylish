@@ -1,0 +1,14 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "org.eftlm.stylish.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "eftlm_stylish.refmap.json",
+  "mixins": [
+    "EFNAnimationsMixin",
+    "NullEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "invincible_dmc:item/sdt_armor"
+    }
+}

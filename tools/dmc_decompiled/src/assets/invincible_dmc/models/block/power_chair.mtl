@@ -1,0 +1,4 @@
+newmtl power_chair
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+map_Kd invincible_dmc:block/power_chair

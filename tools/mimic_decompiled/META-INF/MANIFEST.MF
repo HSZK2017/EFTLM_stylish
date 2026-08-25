@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Specification-Title: mimic
+Specification-Vendor: merlin204,Ao2333
+Specification-Version: 1
+Implementation-Title: mimic
+Implementation-Version: 1.0.7
+Implementation-Vendor: merlin204,Ao2333
+Implementation-Timestamp: 2026-08-16T03:17:43+0800
+MixinConfigs: mimic.mixins.json
+

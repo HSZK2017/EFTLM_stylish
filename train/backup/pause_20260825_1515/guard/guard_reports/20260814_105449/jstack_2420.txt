@@ -1,0 +1,193 @@
+2026-08-14 10:54:50
+Full thread dump Java HotSpot(TM) 64-Bit Server VM (17.0.10+11-LTS-240 mixed mode, sharing):
+
+Threads class SMR info:
+_java_thread_list=0x0000023fc9b2c840, length=18, elements={
+0x0000023fcfc3e240, 0x0000023ffa5c9130, 0x0000023ffa5c9a00, 0x0000023ffd4c4000,
+0x0000023ffd4c48d0, 0x0000023ffd4c51a0, 0x0000023ffd4c5a70, 0x0000023ffd4c8680,
+0x0000023ffa5ed060, 0x0000023ffa5ed970, 0x0000023ffd582480, 0x0000023ffa5b6b50,
+0x0000023ffd5879c0, 0x0000023ffd5f1540, 0x0000023ffd7cb4f0, 0x0000023fc520e5e0,
+0x0000023fc520eb00, 0x0000023fc520f830
+}
+
+"main" #1 prio=5 os_prio=0 cpu=3203.12ms elapsed=3.34s tid=0x0000023fcfc3e240 nid=0x7a50 runnable  [0x000000a2aa3fc000]
+   java.lang.Thread.State: RUNNABLE
+	at java.lang.String.intern(java.base@17.0.10/Native Method)
+	at sun.util.locale.BaseLocale.<init>(java.base@17.0.10/BaseLocale.java:117)
+	at sun.util.locale.BaseLocale$Key.<init>(java.base@17.0.10/BaseLocale.java:262)
+	at sun.util.locale.BaseLocale$Key.normalize(java.base@17.0.10/BaseLocale.java:336)
+	at sun.util.locale.BaseLocale$Cache.normalizeKey(java.base@17.0.10/BaseLocale.java:349)
+	at sun.util.locale.BaseLocale$Cache.normalizeKey(java.base@17.0.10/BaseLocale.java:340)
+	at sun.util.locale.LocaleObjectCache.get(java.base@17.0.10/LocaleObjectCache.java:60)
+	at sun.util.locale.BaseLocale.getInstance(java.base@17.0.10/BaseLocale.java:168)
+	at sun.util.locale.InternalLocaleBuilder.getBaseLocale(java.base@17.0.10/InternalLocaleBuilder.java:524)
+	at java.util.Locale.forLanguageTag(java.base@17.0.10/Locale.java:1727)
+	at sun.util.locale.provider.LocaleProviderAdapter.toLocaleArray(java.base@17.0.10/LocaleProviderAdapter.java:323)
+	at sun.util.locale.provider.CalendarDataProviderImpl.getAvailableLocales(java.base@17.0.10/CalendarDataProviderImpl.java:63)
+	at java.util.spi.LocaleServiceProvider.isSupportedLocale(java.base@17.0.10/LocaleServiceProvider.java:218)
+	at sun.util.locale.provider.LocaleServiceProviderPool.findProviders(java.base@17.0.10/LocaleServiceProviderPool.java:306)
+	at sun.util.locale.provider.LocaleServiceProviderPool.getLocalizedObjectImpl(java.base@17.0.10/LocaleServiceProviderPool.java:274)
+	at sun.util.locale.provider.LocaleServiceProviderPool.getLocalizedObject(java.base@17.0.10/LocaleServiceProviderPool.java:256)
+	at sun.util.locale.provider.CalendarDataUtility.retrieveFirstDayOfWeek(java.base@17.0.10/CalendarDataUtility.java:76)
+	at java.util.Calendar.setWeekCountData(java.base@17.0.10/Calendar.java:3397)
+	at java.util.Calendar.<init>(java.base@17.0.10/Calendar.java:1607)
+	at java.util.GregorianCalendar.<init>(java.base@17.0.10/GregorianCalendar.java:738)
+	at java.util.Calendar$Builder.build(java.base@17.0.10/Calendar.java:1492)
+	at sun.util.locale.provider.CalendarProviderImpl.getInstance(java.base@17.0.10/CalendarProviderImpl.java:87)
+	at java.util.Calendar.createCalendar(java.base@17.0.10/Calendar.java:1692)
+	at java.util.Calendar.getInstance(java.base@17.0.10/Calendar.java:1639)
+	at org.apache.logging.log4j.core.util.datetime.FixedDateFormat.calcMidnightMillis(org.apache.logging.log4j.core@2.19.0/FixedDateFormat.java:547)
+	at org.apache.logging.log4j.core.util.datetime.FixedDateFormat.updateMidnightMillis(org.apache.logging.log4j.core@2.19.0/FixedDateFormat.java:538)
+	- locked <0x00000006173ce5f0> (a org.apache.logging.log4j.core.util.datetime.FixedDateFormat)
+	at org.apache.logging.log4j.core.util.datetime.FixedDateFormat.millisSinceMidnight(org.apache.logging.log4j.core@2.19.0/FixedDateFormat.java:529)
+	at org.apache.logging.log4j.core.util.datetime.FixedDateFormat.format(org.apache.logging.log4j.core@2.19.0/FixedDateFormat.java:616)
+	at org.apache.logging.log4j.core.util.datetime.FixedDateFormat.formatInstant(org.apache.logging.log4j.core@2.19.0/FixedDateFormat.java:590)
+	at org.apache.logging.log4j.core.util.datetime.FixedDateFormat.formatInstant(org.apache.logging.log4j.core@2.19.0/FixedDateFormat.java:584)
+	at org.apache.logging.log4j.core.pattern.DatePatternConverter$FixedFormatter.format(org.apache.logging.log4j.core@2.19.0/DatePatternConverter.java:101)
+	at org.apache.logging.log4j.core.pattern.DatePatternConverter$CachedTime.<init>(org.apache.logging.log4j.core@2.19.0/DatePatternConverter.java:156)
+	at org.apache.logging.log4j.core.pattern.DatePatternConverter.fromEpochMillis(org.apache.logging.log4j.core@2.19.0/DatePatternConverter.java:191)
+	at org.apache.logging.log4j.core.pattern.DatePatternConverter.<init>(org.apache.logging.log4j.core@2.19.0/DatePatternConverter.java:185)
+	at org.apache.logging.log4j.core.pattern.DatePatternConverter.newInstance(org.apache.logging.log4j.core@2.19.0/DatePatternConverter.java:209)
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(java.base@17.0.10/Native Method)
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(java.base@17.0.10/NativeMethodAccessorImpl.java:77)
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(java.base@17.0.10/DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(java.base@17.0.10/Method.java:568)
+	at org.apache.logging.log4j.core.pattern.PatternParser.createConverter(org.apache.logging.log4j.core@2.19.0/PatternParser.java:590)
+	at org.apache.logging.log4j.core.pattern.PatternParser.finalizeConverter(org.apache.logging.log4j.core@2.19.0/PatternParser.java:657)
+	at org.apache.logging.log4j.core.pattern.PatternParser.parse(org.apache.logging.log4j.core@2.19.0/PatternParser.java:420)
+	at org.apache.logging.log4j.core.pattern.PatternParser.parse(org.apache.logging.log4j.core@2.19.0/PatternParser.java:177)
+	at org.apache.logging.log4j.core.layout.PatternLayout$SerializerBuilder.build(org.apache.logging.log4j.core@2.19.0/PatternLayout.java:473)
+	at org.apache.logging.log4j.core.layout.PatternLayout.<init>(org.apache.logging.log4j.core@2.19.0/PatternLayout.java:139)
+	at org.apache.logging.log4j.core.layout.PatternLayout.<init>(org.apache.logging.log4j.core@2.19.0/PatternLayout.java:60)
+	at org.apache.logging.log4j.core.layout.PatternLayout$Builder.build(org.apache.logging.log4j.core@2.19.0/PatternLayout.java:766)
+	at org.apache.logging.log4j.core.config.AbstractConfiguration.setToDefault(org.apache.logging.log4j.core@2.19.0/AbstractConfiguration.java:745)
+	at org.apache.logging.log4j.core.config.DefaultConfiguration.<init>(org.apache.logging.log4j.core@2.19.0/DefaultConfiguration.java:47)
+	at org.apache.logging.log4j.core.LoggerContext.<init>(org.apache.logging.log4j.core@2.19.0/LoggerContext.java:84)
+	at org.apache.logging.log4j.core.selector.ClassLoaderContextSelector.createContext(org.apache.logging.log4j.core@2.19.0/ClassLoaderContextSelector.java:254)
+	at org.apache.logging.log4j.core.selector.ClassLoaderContextSelector.locateContext(org.apache.logging.log4j.core@2.19.0/ClassLoaderContextSelector.java:218)
+	at org.apache.logging.log4j.core.selector.ClassLoaderContextSelector.getContext(org.apache.logging.log4j.core@2.19.0/ClassLoaderContextSelector.java:136)
+	at org.apache.logging.log4j.core.selector.ClassLoaderContextSelector.getContext(org.apache.logging.log4j.core@2.19.0/ClassLoaderContextSelector.java:123)
+	at org.apache.logging.log4j.core.selector.ClassLoaderContextSelector.getContext(org.apache.logging.log4j.core@2.19.0/ClassLoaderContextSelector.java:117)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(org.apache.logging.log4j.core@2.19.0/Log4jContextFactory.java:150)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(org.apache.logging.log4j.core@2.19.0/Log4jContextFactory.java:47)
+	at org.apache.logging.log4j.LogManager.getContext(org.apache.logging.log4j@2.19.0/LogManager.java:196)
+	at org.apache.logging.log4j.LogManager.getLogger(org.apache.logging.log4j@2.19.0/LogManager.java:599)
+	at org.apache.logging.log4j.LogManager.getLogger(org.apache.logging.log4j@2.19.0/LogManager.java:585)
+	at cpw.mods.modlauncher.Launcher.main(cpw.mods.modlauncher@10.0.9/Launcher.java:77)
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(cpw.mods.modlauncher@10.0.9/BootstrapLaunchConsumer.java:26)
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(cpw.mods.modlauncher@10.0.9/BootstrapLaunchConsumer.java:23)
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(cpw.mods.bootstraplauncher@1.1.2/BootstrapLauncher.java:141)
+
+"Reference Handler" #2 daemon prio=10 os_prio=2 cpu=0.00ms elapsed=3.32s tid=0x0000023ffa5c9130 nid=0x6f90 waiting on condition  [0x000000a2aaaff000]
+   java.lang.Thread.State: RUNNABLE
+	at java.lang.ref.Reference.waitForReferencePendingList(java.base@17.0.10/Native Method)
+	at java.lang.ref.Reference.processPendingReferences(java.base@17.0.10/Reference.java:253)
+	at java.lang.ref.Reference$ReferenceHandler.run(java.base@17.0.10/Reference.java:215)
+
+"Finalizer" #3 daemon prio=8 os_prio=1 cpu=0.00ms elapsed=3.32s tid=0x0000023ffa5c9a00 nid=0x9b8 in Object.wait()  [0x000000a2aabfe000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(java.base@17.0.10/Native Method)
+	- waiting on <0x00000006099dbd08> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(java.base@17.0.10/ReferenceQueue.java:155)
+	- locked <0x00000006099dbd08> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(java.base@17.0.10/ReferenceQueue.java:176)
+	at java.lang.ref.Finalizer$FinalizerThread.run(java.base@17.0.10/Finalizer.java:172)
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=2 cpu=0.00ms elapsed=3.30s tid=0x0000023ffd4c4000 nid=0x9c8 waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Attach Listener" #5 daemon prio=5 os_prio=2 cpu=0.00ms elapsed=3.30s tid=0x0000023ffd4c48d0 nid=0x3a4c waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Service Thread" #6 daemon prio=9 os_prio=0 cpu=0.00ms elapsed=3.30s tid=0x0000023ffd4c51a0 nid=0xaf4 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Monitor Deflation Thread" #7 daemon prio=9 os_prio=0 cpu=0.00ms elapsed=3.30s tid=0x0000023ffd4c5a70 nid=0x5e88 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" #8 daemon prio=9 os_prio=2 cpu=1640.62ms elapsed=3.30s tid=0x0000023ffd4c8680 nid=0x72f0 waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   No compile task
+
+"C1 CompilerThread0" #16 daemon prio=9 os_prio=2 cpu=281.25ms elapsed=3.30s tid=0x0000023ffa5ed060 nid=0x3c14 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   Compiling: 2967       3       sun.util.locale.LanguageTag::parse (205 bytes)
+
+"Sweeper thread" #20 daemon prio=9 os_prio=2 cpu=15.62ms elapsed=3.30s tid=0x0000023ffa5ed970 nid=0x6364 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C1 CompilerThread1" #17 daemon prio=9 os_prio=2 cpu=218.75ms elapsed=3.29s tid=0x0000023ffd582480 nid=0x5ef4 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   Compiling: 2970       3       sun.util.locale.StringTokenIterator::<init> (41 bytes)
+
+"C1 CompilerThread2" #18 daemon prio=9 os_prio=2 cpu=234.38ms elapsed=3.29s tid=0x0000023ffa5b6b50 nid=0xd30 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   Compiling: 2971       3       sun.util.locale.StringTokenIterator::setStart (62 bytes)
+
+"C1 CompilerThread3" #19 daemon prio=9 os_prio=2 cpu=187.50ms elapsed=3.29s tid=0x0000023ffd5879c0 nid=0x73dc runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   Compiling: 2966       3       java.util.Locale::forLanguageTag (74 bytes)
+
+"Common-Cleaner" #21 daemon prio=8 os_prio=1 cpu=0.00ms elapsed=3.28s tid=0x0000023ffd5f1540 nid=0x5944 in Object.wait()  [0x000000a2ab6ff000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(java.base@17.0.10/Native Method)
+	- waiting on <0x00000006099d6998> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(java.base@17.0.10/ReferenceQueue.java:155)
+	- locked <0x00000006099d6998> (a java.lang.ref.ReferenceQueue$Lock)
+	at jdk.internal.ref.CleanerImpl.run(java.base@17.0.10/CleanerImpl.java:140)
+	at java.lang.Thread.run(java.base@17.0.10/Thread.java:842)
+	at jdk.internal.misc.InnocuousThread.run(java.base@17.0.10/InnocuousThread.java:162)
+
+"Notification Thread" #22 daemon prio=9 os_prio=0 cpu=0.00ms elapsed=3.20s tid=0x0000023ffd7cb4f0 nid=0x5bc0 runnable  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" #9 daemon prio=9 os_prio=2 cpu=171.88ms elapsed=0.50s tid=0x0000023fc520e5e0 nid=0x6bf8 waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   No compile task
+
+"C2 CompilerThread2" #10 daemon prio=9 os_prio=2 cpu=203.12ms elapsed=0.50s tid=0x0000023fc520eb00 nid=0x74dc waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   No compile task
+
+"C2 CompilerThread3" #11 daemon prio=9 os_prio=2 cpu=328.12ms elapsed=0.50s tid=0x0000023fc520f830 nid=0x1338 waiting on condition  [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+   No compile task
+
+"VM Thread" os_prio=2 cpu=0.00ms elapsed=3.32s tid=0x0000023ffa5c69a0 nid=0x4b98 runnable  
+
+"GC Thread#0" os_prio=2 cpu=15.62ms elapsed=3.33s tid=0x0000023fcfcaf8b0 nid=0x3d90 runnable  
+
+"GC Thread#1" os_prio=2 cpu=15.62ms elapsed=2.60s tid=0x0000023ffe34f100 nid=0x8058 runnable  
+
+"GC Thread#2" os_prio=2 cpu=15.62ms elapsed=2.60s tid=0x0000023ffe34f7d0 nid=0x3858 runnable  
+
+"GC Thread#3" os_prio=2 cpu=15.62ms elapsed=2.60s tid=0x0000023ffe34fa90 nid=0x733c runnable  
+
+"GC Thread#4" os_prio=2 cpu=15.62ms elapsed=2.60s tid=0x0000023ffdbac810 nid=0x6ae8 runnable  
+
+"GC Thread#5" os_prio=2 cpu=15.62ms elapsed=2.60s tid=0x0000023ffdbad6f0 nid=0x81a0 runnable  
+
+"GC Thread#6" os_prio=2 cpu=0.00ms elapsed=2.60s tid=0x0000023ffdbad9b0 nid=0x5100 runnable  
+
+"GC Thread#7" os_prio=2 cpu=0.00ms elapsed=2.60s tid=0x0000023ffdf57db0 nid=0x5220 runnable  
+
+"GC Thread#8" os_prio=2 cpu=0.00ms elapsed=2.60s tid=0x0000023ffdea1370 nid=0x8358 runnable  
+
+"GC Thread#9" os_prio=2 cpu=0.00ms elapsed=2.60s tid=0x0000023ffddedf90 nid=0x6bf0 runnable  
+
+"GC Thread#10" os_prio=2 cpu=15.62ms elapsed=2.60s tid=0x0000023ffddee250 nid=0x655c runnable  
+
+"GC Thread#11" os_prio=2 cpu=15.62ms elapsed=2.60s tid=0x0000023ffdbd8300 nid=0x4de4 runnable  
+
+"G1 Main Marker" os_prio=2 cpu=0.00ms elapsed=3.33s tid=0x0000023fcfcbc550 nid=0x7b90 runnable  
+
+"G1 Conc#0" os_prio=2 cpu=0.00ms elapsed=3.33s tid=0x0000023ffa4726f0 nid=0x6ecc runnable  
+
+"G1 Refine#0" os_prio=2 cpu=0.00ms elapsed=3.33s tid=0x0000023fcfcce540 nid=0x1d0c runnable  
+
+"G1 Service" os_prio=2 cpu=0.00ms elapsed=3.33s tid=0x0000023ffa553e30 nid=0x7908 runnable  
+
+"VM Periodic Task Thread" os_prio=2 cpu=0.00ms elapsed=3.20s tid=0x0000023fcfccc0a0 nid=0x77c4 waiting on condition  
+
+JNI global refs: 17, weak refs: 0
+

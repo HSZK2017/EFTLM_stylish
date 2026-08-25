@@ -1,0 +1,140 @@
+{
+	"trail_effects": [
+		{
+			"start_time": 0.15,
+			"end_time": 0.55,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"color": [48, 48, 48],
+			"lifetime": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail3.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.15,
+			"end_time": 0.55,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"color": [64, 64, 64],
+			"lifetime": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail6.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.15,
+			"end_time": 0.55,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"color": [64, 64, 64],
+			"begin_pos": [-0.3, 0.0, 0.4],
+			"end_pos": [0.3, 0.2, -1.5],
+			"lifetime": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail7.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.35,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [32, 32, 32],
+			"begin_pos": [0, 1.0, -0.5],
+			"end_pos": [-1.5, 1.0, -0.5],
+			"lifetime": 4,
+			"interpolations": 1,
+			"texture_path": "invincible_dmc:textures/trail/power_trail4.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.35,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [32, 32, 32],
+			"begin_pos": [0, 1.0, -0.5],
+			"end_pos": [1.5, 1.0, -0.5],
+			"lifetime": 4,
+			"interpolations": 1,
+			"texture_path": "invincible_dmc:textures/trail/power_trail4.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.35,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [32, 32, 32],
+			"begin_pos": [-0.2, 0.6, 0.5],
+			"end_pos": [-1.7, 0.6, 0.5],
+			"lifetime": 3,
+			"interpolations": 1,
+			"texture_path": "invincible_dmc:textures/trail/power_trail4.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.35,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [32, 32, 32],
+			"begin_pos": [-0.2, 0.6, 0.5],
+			"end_pos": [1.3, 0.6, 0.5],
+			"lifetime": 3,
+			"interpolations": 1,
+			"texture_path": "invincible_dmc:textures/trail/power_trail4.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.35,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [48, 48, 48],
+			"begin_pos": [0, 1.1, -0.3],
+			"end_pos": [-1.5, 1.1, -0.3],
+			"lifetime": 5,
+			"interpolations": 1,
+			"texture_path": "invincible_dmc:textures/trail/power_trail7.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.35,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [48, 48, 48],
+			"begin_pos": [0, 1.1, -0.3],
+			"end_pos": [1.5, 1.1, -0.3],
+			"lifetime": 5,
+			"interpolations": 1,
+			"texture_path": "invincible_dmc:textures/trail/power_trail7.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.35,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [48, 48, 48],
+			"begin_pos": [0, 1.05, -0.1],
+			"end_pos": [-1.5, 1.05, -0.1],
+			"lifetime": 5,
+			"interpolations": 1,
+			"texture_path": "invincible_dmc:textures/trail/power_trail5.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.0,
+			"end_time": 0.35,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [48, 48, 48],
+			"begin_pos": [0, 1.05, -0.1],
+			"end_pos": [1.5, 1.05, -0.1],
+			"lifetime": 5,
+			"interpolations": 1,
+			"texture_path": "invincible_dmc:textures/trail/power_trail5.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		}
+	]
+}

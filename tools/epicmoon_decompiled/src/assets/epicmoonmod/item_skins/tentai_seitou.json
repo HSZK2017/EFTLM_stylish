@@ -1,0 +1,17 @@
+{
+  "renderer": "epicmoonmod:tentai_seitou_renderer",
+  "mesh1_texture": "epicmoonmod:textures/item/tentai_skin.png",
+  "mesh2_texture": "epicmoonmod:textures/item/tentai_skin_mang.png",
+  "mesh2_glowtexture": "epicmoonmod:textures/item/tentai_skin_mang_glow.png",
+  "mesh1":"epicmoonmod:animmodels/tentai_seitou.json",
+  "mesh2":"epicmoonmod:animmodels/tentai_seitou_mang.json",
+  "trail": {
+    "color": [255, 230, 230],
+    "begin_pos": [0.0, 0.1, -0.2],
+    "end_pos": [0.0, 0.3, -2.1],
+    "lifetime": 15,
+    "interpolations": 10,
+    "texture_path": "epicmoonmod:textures/particle/tiger1.png",
+    "particle_type": "epicmoonmod:light_trail2"
+  }
+}

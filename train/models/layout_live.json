@@ -1,0 +1,43 @@
+{
+  "generic": [
+    "idle",
+    "swordmaster_atk",
+    "gunslinger_atk",
+    "ultimate",
+    "jc",
+    "parry",
+    "block",
+    "dodge",
+    "roll",
+    "cycle_melee",
+    "ranged"
+  ],
+  "skills": {
+    "11": "dmcyamato_drive",
+    "12": "dmcyamato_drive_mob",
+    "13": "dmcyamato_aerialflush",
+    "14": "dmcyamato_stomp",
+    "15": "dmcyamato_flare_cut",
+    "16": "dmcyamato_flare_just",
+    "17": "dmcyamato_flare_rapid",
+    "18": "dmcyamato_helmbreaker",
+    "19": "dmcyamato_judgementcut",
+    "20": "dmcyamato_judgementcut_all",
+    "21": "dmcyamato_judgementcut_charge",
+    "22": "dmcyamato_judgementcut_just",
+    "23": "dmcyamato_judgementcut_just_mob",
+    "24": "dmcyamato_killerbee",
+    "25": "dmcyamato_killerbee_hit",
+    "26": "dmcyamato_orbit",
+    "27": "dmcyamato_orbit_1",
+    "28": "dmcyamato_orbit_2",
+    "29": "dmcyamato_rapidslash",
+    "30": "dmcyamato_rapidslash_mob",
+    "31": "dmcyamato_upperslash",
+    "32": "dmcyamato_upperslash_hold",
+    "33": "dmcyamato_volcano",
+    "34": "dmcyamato_volcano_cut",
+    "35": "dmcyamato_volcano_hold",
+    "36": "void_slash"
+  }
+}

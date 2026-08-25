@@ -1,0 +1,28 @@
+package com.dmc.invincible_dmc.api.skill;
+
+public enum ActionTag {
+   NONE,
+   RAPID_SLASH,
+   RISING_STAR,
+   VOID_SLASH,
+   AERIAL_CLEAVE,
+   UPPER_SLASH_TAP,
+   UPPER_SLASH_HOLD,
+   COMBO_A_4,
+   COMBO_A_4_SDT,
+   COMBO_A_5_SDT,
+   COMBO_B_1,
+   COMBO_B_2_SDT,
+   COMBO_C_BASE,
+   COMBO_C_CHASE,
+   COMBO_C_FINISH,
+   COMBO_C_FINISH_NO_CHASE,
+   AERIAL_RAVE_A1,
+   AERIAL_RAVE_A2,
+   AERIAL_RAVE_A3,
+   AERIAL_RAVE_B1,
+   AERIAL_RAVE_B2,
+   COMBO_A_1,
+   COMBO_A_2,
+   COMBO_A_3;
+}

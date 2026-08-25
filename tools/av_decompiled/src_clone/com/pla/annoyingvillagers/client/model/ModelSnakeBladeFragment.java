@@ -1,0 +1,263 @@
+package com.pla.annoyingvillagers.client.model;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+
+public class ModelSnakeBladeFragment<T extends Entity> extends EntityModel<T> {
+   public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
+      ResourceLocation.fromNamespaceAndPath("annoyingvillagers", "modelsnakebladefragment"), "main"
+   );
+   private final ModelPart bb_main;
+
+   public ModelSnakeBladeFragment(ModelPart root) {
+      this.bb_main = root.m_171324_("bb_main");
+   }
+
+   public static LayerDefinition createBodyLayer() {
+      MeshDefinition meshdefinition = new MeshDefinition();
+      PartDefinition partdefinition = meshdefinition.m_171576_();
+      PartDefinition bb_main = partdefinition.m_171599_("bb_main", CubeListBuilder.m_171558_(), PartPose.m_171419_(0.0F, 24.0F, 0.0F));
+      PartDefinition cube_r1 = bb_main.m_171599_(
+         "cube_r1",
+         CubeListBuilder.m_171558_().m_171514_(2, 23).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -13.0F, -1.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r2 = bb_main.m_171599_(
+         "cube_r2",
+         CubeListBuilder.m_171558_().m_171514_(2, 23).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -16.0F, -1.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r3 = bb_main.m_171599_(
+         "cube_r3",
+         CubeListBuilder.m_171558_().m_171514_(4, 25).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -15.0F, 0.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r4 = bb_main.m_171599_(
+         "cube_r4",
+         CubeListBuilder.m_171558_().m_171514_(8, 27).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -13.0F, 0.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r5 = bb_main.m_171599_(
+         "cube_r5",
+         CubeListBuilder.m_171558_().m_171514_(10, 27).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -15.0F, -2.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r6 = bb_main.m_171599_(
+         "cube_r6",
+         CubeListBuilder.m_171558_().m_171514_(5, 24).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -14.0F, 1.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r7 = bb_main.m_171599_(
+         "cube_r7",
+         CubeListBuilder.m_171558_().m_171514_(5, 25).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -14.0F, -1.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r8 = bb_main.m_171599_(
+         "cube_r8",
+         CubeListBuilder.m_171558_().m_171514_(4, 25).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -15.0F, -1.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r9 = bb_main.m_171599_(
+         "cube_r9",
+         CubeListBuilder.m_171558_().m_171514_(10, 27).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -14.0F, 0.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r10 = bb_main.m_171599_(
+         "cube_r10",
+         CubeListBuilder.m_171558_().m_171514_(4, 27).m_171488_(-8.7F, 2.0F, -6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -14.0F, -2.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      PartDefinition cube_r11 = bb_main.m_171599_(
+         "cube_r11",
+         CubeListBuilder.m_171558_()
+            .m_171514_(4, 0)
+            .m_171488_(-8.8F, 8.0F, 10.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(5, 2)
+            .m_171488_(-8.6F, 9.0F, 9.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 2)
+            .m_171488_(-8.6F, 8.0F, 9.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 2)
+            .m_171488_(-8.6F, 10.0F, 8.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 2)
+            .m_171488_(-8.5F, 9.0F, 8.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.7F, 8.0F, 8.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 11.0F, 7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 10.0F, 7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 9.0F, 7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 10)
+            .m_171488_(-8.6F, 8.0F, 7.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 13.0F, 6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(11, 6)
+            .m_171488_(-8.6F, 12.0F, 6.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 11.0F, 6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 10.0F, 6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(4, 8)
+            .m_171488_(-8.5F, 9.0F, 6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 8.0F, 6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 12.0F, 5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 11.0F, 5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.8F, 10.0F, 5.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 0)
+            .m_171488_(-8.5F, 9.0F, 5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 8.0F, 5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 12.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 11.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 10.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.8F, 9.0F, 4.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(12, 14)
+            .m_171488_(-8.5F, 8.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 11.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 10.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.8F, 9.0F, 3.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(9, 8)
+            .m_171488_(-8.7F, 8.0F, 3.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 12.0F, 2.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 11.0F, 2.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 9.0F, 2.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(5, 12)
+            .m_171488_(-8.7F, 8.0F, 2.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 11.0F, 1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 8.0F, 1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 6.0F, 10.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 4.0F, 9.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 5.0F, 9.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 6.0F, 9.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(10, 2)
+            .m_171488_(-8.5F, 3.0F, 8.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 4)
+            .m_171488_(-8.7F, 4.0F, 8.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 14)
+            .m_171488_(-8.8F, 5.0F, 8.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(4, 0)
+            .m_171488_(-8.8F, 6.0F, 8.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 1.0F, 7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 2.0F, 7.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(10, 4)
+            .m_171488_(-8.6F, 3.0F, 7.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(10, 2)
+            .m_171488_(-8.8F, 4.0F, 7.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(4, 0)
+            .m_171488_(-8.8F, 5.0F, 7.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(4, 0)
+            .m_171488_(-8.7F, 6.0F, 7.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(5, 10)
+            .m_171488_(-8.7F, 1.0F, 6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(10, 10)
+            .m_171488_(-8.8F, 2.0F, 6.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 7)
+            .m_171488_(-8.8F, 3.0F, 6.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(10, 10)
+            .m_171488_(-8.8F, 4.0F, 6.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.6F, 5.0F, 6.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(5, 6)
+            .m_171488_(-8.7F, 6.0F, 6.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 7)
+            .m_171488_(-8.8F, 2.0F, 5.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(10, 10)
+            .m_171488_(-8.8F, 3.0F, 5.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(10, 12)
+            .m_171488_(-8.7F, 4.0F, 5.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(4, 8)
+            .m_171488_(-8.6F, 5.0F, 5.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.6F, 6.0F, 5.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 3.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 4.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(4, 8)
+            .m_171488_(-8.6F, 5.0F, 4.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 6.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 4.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 5.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 6.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(5, 12)
+            .m_171488_(-8.7F, 5.0F, 2.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 6.0F, 2.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 6.0F, 1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 7.0F, 11.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(4, 0)
+            .m_171488_(-8.8F, 7.0F, 10.0F, 1.6F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(10, 0)
+            .m_171488_(-8.7F, 7.0F, 9.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(5, 4)
+            .m_171488_(-8.7F, 7.0F, 8.0F, 1.4F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(0, 12)
+            .m_171488_(-8.6F, 7.0F, 7.0F, 1.2F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 7.0F, 6.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 7.0F, 5.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 7.0F, 4.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 7.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 7.0F, 2.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 7.0F, 1.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 7.0F, 0.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+            .m_171514_(6, 14)
+            .m_171488_(-8.5F, 12.0F, 3.0F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)),
+         PartPose.m_171423_(8.0F, -11.0F, -8.0F, 0.5236F, 0.0F, 0.0F)
+      );
+      return LayerDefinition.m_171565_(meshdefinition, 16, 32);
+   }
+
+   public void m_6973_(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+   }
+
+   public void m_7695_(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+      this.bb_main.m_104306_(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+   }
+}

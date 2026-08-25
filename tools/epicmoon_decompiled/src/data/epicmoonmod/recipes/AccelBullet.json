@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        " B ",
+        "BSB"
+    ],
+    "key":
+    {
+        "B": { "item" : "minecraft:iron_ingot" },
+        "S": { "item" : "minecraft:gunpowder" }
+    },
+    "result":
+    {
+        "item" : "epicmoonmod:accel_round",
+        "count" : 1
+    }
+}

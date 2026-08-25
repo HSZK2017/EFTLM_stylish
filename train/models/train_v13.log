@@ -1,0 +1,26 @@
+[main] loading boss data...
+  731 files, skipped 213 short(<30 steps), kept 518
+[main] loading PER relabeled weights: models/relabeled_20260813_121842.npz
+[main] PER weights applied (mean=0.791)
+[main] loading zombie data (mix 10%)...
+  691 files, skipped 3 short(<30 steps), kept 688
+[main] zombie downsampled 288953 -> 260058 boss + 28895 zombie
+[main] forcing input dim 16 -> 18 (pad zeros)
+[pretrain] melee BC on 12693 samples (input 18)...
+  pretrain epoch 0: loss=2.2744 acc=0.598
+  pretrain epoch 5: loss=0.8015 acc=0.786
+  pretrain epoch 10: loss=0.7272 acc=0.820
+  pretrain epoch 14: loss=0.7079 acc=0.821
+[train] action distribution within caps
+[train] device=cuda, samples=288953
+[train] BC warmup...
+  bc epoch 0: loss=0.5934 acc=0.903
+  bc epoch 5: loss=0.5364 acc=0.909
+  bc epoch 10: loss=0.5275 acc=0.910
+  bc epoch 15: loss=0.5232 acc=0.911
+  bc epoch 19: loss=0.5206 acc=0.912
+[train] reward-weighted BC...
+  rwbc epoch 0: loss=0.5317 acc=0.911
+  rwbc epoch 1: loss=0.5291 acc=0.908
+[export] model written: models/rl_model_v13.bin (28544 bytes)
+[export] meta written: models/rl_model_v13.bin.meta.txt

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Specification-Title: invincible_dmc
+Specification-Vendor: Arcad1a, kevinssg, Inspiration Mushroom(GuHao_), I
+ _Black_Demon_I, hill, Hant0n
+Specification-Version: 1
+Implementation-Title: Invincible-DMC
+Implementation-Version: 1.0.4
+Implementation-Vendor: Arcad1a, kevinssg, Inspiration Mushroom(GuHao_), 
+ I_Black_Demon_I, hill, Hant0n
+Implementation-Timestamp: 2026-08-21T04:07:57+0800
+MixinConfigs: invincible_dmc.mixins.json
+

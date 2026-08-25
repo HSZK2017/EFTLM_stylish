@@ -1,0 +1,28 @@
+{
+  "type": "invincible_dmc:void",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "layers": [
+        {
+          "block": "minecraft:air",
+          "height": 58
+        },
+        {
+          "block": "minecraft:barrier",
+          "height": 3
+        },
+        {
+          "block": "minecraft:water",
+          "height": 1
+        },
+        {
+          "block": "minecraft:barrier",
+          "height": 1
+        }
+      ],
+      "biome": "invincible_dmc:demon_realm",
+      "structure_overrides": false
+    }
+  }
+}

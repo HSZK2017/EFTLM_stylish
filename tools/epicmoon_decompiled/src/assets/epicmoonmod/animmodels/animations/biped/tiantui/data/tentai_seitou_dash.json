@@ -1,0 +1,29 @@
+{
+	"trail_effects": [
+		{
+			"start_time": 0.0,
+			"end_time": 0.4,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand"
+		},
+		{
+			"start_time": 0.45,
+			"end_time": 0.55,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.1, -0.2],
+			"end_pos": [0.0, 0.3, -2.1],
+			"lifetime": 10,
+			"interpolations": 2,
+			"color": [255, 255, 255],
+			"texture_path": "epicmoonmod:textures/particle/tiger2.png",
+			"particle_type": "epicmoonmod:light_trail"
+		},
+		{
+			"start_time": 0.76,
+			"end_time": 0.86,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand"
+		}
+	]
+}

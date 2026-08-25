@@ -1,0 +1,54 @@
+{
+  "trail_effects": [
+    {
+      "color": [
+        64,
+        64,
+        64
+      ],
+      "begin_pos": [
+        0,
+        0.2,
+        0.03
+      ],
+      "end_pos": [
+        0,
+        0.2,
+        -0.03
+      ],
+      "start_time": 0.01,
+      "end_time": 2,
+      "lifetime": 8,
+      "interpolations": 1,
+      "joint": "Root",
+      "item_skin_hand": "main_hand",
+      "texture_path": "invincible_dmc:textures/trail/summoned_sword5.png",
+      "particle_type": "invincible_dmc:bloom_trail_sword"
+    },
+    {
+      "color": [
+        64,
+        64,
+        64
+      ],
+      "begin_pos": [
+        -0.2,
+        0.5,
+        0.05
+      ],
+      "end_pos": [
+        0.2,
+        -0.5,
+        -0.05
+      ],
+      "start_time": 0.01,
+      "end_time": 2,
+      "lifetime": 4,
+      "interpolations": 1,
+      "joint": "Root",
+      "item_skin_hand": "main_hand",
+      "texture_path": "invincible_dmc:textures/trail/summoned_sword2.png",
+      "particle_type": "invincible_dmc:bloom_trail_sword"
+    }
+  ]
+}

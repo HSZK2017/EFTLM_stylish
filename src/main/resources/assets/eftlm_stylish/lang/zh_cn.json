@@ -1,0 +1,6 @@
+{
+  "maid_skill.eftlm_stylish.stylish_combat": "华丽连段",
+  "maid_skill.eftlm_stylish.stylish_combat.desc": "DMC 风格战斗 AI：剑圣/枪神风格切换、连段轮换武器、浮空 JC 取消、弹反、翻滚起身、远程收尾；空闲血量偏低时自动使用背包中的治疗药水/金苹果，或缓慢回血。",
+  "message.eftlm_stylish.style.swordmaster": "华丽连段：切换为 剑圣 风格",
+  "message.eftlm_stylish.style.gunslinger": "华丽连段：切换为 枪神 风格"
+}

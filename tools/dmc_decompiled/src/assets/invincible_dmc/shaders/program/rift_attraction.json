@@ -1,0 +1,24 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "invincible_dmc:blit",
+  "fragment": "invincible_dmc:rift_attraction",
+  "attributes": [ "Position" ],
+  "samplers": [
+    { "name": "DiffuseSampler" }
+  ],
+  "uniforms": [
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+    { "name": "OutSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] },
+    { "name": "LineStart", "type": "float", "count": 2, "values": [ 0.25, 0.25 ] },
+    { "name": "LineEnd", "type": "float", "count": 2, "values": [ 0.75, 0.75 ] },
+    { "name": "Strength", "type": "float", "count": 1, "values": [ 0.0095 ] },
+    { "name": "Radius", "type": "float", "count": 1, "values": [ 0.060 ] },
+    { "name": "Intensity", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "StartTipFade", "type": "float", "count": 1, "values": [ 1.0 ] },
+    { "name": "EndTipFade", "type": "float", "count": 1, "values": [ 1.0 ] }
+  ]
+}

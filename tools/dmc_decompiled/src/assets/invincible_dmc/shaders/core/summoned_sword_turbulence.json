@@ -1,0 +1,140 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "srcalpha",
+    "dstrgb": "one"
+  },
+  "vertex": "invincible_dmc:summoned_sword_turbulence",
+  "fragment": "invincible_dmc:summoned_sword_turbulence",
+  "attributes": [
+    "Position",
+    "Color",
+    "UV0",
+    "UV1",
+    "UV2",
+    "Normal"
+  ],
+  "samplers": [
+    { "name": "Sampler0" },
+    { "name": "Sampler1" },
+    { "name": "Sampler2" }
+  ],
+  "uniforms": [
+    {
+      "name": "ModelViewMat",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+      ]
+    },
+    {
+      "name": "ProjMat",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+      ]
+    },
+    {
+      "name": "PoseMat",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+      ]
+    },
+    {
+      "name": "InversePoseMat",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1
+      ]
+    },
+    {
+      "name": "ColorModulator",
+      "type": "float",
+      "count": 4,
+      "values": [1, 1, 1, 1]
+    },
+    {
+      "name": "GameTime",
+      "type": "float",
+      "count": 1,
+      "values": [0]
+    },
+    {
+      "name": "TurbulenceStrength",
+      "type": "float",
+      "count": 1,
+      "values": [0.03]
+    },
+    {
+      "name": "UvDistortionStrength",
+      "type": "float",
+      "count": 1,
+      "values": [0.02]
+    },
+    {
+      "name": "FlowSpeed",
+      "type": "float",
+      "count": 1,
+      "values": [0.75]
+    },
+    {
+      "name": "EnergyColor",
+      "type": "float",
+      "count": 3,
+      "values": [0.278431, 0.580392, 0.760784]
+    },
+    {
+      "name": "SecondaryEnergyColor",
+      "type": "float",
+      "count": 3,
+      "values": [0.16, 0.36, 0.52]
+    },
+    {
+      "name": "CoreEnergyColor",
+      "type": "float",
+      "count": 3,
+      "values": [0.42, 0.70, 0.88]
+    },
+    {
+      "name": "MagicVeinStrength",
+      "type": "float",
+      "count": 1,
+      "values": [1.15]
+    },
+    {
+      "name": "EmissiveStrength",
+      "type": "float",
+      "count": 1,
+      "values": [0.94]
+    },
+    {
+      "name": "TintColor",
+      "type": "float",
+      "count": 3,
+      "values": [0.278431, 0.580392, 0.760784]
+    },
+    {
+      "name": "TintStrength",
+      "type": "float",
+      "count": 1,
+      "values": [0.85]
+    }
+  ]
+}

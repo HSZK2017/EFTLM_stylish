@@ -1,0 +1,17 @@
+{
+	"trail_effects": [
+		{
+			"start_time": 0.2,
+			"end_time": 0.2,
+			"joint": "Tool_L",
+			"item_skin_hand": "main_hand",
+			"begin_pos": [0.0, 0.1, -0.3],
+			"end_pos": [0.0, 0.1, -0.3],
+			"lifetime": 1,
+			"interpolations": 1,
+			"color": [255, 230, 230],
+			"texture_path": "epicmoonmod:textures/particle/Air.png",
+			"particle_type": "epicmoonmod:effek_trail8"
+		}
+	]
+}

@@ -1,0 +1,59 @@
+{
+  "MAINHAND": [
+    "black_fire_sword",
+    "blue_flame_sword",
+    "centranos_sword",
+    "clow_sword",
+    "diamond_blaster_sword",
+    "diamond_warblade",
+    "diamond_falchion",
+    "diamond_great_falchion",
+    "diamond_sabre",
+    "hooked_iron_sword",
+    "hooked_golden_sword",
+    "iron_cleaver",
+    "diamond_laevateinn",
+    "diamond_longsword",
+    "golden_longsword",
+    "iron_longsword",
+    "diamond_chipped_longsword",
+    "dnax_hooked_sword",
+    "flanker_hooked_sword",
+    "iron_twin_blade_katana",
+    "earth_axe",
+    "jade_sword",
+    "red_diamond_sword",
+    "exterminator_battleaxe",
+    "red_axe",
+    "iron_double_bladed_halberd",
+    "diamond_armblade",
+    "knife",
+    "blackscratcher",
+    "diamond_sickle",
+    "diamond_spear",
+    "iron_sickle",
+    "twin_diamond_spear",
+    "golden_mace",
+    "diamond_mace",
+    "golden_moon_blade",
+    "diamond_moon_blade"
+  ],
+  "OFFHAND": [
+  ],
+  "FEET": [
+    "ruby_boots",
+    "unlight_diamond_boots"
+  ],
+  "LEGS": [
+    "ruby_leggings",
+    "unlight_diamond_leggings"
+  ],
+  "CHEST": [
+    "ruby_chestplate",
+    "unlight_diamond_chestplate"
+  ],
+  "HEAD": [
+    "ruby_helmet",
+    "unlight_diamond_helmet"
+  ]
+}

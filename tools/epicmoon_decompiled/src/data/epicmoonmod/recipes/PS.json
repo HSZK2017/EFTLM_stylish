@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:smithing_transform",
+    "base": {
+        "item": "minecraft:golden_sword"
+    },
+    "addition": {
+        "item" : "epicfight:golden_tachi"
+    },
+    "result": {
+        "item": "epicmoonmod:valencina_dual_swords"
+    },
+    "template": {
+      "item": "minecraft:nether_star"
+    }
+}

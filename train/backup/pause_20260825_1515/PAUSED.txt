@@ -1,0 +1,3 @@
+﻿Paused for architecture review at 2026-08-25 15:15
+Server stopped gracefully, daemons stopped, data backed up.
+Do NOT auto-restart until code architecture update is complete.

@@ -1,0 +1,56 @@
+{
+  "shot": {
+    "subtitles": "sounds.epicmoonmod.shot",
+    "sounds": [
+      "epicmoonmod:shot"
+    ]
+  },
+  "shot2": {
+    "subtitles": "sounds.epicmoonmod.shot2",
+    "sounds": [
+      "epicmoonmod:shot2"
+    ]
+  },
+  "shot3": {
+    "subtitles": "sounds.epicmoonmod.shot3",
+    "sounds": [
+      "epicmoonmod:shot3"
+    ]
+  },
+  "shot4": {
+    "subtitles": "sounds.epicmoonmod.shot4",
+    "sounds": [
+      "epicmoonmod:shot4"
+    ]
+  },
+  "shot5": {
+    "subtitles": "sounds.epicmoonmod.shot5",
+    "sounds": [
+      "epicmoonmod:shot5"
+    ]
+  },
+  "reload1": {
+    "subtitles": "sounds.epicmoonmod.reload1",
+    "sounds": [
+      "epicmoonmod:reload1"
+    ]
+  },
+  "reload2": {
+    "subtitles": "sounds.epicmoonmod.reload2",
+    "sounds": [
+      "epicmoonmod:reload2"
+    ]
+  },
+  "reload3": {
+    "subtitles": "sounds.epicmoonmod.reload3",
+    "sounds": [
+      "epicmoonmod:reload3"
+    ]
+  },
+  "tremorburst": {
+    "subtitles": "sounds.epicmoonmod.tremorburst",
+    "sounds": [
+      "epicmoonmod:tremorburst"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+==================================================
+EFTLM 训练体系收尾关停报告
+时间: 2026-08-15 05:21 (RCON stop 生效, 世界已保存)
+==================================================
+
+【v16 训练状态】完成 ✅
+- 05:10:17 iterate round 2 触发
+- 05:12:06 训练完成: rl_model_v16.bin (38164 bytes), BC/rwbc acc 0.851
+- 05:12:06 已部署并热重载: [rl] model reloaded: input=18 output=64 layers=4
+- 05:12:08 锚定 round 3 (11:10:17) —— 已被本次收尾终止
+
+【备份清单】E:\program\JAVA\EFTLM-example\train\backup\shutdown_20260815_0520\
+- trajectories/: 4209 文件, 64,166,772 bytes (全部 traj_*.bin)
+- rl_model.bin  (38164) = 部署中的 v16
+- rl_model_v16.bin + .meta.txt
+- rl_model_version.txt: version=16, file=rl_model_v16.bin, time=2026-08-15 05:12:06
+
+【进程停止结果】
+- java 服务器 (forge 1.20.1-47.4.13, PID 4432): RCON stop 优雅退出 ✅
+- iterate 守护 (PID 31472): 已停止 ✅
+- server_guard (PID 10148): 已停止 ✅ (防自动拉起)
+- server_reminder (PID 26804): 已停止 ✅
+- 复查: 无 E 盘遗留进程
+- F 盘体系: 未触碰 (脚本按命令行匹配排除 F:)
+
+【下次唤起指引】
+1. 启动服务器: 运行 prod_server 启动脚本 (java @user_jvm_args.txt @libraries/.../win_args.txt nogui)
+2. 重启 iterate 训练守护:
+   cd E:\program\JAVA\EFTLM-example
+   D:\Python\python.exe -u train/iterate.py --server-dir "E:\program\JAVA\touhou little maid - unknow sky area\prod_server" --project-dir E:\program\JAVA\EFTLM-example --hours 6 --anchor server
+3. RL 状态: 服务器启动后 rl_model.bin 即 v16, 无需额外操作
+==================================================

@@ -1,0 +1,117 @@
+{
+	"trail_effects": [
+		{
+			"start_time": 0.4,
+			"end_time": 0.6,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"color": [48, 48, 48],
+			"texture_path": "invincible_dmc:textures/trail/power_trail3.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.4,
+			"end_time": 0.6,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"color": [128, 128, 128],
+			"begin_pos": [-0.5, 0.5, 0.5],
+			"end_pos": [-0.5, 0.5, -1.5],
+			"lifetime": 6,
+			"interpolations": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail7.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.4,
+			"end_time": 0.6,
+			"joint": "Tool_R",
+			"item_skin_hand": "main_hand",
+			"color": [128, 128, 128],
+			"begin_pos": [0.25, 0.5, 0.5],
+			"end_pos": [-0.25, 0.5, -2.5],
+			"lifetime": 6,
+			"interpolations": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail5.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.1,
+			"end_time": 0.6,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [48, 48, 48],
+			"begin_pos": [0, 1.2, -0],
+			"end_pos": [-2, 1.2, -0],
+			"lifetime": 6,
+			"interpolations": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail4.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.1,
+			"end_time": 0.6,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [48, 48, 48],
+			"begin_pos": [0, 1.2, -0],
+			"end_pos": [2, 1.2, -0],
+			"lifetime": 6,
+			"interpolations": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail4.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.1,
+			"end_time": 0.6,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [128, 128, 128],
+			"begin_pos": [0, 0.8, -0],
+			"end_pos": [-2, 0.8, -0],
+			"lifetime": 6,
+			"interpolations": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail5.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.1,
+			"end_time": 0.6,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [128, 128, 128],
+			"begin_pos": [0, 0.8, -0],
+			"end_pos": [2, 0.8, -0],
+			"lifetime": 6,
+			"interpolations": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail5.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.1,
+			"end_time": 0.6,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [128, 128, 128],
+			"begin_pos": [0, 1, -0],
+			"end_pos": [-1.5, 1, -0],
+			"lifetime": 6,
+			"interpolations": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail7.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		},
+		{
+			"start_time": 0.1,
+			"end_time": 0.6,
+			"joint": "Root",
+			"item_skin_hand": "main_hand",
+			"color": [128, 128, 128],
+			"begin_pos": [0, 1, -0],
+			"end_pos": [1.5, 1, -0],
+			"lifetime": 6,
+			"interpolations": 5,
+			"texture_path": "invincible_dmc:textures/trail/power_trail7.png",
+			"particle_type": "invincible_dmc:bloom_trail"
+		}
+	]
+}

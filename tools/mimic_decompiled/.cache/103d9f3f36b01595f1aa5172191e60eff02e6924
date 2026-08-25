@@ -1,0 +1,5 @@
+// 1.20.1	2025-10-07T19:10:05.9786311	Registries
+d0c493b758750f45f181bc495d67e747a7760e88 data/mimic/dimension/the_lethean_sea.json
+600e819b0ef1b642030f0e675d253421abfff7e0 data/mimic/dimension_type/the_lethean_sea_type.json
+bcff8d10ecb9bff3b694176dcfff332ceb30be0d data/mimic/worldgen/biome/the_lethean_sea.json
+8f134edab4c7ef4da7fec41e8d40e7b4096ddf14 data/mimic/worldgen/noise_settings/air.json

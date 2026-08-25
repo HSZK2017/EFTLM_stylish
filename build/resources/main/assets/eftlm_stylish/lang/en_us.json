@@ -1,0 +1,6 @@
+{
+  "maid_skill.eftlm_stylish.stylish_combat": "Stylish Combo",
+  "maid_skill.eftlm_stylish.stylish_combat.desc": "DMC-style combat AI: swordmaster/gunslinger style switching, weapon cycling per combo loop, aerial JC cancels, parry, roll recovery and ranged finishers; auto-uses healing potions/golden apples from inventory when idle and low on health, otherwise slowly regenerates.",
+  "message.eftlm_stylish.style.swordmaster": "Stylish Combo: switched to Swordmaster style",
+  "message.eftlm_stylish.style.gunslinger": "Stylish Combo: switched to Gunslinger style"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "epicmoonmod:dualskill",
+  "attributes": {
+    "two_hand": {
+      "impact": 2.0,
+      "armor_negation":40.0,
+      "max_strikes":3
+    }
+  }
+}

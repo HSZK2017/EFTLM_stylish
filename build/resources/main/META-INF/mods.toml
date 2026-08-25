@@ -1,0 +1,46 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+mixinConfigs=["eftlm_stylish.mixins.json"]
+
+[[mods]]
+modId="eftlm_stylish"
+version="1.0.0"
+displayName="史诗战斗:车万女仆[华丽连段]"
+description='''EFTLM addon: maid fights in DMC style - swordmaster / gunslinger style switching, weapon cycling, JC combos and flair management.'''
+authors="EFTLM Stylish"
+
+[[dependencies.eftlm_stylish]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1]"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.eftlm_stylish]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.eftlm_stylish]]
+modId="epicfight"
+mandatory=true
+versionRange="[20.14,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.eftlm_stylish]]
+modId="ef_tlm"
+mandatory=true
+versionRange="[1.3,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.eftlm_stylish]]
+modId="touhou_little_maid"
+mandatory=true
+versionRange="[1.5.2,)"
+ordering="AFTER"
+side="BOTH"
