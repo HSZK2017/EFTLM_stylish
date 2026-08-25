@@ -9,6 +9,7 @@ version="${mod_version}"
 displayName="史诗战斗:车万女仆[华丽连段]"
 description='''${mod_description}'''
 authors="${mod_authors}"
+credits="""致谢：merlin204（The Mimic 模组作者，授权借鉴经验驱动招式调度思路）；AnnoyingVillagers（思路来源，源码 GPL-3.0 开源）"""
 
 [[dependencies.${mod_id}]]
 modId="minecraft"

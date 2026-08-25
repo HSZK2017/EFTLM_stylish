@@ -25,7 +25,8 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * P2.5 道具战斗（仿 AVNpc 战斗道具，报告 1.5.4）：受击方块格挡采用三级策略——
+ * P2.5 道具战斗（思路来源：AnnoyingVillagers 模组，源码 GPL-3.0 开源；
+ * 致谢见 README 与 mods.toml credits，报告 1.5.4）：受击方块格挡采用三级策略——
  * <ol>
  *     <li><b>Herobrine 式放墙</b>（对应 AV {@code placeRandomFrontWall}）：朝攻击方向
  *         放置短墙（黑曜石优先，其次背包任意方块），阻挡攻击者接近与弹道；

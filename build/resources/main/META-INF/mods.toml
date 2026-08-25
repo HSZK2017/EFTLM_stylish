@@ -9,6 +9,7 @@ version="1.0.0"
 displayName="史诗战斗:车万女仆[华丽连段]"
 description='''EFTLM addon: maid fights in DMC style - swordmaster / gunslinger style switching, weapon cycling, JC combos and flair management.'''
 authors="EFTLM Stylish"
+credits="""致谢：merlin204（The Mimic 模组作者，授权借鉴经验驱动招式调度思路）；AnnoyingVillagers（思路来源，源码 GPL-3.0 开源）"""
 
 [[dependencies.eftlm_stylish]]
 modId="minecraft"

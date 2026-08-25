@@ -11,13 +11,14 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 /**
- * AV 授权防御 mixin：NullEntity 的 EpicFight patch 缺失防护。
+ * AV 防御 mixin（思路来源：AnnoyingVillagers，源码 GPL-3.0 开源）：NullEntity 的
+ * EpicFight patch 缺失防护。
  * <p>
  * 部署验证 2026-08-26 崩溃（crash-2026-08-25_17.44.37）：`NullEntity.m_6075_`
  * （= Entity.travel 的 SRG 名，NullEntity.java:511）中
  * `!this.getLivingEntityPatch().isStunned()` 对 {@code getLivingEntityPatch() == null}
  * 无空检查 → NPE（实体 patch 偶发缺失，与模组加载时序/实体生成时机相关）。
- * 作者已授权 mixin 修复：{@code m_6075_} 开头检查 patch 缺失 → 取消本 tick 的
+ * 依据其开源许可做防御性修复：{@code m_6075_} 开头检查 patch 缺失 → 取消本 tick 的
  * travel（实体保持存活与 tick，patch 恢复后自然恢复），避免整个实体崩溃服务器。
  * <p>
  * 映射机制（2026-08-25 修复注入失败）：Forge 1.20.1 生产环境以 <b>SRG 名</b>运行

@@ -23,7 +23,7 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
  *     dest.setConnectedAnimations(from, this);                  // ← toAnimation 在此才赋值
  * </pre>
  * 即：EFN 的播放速度计算在 {@code dest.toAnimation == null} 的窗口内被触发时 NPE。
- * 此前本模组以"播放纪律"（空闲才播）豁免；作者已授权 mixin 根因修复——
+ * 此前本模组以"播放纪律"（空闲才播）豁免；此处做防御性 mixin 根因修复——
  * 拦截 {@code getPlaySpeed} 调用，LinkAnimation 的 toAnimation 未设置时返回默认速度 1.0F，
  * 修复后高频无缝连击（行为表 / RL / 未来意图队列 reserveAnimation 路径）同样安全。
  * <p>

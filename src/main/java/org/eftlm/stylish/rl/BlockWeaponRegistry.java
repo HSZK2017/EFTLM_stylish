@@ -10,7 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * P5.5 方块武器注册表（仿 AV "Him克隆"（{@code HerobrineCloneEntity}）的黑曜石方块武器体系）。
+ * P5.5 方块武器注册表（思路来源：AV "Him克隆"（{@code HerobrineCloneEntity}）的黑曜石
+ * 方块武器体系，源码 GPL-3.0 开源）。
  * <p>
  * AV 侧机制（反编译 {@code HerobrineCloneEntity / HerobrineObsidianWeapon / ShadowHerobrineEntity}）：
  * 克隆体主手持有专用物品 {@code OBSIDIAN_WEAPON}（EpicFight 注册为 SWORD 类别），Patch 把该类别
