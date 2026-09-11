@@ -83,6 +83,23 @@ public final class RlBrain {
     /** 每个女仆连击熔断冷却 tick（防反复触发） */
     private static final java.util.Map<java.util.UUID, Integer> COMBO_COOLDOWN = new java.util.HashMap<>();
 
+    /**
+     * 幽灵目标写回 ATTACK_TARGET 的最低置信度（P0 修复）：
+     * 低于该值说明目标已脱锁较久（0.98^t 衰减），只保留在目标列表里用于威胁评估与位置预测，
+     * 不再作为实际攻击目标，避免女仆追着外推位置空跑。
+     */
+    private static final float GHOST_LOCK_MIN_CONFIDENCE = 0.5F;
+
+    /**
+     * 强制等待决策计数（动作窗口关闭、本 tick 无真实决策可做）。
+     * 2026-09-11：这类步不再写入训练集（见 tick 内注释），计数用于心跳观测
+     * ——它同时是"有效决策密度"指标：skipped 越多说明可决策窗口越稀疏。
+     * P2-6：改为<b>按女仆</b>计数。原实现是单个全局 AtomicLong，任何女仆跨过
+     * {@code tickCount % 100 == 0} 就把**所有人**的增量一起领走（getAndSet(0)），
+     * 于是心跳行里的 forced_wait_skipped 被错误归因到"恰好打印的那个女仆"。
+     */
+    private static final java.util.Map<java.util.UUID, long[]> FORCED_WAIT = new java.util.HashMap<>();
+
     private RlBrain() {
     }
 
@@ -101,7 +118,11 @@ public final class RlBrain {
         TargetTracker.update(maid);
         // 根据攻击列表中全部目标的威胁/血量/距离选择当前主目标
         TargetTracker.TrackedTarget priority = TargetTracker.selectPriorityTarget(maid);
-        if (priority != null && priority.getEntity() != null && priority.getEntity().isAlive()) {
+        // P0 修复（2026-09-10）：幽灵目标（脱锁记忆）只在置信度足够高时才写回 TLM brain 的
+        // ATTACK_TARGET。否则一个早已离开扫描范围、只剩外推位置的陈旧目标会被每 tick 写回，
+        // 让女仆长期追着一个不存在的位置（同时也是"无目标降级待机"约束失效的原因）。
+        if (priority != null && priority.getEntity() != null && priority.getEntity().isAlive()
+                && (!priority.isGhost() || priority.getConfidence() >= GHOST_LOCK_MIN_CONFIDENCE)) {
             maid.getBrain().setMemory(net.minecraft.world.entity.ai.memory.MemoryModuleType.ATTACK_TARGET, priority.getEntity());
             patch.setAttakTargetSync(priority.getEntity());
         }
@@ -121,20 +142,57 @@ public final class RlBrain {
         if (maid.tickCount % DECISION_INTERVAL != 0) {
             return;
         }
-        // P5.6 自适应规则模式：自适应影子女仆 / 自我博弈对手女仆不推理 RL
-        // （CombatLibrary.tick 已驱动节奏统计/经验调度出招；反应层防守照常在其上方运行）
+        // P5.6 自适应规则模式：自适应影子女仆不推理 RL（CombatLibrary.tick 已驱动；
+        // 反应层防守照常在其上方运行）。P5.8：selfplay 对手改为模型驱动（模型池），
+        // 不再走规则控制（isRuleControlled 已移除对手女仆判定）。
         if (CombatLibrary.isRuleControlled(maid)) {
             return;
         }
         float[] state = RlState.collect(patch);
         // 动态行动空间（Agent 注册表）：固定段 0..10 + 各执行器贡献的技能池槽位 11..26
         RlActionSlot[] layout = RlActionRegistry.buildLayout(patch);
-        java.util.List<Integer> valid = validActions(layout);
+        // ---- 动作窗口掩码（2026-09-10 决策质量修复）----
+        // 动机：instructor 统计 rejected_rate=96.65%（346 万步）且 weakness=["rejected_high","kill_low"]。
+        // 根因：决策 5 tick 一次而攻击动画 20~40 tick，绝大多数决策落在"自己不可打断的动画"里，
+        // 输出的攻击被 Commitment 门控拒绝（REJECTED_BUSY）；更糟的是这些步**仍按模型选择的动作**
+        // 进入 BC/AWR（P5.7 的拒绝标签改写只覆盖技能槽，generic 动作 0..10 不受影响）——
+        // 等于把"根本执行不了的动作用作正样本"，正是 rejected_high 自我强化的根源。
+        // 现在：动作窗口关闭时只保留"等待(idle)"、紧急动作(roll/dodge/parry)与防守技能槽，
+        // 其余槽位置零；ε-greedy 也只在可执行集合内探索 → 有效决策率从 ~3% 回到 ~85%+。
+        boolean actionWindowOpen = CommitmentCatalog.canExecuteNow(patch, false);
+        LivingEntity maskTarget = patch.getTarget();
+        boolean[] masked = new boolean[layout.length];
+        java.util.List<Integer> valid = new java.util.ArrayList<>(RlActEvent.TOTAL_ACTIONS);
+        for (int i = 0; i < layout.length; i++) {
+            RlActionSlot s = layout[i];
+            if (s == null) {
+                masked[i] = true;
+                continue;
+            }
+            boolean windowBlocked = !actionWindowOpen && !isUrgentSlot(s) && !isIdleSlot(s);
+            boolean expMasked = CombatLibrary.shouldMaskSlot(maid, s, maskTarget);
+            masked[i] = windowBlocked || expMasked;
+            if (!masked[i]) {
+                valid.add(i);
+            }
+        }
+        if (valid.isEmpty()) {
+            valid.add(RlActEvent.ACT_IDLE); // 防御性兜底（idle 永不被掩码，理论上不可达）
+        }
         int action;
         float[] probs = null;
         boolean modelSrc = false;
+        boolean opponent = org.eftlm.stylish.arena.AutoArena.selfplayMode()
+                && org.eftlm.stylish.arena.AutoArena.isAdaptiveMaid(maid);
         RlModel m = ensureModel(maid);
-        if (m != null
+        // P5.8 随机对手注入：selfplay_opponent=random 且掷骰命中比例 → 对手走纯随机动作
+        // （防模型"钻牛角尖"过度适应特定策略；随机注入不采集数据，不影响训练分布）
+        if (opponent && RlConfig.selfplayOpponent.equals("random")
+                && RANDOM.nextFloat() < RlConfig.selfplayRandomRatio) {
+            action = valid.get(RANDOM.nextInt(valid.size()));
+            modelSrc = false;
+            probs = null;
+        } else if (m != null
                 && (m.getInputDim() == RlState.STATE_DIM
                 || m.getInputDim() == RlState.OLD_STATE_DIM_18
                 || m.getInputDim() == RlState.LEGACY_STATE_DIM)
@@ -143,16 +201,14 @@ public final class RlBrain {
             float[] in = m.getInputDim() == state.length
                     ? state : java.util.Arrays.copyOf(state, m.getInputDim());
             probs = m.forward(in);
-            // 无效行动掩码：无执行器的槽位置 0（argMax 天然不选）；
-            // P5.6 命中网格经验掩码：该技能动画已有命中网格且当前目标不在网格 → 置 0
-            // （只作用推理期选择，不进训练数据；减少无效出招、加快训练收敛）
-            LivingEntity maskTarget = patch.getTarget();
-            for (int i = 0; i < layout.length; i++) {
-                if (layout[i] == null || CombatLibrary.shouldMaskSlot(maid, layout[i], maskTarget)) {
+            // 无效行动掩码：无执行器的槽位 / 动作窗口关闭时的非紧急动作 /
+            // P5.6 命中网格经验外（该技能动画已有命中网格且当前目标不在网格）
+            for (int i = 0; i < layout.length && i < probs.length; i++) {
+                if (masked[i]) {
                     probs[i] = 0.0F;
                 }
             }
-            // ε-greedy 探索（仅在有效行动内随机）
+            // ε-greedy 探索（仅在**可执行**行动内随机）
             if (RANDOM.nextFloat() < RlConfig.epsilon) {
                 action = valid.get(RANDOM.nextInt(valid.size()));
             } else {
@@ -190,6 +246,7 @@ public final class RlBrain {
                 || action == RlActEvent.ACT_ULTIMATE || action == RlActEvent.ACT_JC
                 || action == RlActEvent.ACT_RANGED
                 || action == RlActEvent.ACT_CYCLE_MELEE
+                || action == RlActEvent.ACT_PARRY || action == RlActEvent.ACT_BLOCK
                 || (action == RlActEvent.ACT_ROLL && state[9] < 0.5F)) {
             LivingEntity t = patch.getTarget();
             if ((t == null || !t.isAlive()) && !hasAnyTarget(maid)) {
@@ -202,6 +259,17 @@ public final class RlBrain {
         if (slot == null) {
             slot = RlActionSlot.generic(RlActEvent.ACT_IDLE, "idle");
             action = RlActEvent.ACT_IDLE;
+        }
+        // ---- 强制等待步不入训练集（2026-09-11 修复）----
+        // 动作窗口关闭（自身正在播不可打断动画）时可执行集合只剩 idle/紧急动作，此时"选 idle"
+        // 不是策略选择而是物理约束。这类步此前被写进轨迹 → 训练标签被 idle 主导：
+        // 实测 v79/v80 的 label_top1_ratio = 0.61/0.60 > 门禁阈值 0.55，两轮连续被拒（模型无法部署），
+        // 同时白占 40%+ 样本、拖长每轮训练。现在：只记 trace 观测，不执行、不写轨迹、不进塑形奖励池；
+        // 后果奖励（命中/受击…）仍按 P0-2 契约留在 PENDING，回填到下一条真正记录的步。
+        if (!actionWindowOpen && isIdleSlot(slot)) {
+            FORCED_WAIT.computeIfAbsent(maid.getUUID(), k -> new long[1])[0]++;
+            RlTrace.event(maid, "forced_wait", "action window closed; decision not recorded");
+            return;
         }
         // P0 观测：决策链路追踪（执行结果由 RlActHandler 补全到 trace）
         RlTrace.recordDecision(maid, maid.tickCount, modelSrc ? "model" : "rule", action, slot.label(), probs);
@@ -230,6 +298,10 @@ public final class RlBrain {
             recorded = StyleState.getStyle(maid) == AnimKit.STYLE_GUNSLINGER
                     ? RlActEvent.ACT_GUNSLINGER_ATK : RlActEvent.ACT_SWORDMASTER_ATK;
         }
+        // ---- 奖励塑形（P0 修复 2026-09-10：全部走 addStepReward）----
+        // 下面 5 个函数计算的都是"当前这一步决策"的塑形奖励（它们由当前动作/当前状态直接决定），
+        // 因此必须记在"即将写入的这一步"上；而命中/击杀/受击等事件奖励是"上一步动作的后果"，
+        // 由事件回调走 addReward 并回填到上一步。两者混在同一个累加器里正是旧版奖励-动作错位一步的根因。
         // 多样性奖励塑形：连段熵奖励 + 动作滥用衰减（作用于当前决策步）
         applyDiversityReward(maid, recorded);
         // 同态动作衰减：远程连射收益递减，近战/闪避/弹反后重置（把远程逼成近战后的附加输出）
@@ -237,46 +309,66 @@ public final class RlBrain {
         // V46 防守塑形：鼓励在威胁/倒地时使用闪避、翻滚、弹反
         applyDefensiveReward(maid, recorded, state);
         // V9：距离扣分惩罚（脱离近战判定范围持续超标 → 指数级负奖励，逼 AI 追击贴脸）
-        applyProximityPenalty(maid, state);
+        applyProximityPenalty(patch, maid, state);
         // V9：连击断档熔断（3 秒无近战命中 → 清空华丽倍率 + 大幅倒扣）
         applyComboTimeout(maid);
         // P3：轨迹 v2 记录动作语义标签（slot.label()），供训练侧跨布局语义对齐
         RlDataRecorder.recordStep(maid, state, recorded, slot.label());
         // 节流诊断：每 100 tick 打印一次（验证决策链路持续运行）
         if (maid.tickCount % 100 == 0) {
-            LOGGER.info("[RL] heartbeat: tick={} action={} buffer={} trace={} stack={} skills={}", maid.tickCount, action,
-                    RlDataRecorder.bufferSize(), RlTrace.bufferSize(),
-                    StyleState.getSkillStack(maid),
-                    countSkills(layout));
+            // 决策质量：执行/拒绝计数（RlFeedback 采集）——与 instructor 的 rejected_rate 同口径，
+            // 让"掩码是否把无效决策压下去"在服务器日志里直接可见
+            int[] ex = RlFeedback.drainExecStats(maid);
+            int total = ex[0] + ex[1] + ex[2];
+            long[] fw = FORCED_WAIT.get(maid.getUUID());
+            long skipped = fw == null ? 0L : fw[0];
+            if (fw != null) {
+                fw[0] = 0L; // P2-6：只清本女仆的计数（原先会领走所有女仆的增量）
+            }
+            LOGGER.info("[RL] heartbeat: tick={} action={} buffer={} trace={} stack={} skills={} "
+                            + "exec={} reject_busy={} reject_invalid={} reject_rate={}% forced_wait_skipped={}",
+                    maid.tickCount, action, RlDataRecorder.bufferSize(), RlTrace.bufferSize(),
+                    StyleState.getSkillStack(maid), countSkills(layout),
+                    ex[0], ex[1], ex[2], total == 0 ? 0 : Math.round(100.0F * (ex[1] + ex[2]) / total),
+                    skipped);
         }
-        // 临时诊断：目标获取链路验证（每 200 tick）
-        if (maid.tickCount % 200 == 0) {
-            net.minecraft.world.entity.LivingEntity t1 = patch.getTarget();
-            net.minecraft.world.entity.LivingEntity t2 = maid.getTarget();
-            LOGGER.info("[RL] diag target: patch={} tlm={} dist={}", t1 != null ? t1.getType().getDescriptionId() : "null",
-                    t2 != null ? t2.getType().getDescriptionId() : "null",
-                    t1 != null ? String.format("%.1f", maid.distanceTo(t1)) : (t2 != null ? String.format("%.1f", maid.distanceTo(t2)) : "n/a"));
-        }
+        // P1 修复（2026-09-10）：删除"临时诊断"（每 200 tick 一行 INFO，含 String.format 与两次
+        // getTarget 调用），目标获取链路已由 RlTrace 的 D 行（tdist/tlvl）覆盖。
     }
 
-    /** 无目标判定（与 RlState 目标通道一致：patch 目标 → TLM brain 目标 → arena 最近标靶） */
+    /**
+     * 无目标判定（patch 目标 → TLM brain 目标 → TargetTracker 已扫描到的目标列表）。
+     * P1 修复（2026-09-10）：旧实现在每次决策点调用 {@code AutoArena.findNearestTarget}
+     * （按类型遍历全图实体 + 每次解析 id）；TargetTracker 每 tick 已经维护了同一份
+     * 敌对目标列表，直接复用即可（语义也更一致：与 selectPriorityTarget 同源）。
+     */
     private static boolean hasAnyTarget(EntityMaid maid) {
         LivingEntity t = maid.getTarget();
         if (t != null && t.isAlive()) {
             return true;
         }
-        return org.eftlm.stylish.arena.AutoArena.findNearestTarget(maid) != null;
+        return !TargetTracker.getTargets(maid).isEmpty();
     }
 
-    /** 布局中非空槽位（有效行动）索引与技能槽数量 */
-    private static java.util.List<Integer> validActions(RlActionSlot[] layout) {
-        java.util.List<Integer> valid = new java.util.ArrayList<>(RlActEvent.TOTAL_ACTIONS);
-        for (int i = 0; i < layout.length; i++) {
-            if (layout[i] != null) {
-                valid.add(i);
-            }
+    /**
+     * 紧急动作槽（翻滚/闪避/弹反 + 防守技能）：不受"动作窗口掩码"限制——
+     * 它们本身就是"打断/脱离当前动作"的手段，门控对它们直放（见 CommitmentCatalog.canExecuteNow(urgent)）。
+     */
+    private static boolean isUrgentSlot(RlActionSlot slot) {
+        if (slot == null) {
+            return false;
         }
-        return valid;
+        if (slot.skill() != null) {
+            return DefenseSkillExecutor.ID.equals(slot.executorId()); // dodge_step / blade_clash
+        }
+        int a = slot.localId();
+        return a == RlActEvent.ACT_ROLL || a == RlActEvent.ACT_DODGE || a == RlActEvent.ACT_PARRY;
+    }
+
+    /** 通用"等待"槽（idle）：任何时刻都可执行（NOOP），动作窗口掩码必须保留它，否则可执行集合会为空 */
+    private static boolean isIdleSlot(RlActionSlot slot) {
+        return slot != null && GenericCombatExecutor.ID.equals(slot.executorId())
+                && slot.localId() == RlActEvent.ACT_IDLE;
     }
 
     private static int countSkills(RlActionSlot[] layout) {
@@ -294,12 +386,81 @@ public final class RlBrain {
      * 默认 config/eftlm_stylish/rl_model.bin）。
      * P4：影子评估——竞技场影子女仆使用 shadow_model_file 对应模型
      * （未配置/加载失败时回退主模型）。
+     * P5.8：selfplay 对手女仆使用模型池（history/champion/random 策略，见 {@link #ensureOpponentModel()}）。
      */
     public static RlModel ensureModel(EntityMaid maid) {
+        if (org.eftlm.stylish.arena.AutoArena.selfplayMode()
+                && org.eftlm.stylish.arena.AutoArena.isAdaptiveMaid(maid)) {
+            return ensureOpponentModel();
+        }
         if (org.eftlm.stylish.arena.AutoArena.isShadowMaid(maid)) {
             return ensureShadowModel();
         }
         return ensureModel();
+    }
+
+    // ------------------------------------------------------------------
+    // P5.8 selfplay 模型池（历史策略池）：config/eftlm_stylish/model_pool/*.bin
+    // iterate 部署时把上一版/历史模型拷入；对手按 selfplay_opponent 策略选择。
+    // ------------------------------------------------------------------
+    private static final java.util.List<RlModel> MODEL_POOL = new java.util.ArrayList<>();
+    private static boolean poolChecked = false;
+
+    private static void ensureModelPool() {
+        if (poolChecked) {
+            return;
+        }
+        poolChecked = true;
+        MODEL_POOL.clear();
+        try {
+            Path dir = net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get()
+                    .resolve("eftlm_stylish").resolve("model_pool");
+            if (!java.nio.file.Files.exists(dir)) {
+                LOGGER.info("[RL] model pool: no model_pool/ dir, history opponents disabled");
+                return;
+            }
+            try (var stream = java.nio.file.Files.list(dir)) {
+                stream.filter(p -> p.toString().endsWith(".bin")).sorted().forEach(p -> {
+                    RlModel m = RlModel.load(p);
+                    if (m != null && m.getOutputDim() == RlActEvent.TOTAL_ACTIONS) {
+                        MODEL_POOL.add(m);
+                        LOGGER.info("[RL] pool model: {} (input={})", p.getFileName(), m.getInputDim());
+                    }
+                });
+            }
+            LOGGER.info("[RL] model pool: {} opponent model(s) loaded", MODEL_POOL.size());
+        } catch (Exception e) {
+            LOGGER.warn("[RL] model pool load failed", e);
+        }
+    }
+
+    /**
+     * selfplay 对手模型选择：
+     * <ul>
+     *   <li>latest —— 当前部署模型（rl_model.bin）；</li>
+     *   <li>history —— 模型池中随机一个（历史策略池，默认；防过度适应最新策略）；</li>
+     *   <li>champion —— 模型池中最新一个（冠军基准；池由 iterate 部署时维护）；</li>
+     *   <li>random —— 返回 null（调用方走纯随机动作注入，见 {@link #tick}）。</li>
+     * </ul>
+     * 池为空时回退主模型。
+     */
+    private static RlModel ensureOpponentModel() {
+        RlConfig.ensureLoaded();
+        String mode = RlConfig.selfplayOpponent;
+        if ("random".equals(mode)) {
+            return null;
+        }
+        if ("latest".equals(mode)) {
+            return ensureModel();
+        }
+        ensureModelPool();
+        if (MODEL_POOL.isEmpty()) {
+            return ensureModel();
+        }
+        if ("champion".equals(mode)) {
+            return MODEL_POOL.get(MODEL_POOL.size() - 1);
+        }
+        return MODEL_POOL.get(RANDOM.nextInt(MODEL_POOL.size())); // history 随机
     }
 
     private static RlModel ensureModel() {
@@ -327,7 +488,7 @@ public final class RlBrain {
     }
 
     /** 热重载模型（迭代部署：替换 rl_model.bin 后经 /rl reload 生效，无需重启服务器）；
-     *  P4：同时重载影子评估模型。 */
+     *  P4：同时重载影子评估模型。P5.8：刷新 selfplay 模型池。 */
     public static synchronized boolean reloadModel() {
         Path path = RlConfig.modelPath();
         RlModel next = RlModel.load(path);
@@ -350,6 +511,9 @@ public final class RlBrain {
         } else {
             shadowModel = null;
         }
+        // P5.8 模型池刷新（历史对手版本随部署变化）
+        poolChecked = false;
+        ensureModelPool();
         if (!(next.getInputDim() == RlState.STATE_DIM
                 || next.getInputDim() == RlState.OLD_STATE_DIM_18
                 || next.getInputDim() == RlState.LEGACY_STATE_DIM)
@@ -383,11 +547,13 @@ public final class RlBrain {
         POS_HISTORY.remove(id);
         PROX_TICKS.remove(id);
         COMBO_COOLDOWN.remove(id);
+        FORCED_WAIT.remove(id);
         TargetTracker.forgetMaid(id);
         ReactiveLayer.forget(id);
         ItemCombat.forget(id);
         CombatLibrary.forget(id);
         RlTrace.forget(id);
+        RlFeedback.forget(id);
     }
 
     /**
@@ -443,10 +609,10 @@ public final class RlBrain {
             if (streak - 1 < RANGED_DECAY.length) {
                 int reward = (int) (10 * RANGED_DECAY[streak - 1]);
                 if (reward > 0) {
-                    RlDataRecorder.addReward(maid, reward);
+                    RlDataRecorder.addStepReward(maid, reward);
                 }
             } else {
-                RlDataRecorder.addReward(maid, RANGED_COWARD_PENALTY); // 龟缩怯战惩罚
+                RlDataRecorder.addStepReward(maid, RANGED_COWARD_PENALTY); // 龟缩怯战惩罚
             }
         } else if (action == RlActEvent.ACT_SWORDMASTER_ATK || action == RlActEvent.ACT_GUNSLINGER_ATK
                 || action == RlActEvent.ACT_ULTIMATE || action == RlActEvent.ACT_JC
@@ -507,10 +673,16 @@ public final class RlBrain {
      * 持续超过 {@value #PROX_START_TICKS} tick → 负奖励按超标秒数指数级增长（封顶 {@value #PROX_MAX}）。
      * 只要回到近战范围内，计数器立即清零——惩罚不是惩罚"远程"，而是惩罚"不贴脸"。
      */
-    private static void applyProximityPenalty(EntityMaid maid, float[] state) {
+    private static void applyProximityPenalty(MaidPatch<?> patch, EntityMaid maid, float[] state) {
         java.util.UUID id = maid.getUUID();
         int ticks = PROX_TICKS.getOrDefault(id, 0);
-        if (state[0] <= PROX_STATE) {
+        // 2026-09-10 修复：只惩罚"主动保持距离"，不惩罚无法控制的处境。
+        // 旧实现只要 s[0] > 3.5 格就计罚，于是无目标空场（s[0] 固定 1.0）、被击倒/受控、
+        // 以及正在播不可打断动画的帧全部计入 —— 实测 p50 长期停在惩罚封顶值（-16），
+        // 在"打不过"的阶段它把梯度推向"贴脸送死"。现在三种情况直接清零计数。
+        boolean engaged = hasAnyTarget(maid);
+        boolean incapacitated = patch.getEntityState().knockDown() || patch.getEntityState().inaction();
+        if (state[0] <= PROX_STATE || !engaged || incapacitated) {
             PROX_TICKS.put(id, 0);
             return;
         }
@@ -520,9 +692,11 @@ public final class RlBrain {
             int seconds = ticks / 20;
             // 每超标 1 秒惩罚翻倍，封顶 PROX_MAX(-16)；seconds 先钳制再位移，
             // 修复 1 << seconds 在 seconds>=31 时溢出为负 → 惩罚反转为 +21 亿奖励的 bug
-            int magnitude = seconds >= 4 ? -PROX_MAX : (1 << seconds);
-            int penalty = -Math.min(magnitude, -PROX_MAX);
-            RlDataRecorder.addReward(maid, Math.max(penalty, PROX_MAX));
+            // 封顶值可经 rl.properties prox_penalty_max 调整（默认 -16，保持与历史数据同口径）
+            int cap = RlConfig.proxPenaltyMax;
+            int magnitude = seconds >= 4 ? -cap : (1 << seconds);
+            int penalty = -Math.min(magnitude, -cap);
+            RlDataRecorder.addStepReward(maid, Math.max(penalty, cap));
         }
     }
 
@@ -544,7 +718,7 @@ public final class RlBrain {
         java.util.UUID id = maid.getUUID();
         int cooldown = COMBO_COOLDOWN.getOrDefault(id, 0);
         if (maid.tickCount - cooldown > COMBO_TIMEOUT_TICKS) {
-            RlDataRecorder.addReward(maid, COMBO_TIMEOUT_PENALTY);
+            RlDataRecorder.addStepReward(maid, COMBO_TIMEOUT_PENALTY);
             COMBO_COOLDOWN.put(id, maid.tickCount);
         }
     }
@@ -555,13 +729,13 @@ public final class RlBrain {
      */
     private static void applyDefensiveReward(EntityMaid maid, int action, float[] state) {
         if (action == RlActEvent.ACT_DODGE && state[7] > 0.5F) {
-            RlDataRecorder.addReward(maid, 12); // 敌方攻击中闪避：先读/规避
+            RlDataRecorder.addStepReward(maid, 12); // 敌方攻击中闪避：先读/规避
         } else if (action == RlActEvent.ACT_ROLL && state[9] > 0.5F) {
-            RlDataRecorder.addReward(maid, 10); // 被击倒立即翻滚起身
+            RlDataRecorder.addStepReward(maid, 10); // 被击倒立即翻滚起身
         } else if (action == RlActEvent.ACT_PARRY && state[7] > 0.5F) {
-            RlDataRecorder.addReward(maid, 8);
+            RlDataRecorder.addStepReward(maid, 8);
         } else if (action == RlActEvent.ACT_BLOCK && state[7] > 0.5F) {
-            RlDataRecorder.addReward(maid, 5);
+            RlDataRecorder.addStepReward(maid, 5);
         }
     }
 
@@ -610,7 +784,7 @@ public final class RlBrain {
 
         // Staleness 惩罚：窗口内同动作滥用
         if (stale[action] > STALE_THRESHOLD) {
-            RlDataRecorder.addReward(maid, STALE_PENALTY);
+            RlDataRecorder.addStepReward(maid, STALE_PENALTY);
         }
 
         // Combo Entropy 奖励：窗口内动作分布香农熵（归一化）
@@ -628,7 +802,7 @@ public final class RlBrain {
             }
             float bonus = (entropy / (float) Math.log(RlActEvent.TOTAL_ACTIONS)) * ENTROPY_BONUS_MAX;
             if (bonus >= 1.0F) {
-                RlDataRecorder.addReward(maid, (int) bonus);
+                RlDataRecorder.addStepReward(maid, (int) bonus);
             }
         }
     }

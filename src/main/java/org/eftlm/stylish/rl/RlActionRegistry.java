@@ -32,6 +32,8 @@ public final class RlActionRegistry {
     /** 技能池执行器（全局编号 ACT_SKILL_BASE..，按注册顺序） */
     private static final List<RlActionExecutor> SKILL_EXECUTORS = new ArrayList<>();
     private static final Map<String, RlActionExecutor> BY_ID = new HashMap<>();
+    /** 防守技能保留槽位数（slot_stable 时固定在尾部，技能池不得占用） */
+    private static final int DEFENSE_SLOTS = 2;
 
     static {
         register(new GenericCombatExecutor());
@@ -68,6 +70,11 @@ public final class RlActionRegistry {
 
     /**
      * 决策点行动布局：index = 全局行动编号；null = 无效槽位（RL 掩码置零）。
+     * <p>
+     * P1 修复（2026-09-10）：`slot_stable` 模式下防守技能固定在尾部两槽
+     * （{@code TOTAL_ACTIONS-2/-1}），而技能池执行器此前可以一直填到最后一个槽位——
+     * 只要某个武器的技能数 ≥ {@code MAX_SKILL_SLOTS-2}，防守槽就会**静默覆盖**末尾两个技能槽
+     * （槽位语义被破坏、技能不可达）。现在技能段被限制在防守槽之前，并在截断时告警。
      */
     public static RlActionSlot[] buildLayout(MaidPatch<?> patch) {
         EntityMaid maid = (EntityMaid) patch.getOriginal();
@@ -83,13 +90,17 @@ public final class RlActionRegistry {
                 layout[g++] = s;
             }
         }
+        // 防守槽保留区（slot_stable 时）：技能池不得越界写入
+        boolean reserveDefense = RlConfig.slotStable && hasDefenseExecutor();
+        int skillLimit = reserveDefense ? RlActEvent.TOTAL_ACTIONS - DEFENSE_SLOTS : RlActEvent.TOTAL_ACTIONS;
         int skillIdx = 0;
+        boolean truncated = false;
         outer:
         for (RlActionExecutor ex : SKILL_EXECUTORS) {
             // P2 稳定模式：防守技能（dodge_step/blade_clash）固定在全局尾部两槽，
             // 不受武器切换影响（语义永久稳定）
             if (RlConfig.slotStable && ex instanceof DefenseSkillExecutor) {
-                int base = RlActEvent.TOTAL_ACTIONS - 2;
+                int base = RlActEvent.TOTAL_ACTIONS - DEFENSE_SLOTS;
                 for (RlActionSlot s : ex.available(patch, tick)) {
                     if (base >= RlActEvent.TOTAL_ACTIONS) {
                         break;
@@ -99,13 +110,29 @@ public final class RlActionRegistry {
                 continue;
             }
             for (RlActionSlot s : ex.available(patch, tick)) {
-                if (skillIdx >= RlActEvent.MAX_SKILL_SLOTS) {
+                if (skillIdx >= RlActEvent.MAX_SKILL_SLOTS
+                        || RlActEvent.ACT_SKILL_BASE + skillIdx >= skillLimit) {
+                    truncated = true;
                     break outer;
                 }
                 layout[RlActEvent.ACT_SKILL_BASE + skillIdx++] = s;
             }
         }
+        if (truncated) {
+            LOGGER.warn("[RL] skill slots truncated at {} (MAX_SKILL_SLOTS={}, defense reserve={}) — "
+                            + "raise MAX_SKILL_SLOTS or trim the skill catalog",
+                    RlActEvent.ACT_SKILL_BASE + skillIdx, RlActEvent.MAX_SKILL_SLOTS, reserveDefense);
+        }
         return layout;
+    }
+
+    private static boolean hasDefenseExecutor() {
+        for (RlActionExecutor ex : SKILL_EXECUTORS) {
+            if (ex instanceof DefenseSkillExecutor) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** 事件总线分发：查槽 → 校验 → 执行 → 返回结果（异常兜底 FAILED） */

@@ -32,8 +32,13 @@ public class RlMemoryCleanup {
             return; // 换维度等临时离场不清理，返回后状态可继续使用
         }
         UUID id = maid.getUUID();
+        org.apache.logging.log4j.LogManager.getLogger("eftlm_stylish")
+                .info("[RL] maid removed: uuid={} reason={} pos={} (death-path cleanup start)",
+                        id, reason, maid.blockPosition());
         RlBrain.forgetMaid(id);
         RlDataRecorder.forgetMaid(id);
         EfnSkillCatalog.forgetMaid(id);
+        org.apache.logging.log4j.LogManager.getLogger("eftlm_stylish")
+                .info("[RL] maid removed: cleanup done (uuid={})", id);
     }
 }

@@ -42,7 +42,101 @@ public class RlCommand {
                                 .then(Commands.argument("target", com.mojang.brigadier.arguments.StringArgumentType.word())
                                         .executes(ctx -> dump(ctx, com.mojang.brigadier.arguments.StringArgumentType.getString(ctx, "target")))))
                         .then(Commands.literal("layout").executes(RlCommand::layout))
-                        .then(Commands.literal("adaptive").executes(RlCommand::adaptive)));
+                        .then(Commands.literal("adaptive").executes(RlCommand::adaptive))
+                        .then(Commands.literal("tickrate")
+                                .then(Commands.argument("multiplier", com.mojang.brigadier.arguments.FloatArgumentType.floatArg(0.1F, 10.0F))
+                                        .executes(RlCommand::tickrate)))
+                        .then(Commands.literal("autotick")
+                                .then(Commands.literal("on").executes(ctx -> setAutoTick(ctx, true)))
+                                .then(Commands.literal("off").executes(ctx -> setAutoTick(ctx, false)))
+                                .then(Commands.literal("max")
+                                        .then(Commands.argument("value", com.mojang.brigadier.arguments.FloatArgumentType.floatArg(1.0F, 10.0F))
+                                                .executes(RlCommand::autoTickMax)))
+                                .then(Commands.literal("min")
+                                        .then(Commands.argument("value", com.mojang.brigadier.arguments.FloatArgumentType.floatArg(0.1F, 10.0F))
+                                                .executes(RlCommand::autoTickMin)))
+                                .then(Commands.literal("status").executes(RlCommand::autoTickStatus)))
+                        .then(Commands.literal("dumpthreads").executes(RlCommand::dumpThreads)));
+    }
+
+    /**
+     * P5.7：智能性能调度开关（/rl autotick on|off）——空闲自动加速、负载自动降速、看门狗。
+     */
+    private static int setAutoTick(CommandContext<CommandSourceStack> ctx, boolean on) {
+        org.eftlm.stylish.util.AutoTicker.setEnabled(on);
+        ctx.getSource().sendSuccess(() -> Component.literal(
+                "[rl] autotick " + (on ? "ON" : "OFF")
+                        + (on ? " (idle->accelerate, load->decelerate, watchdog armed)" : "")), false);
+        return 1;
+    }
+
+    /**
+     * P5.7：智能调度状态（倍率范围/当前值/最近采样摘要）。
+     */
+    private static int autoTickStatus(CommandContext<CommandSourceStack> ctx) {
+        ctx.getSource().sendSuccess(() -> Component.literal(
+                org.eftlm.stylish.util.AutoTicker.status()), false);
+        return 1;
+    }
+
+    /**
+     * P5.7 死锁定位：手动触发全线程转储（/rl dumpthreads）——写入
+     * config/eftlm_stylish/thread_dump_&lt;epoch&gt;.txt，主线程栈即阻塞点实锤。
+     */
+    private static int dumpThreads(CommandContext<CommandSourceStack> ctx) {
+        org.eftlm.stylish.util.AutoTicker.dumpThreads("manual /rl dumpthreads");
+        ctx.getSource().sendSuccess(() -> Component.literal(
+                "[rl] thread dump written to config/eftlm_stylish/thread_dump_*.txt"), false);
+        return 1;
+    }
+
+    /**
+     * P5.7：热改自动调度倍率上限（/rl autotick max 4.0）——无需重启，
+     * 供性能探测/容量测试逐步提高加速档位。
+     */
+    private static int autoTickMax(CommandContext<CommandSourceStack> ctx) {
+        float v = com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "value");
+        RlConfig.ensureLoaded();
+        RlConfig.autoTickrateMax = Math.max(RlConfig.autoTickrateMin, Math.min(10.0F, v));
+        org.eftlm.stylish.util.AutoTicker.setRange(
+                RlConfig.autoTickrateMin, RlConfig.autoTickrateMax, RlConfig.autoTickrateStep);
+        ctx.getSource().sendSuccess(() -> Component.literal(
+                "[rl] autotick max -> " + RlConfig.autoTickrateMax
+                        + " (auto range " + RlConfig.autoTickrateMin + "~" + RlConfig.autoTickrateMax + ")"), false);
+        return 1;
+    }
+
+    /**
+     * P5.7：热改自动调度倍率下限（/rl autotick min 1.0）。
+     */
+    private static int autoTickMin(CommandContext<CommandSourceStack> ctx) {
+        float v = com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "value");
+        RlConfig.ensureLoaded();
+        RlConfig.autoTickrateMin = Math.max(0.1F, Math.min(10.0F, v));
+        if (RlConfig.autoTickrateMax < RlConfig.autoTickrateMin) {
+            RlConfig.autoTickrateMax = RlConfig.autoTickrateMin;
+        }
+        org.eftlm.stylish.util.AutoTicker.setRange(
+                RlConfig.autoTickrateMin, RlConfig.autoTickrateMax, RlConfig.autoTickrateStep);
+        ctx.getSource().sendSuccess(() -> Component.literal(
+                "[rl] autotick min -> " + RlConfig.autoTickrateMin
+                        + " (auto range " + RlConfig.autoTickrateMin + "~" + RlConfig.autoTickrateMax + ")"), false);
+        return 1;
+    }
+
+    /**
+     * P5.6：游戏刻加速热调（/rl tickrate 1.5 → 30 TPS；服务端虚拟时钟）。
+     * 手动设置会暂停自动调度（manual 优先），/rl autotick on 恢复。
+     */
+    private static int tickrate(CommandContext<CommandSourceStack> ctx) {
+        float m = com.mojang.brigadier.arguments.FloatArgumentType.getFloat(ctx, "multiplier");
+        org.eftlm.stylish.util.TickAccelerator.setMultiplier(m);
+        org.eftlm.stylish.util.AutoTicker.pauseForManual();
+        ctx.getSource().sendSuccess(() -> Component.literal(
+                "[rl] tickrate -> " + m + " (" + Math.round(20 * m) + " TPS"
+                        + (org.eftlm.stylish.util.TickAccelerator.active() ? ", virtual clock active" : ", client/no-op")
+                        + ", auto scheduler paused)"), false);
+        return 1;
     }
 
     /**

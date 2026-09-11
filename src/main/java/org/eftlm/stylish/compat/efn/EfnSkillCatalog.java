@@ -51,7 +51,14 @@ public final class EfnSkillCatalog {
 
     private static volatile EfnSkillCatalog INSTANCE;
 
-    /** 每个女仆的技能冷却（技能 id -> 上次释放 tick，RL 与规则兜底共用） */
+    /**
+     * 每个女仆的技能冷却（**动画键** -> 上次释放 tick，RL 与规则兜底共用）。
+     * <p>
+     * P1 修复（2026-09-10）：键此前是 {@code SkillSpec.id()}，而目录里 id **并不唯一**
+     * （如 hf_blade 的 slash_lr_down 在 diagonal/horizontal 两个不同动画上重复出现，
+     * 实测 hf_blade 14 组、hf_murasama 14 组、sekiro 8 组）——于是两个不同动画共享一个冷却槽。
+     * 现在改用唯一的动画键；id 仅用于动作标签与日志。
+     */
     private static final Map<java.util.UUID, Map<String, Integer>> SKILL_COOLDOWNS = new HashMap<>();
 
     /** 武器目录名 -> 条目 */
@@ -96,6 +103,12 @@ public final class EfnSkillCatalog {
             }
         }
         return c;
+    }
+
+    /** 全部已注册武器物品 id（如 efn:yamato_dmc4；arena 开局随机化用） */
+    public static java.util.List<String> allItemIds() {
+        EfnSkillCatalog c = get();
+        return c == null ? java.util.Collections.emptyList() : new java.util.ArrayList<>(c.byItem.keySet());
     }
 
     /** 重载配置（RCON / 命令用） */
@@ -144,6 +157,7 @@ public final class EfnSkillCatalog {
                 try {
                     JsonObject w = e.getValue().getAsJsonObject();
                     List<SkillSpec> skills = parseSkills(w);
+                    warnDuplicateIds(dir, skills);
                     WeaponEntry entry = new WeaponEntry(dir, skills);
                     byDir.put(dir, entry);
                     // items 字段两种格式并存：裸字符串（"items": "agony"）或数组
@@ -177,6 +191,25 @@ public final class EfnSkillCatalog {
             }
         }
         return new EfnSkillCatalog(byDir, byItem, byCategory);
+    }
+
+    /**
+     * 技能 id 唯一性检查（P1 修复 2026-09-10）：id 会作为动作标签写入轨迹、并被训练侧按
+     * 布局重映射，重复 id 会让"两个不同动画"在数据里无法区分（冷却已改用 animKey，不受影响）。
+     * 这里只告警不阻断——标签兼容性优先，清理由技能目录（skills.json）维护者完成。
+     */
+    private static void warnDuplicateIds(String dir, List<SkillSpec> skills) {
+        Map<String, Integer> seen = new HashMap<>();
+        for (SkillSpec s : skills) {
+            seen.merge(s.id(), 1, Integer::sum);
+        }
+        for (Map.Entry<String, Integer> e : seen.entrySet()) {
+            if (e.getValue() > 1) {
+                LOGGER.warn("[SKILLS] duplicate skill id '{}' x{} in weapon '{}' "
+                                + "(labels are ambiguous for training; cooldown already keyed by animKey)",
+                        e.getKey(), e.getValue(), dir);
+            }
+        }
     }
 
     private static List<SkillSpec> parseSkills(JsonObject w) {
@@ -287,13 +320,23 @@ public final class EfnSkillCatalog {
         if (m == null) {
             return false;
         }
-        Integer last = m.get(spec.id());
-        return last != null && last + spec.cooldownTicks() > tick;
+        Integer last = m.get(spec.animKey());
+        if (last == null) {
+            return false;
+        }
+        // P1 修复：tick 回退保护。maid.tickCount 不写 NBT，实体随区块卸载重载后会归零，
+        // 而冷却表里仍留着旧的大数值 → 旧判断 (last + cd > tick) 会让该技能被"锁死"数万 tick。
+        // 现在 tick 小于记录值时视为已过期（并顺手清掉旧记录）。
+        if (tick < last) {
+            m.remove(spec.animKey());
+            return false;
+        }
+        return last + spec.cooldownTicks() > tick;
     }
 
     /** 记录技能释放时间（进入冷却） */
     public static void markUsed(EntityMaid maid, SkillSpec spec, int tick) {
-        SKILL_COOLDOWNS.computeIfAbsent(maid.getUUID(), k -> new HashMap<>()).put(spec.id(), tick);
+        SKILL_COOLDOWNS.computeIfAbsent(maid.getUUID(), k -> new HashMap<>()).put(spec.animKey(), tick);
     }
 
     /** 女仆被击杀 / 移除时释放冷却记录 */
@@ -330,6 +373,30 @@ public final class EfnSkillCatalog {
             return new ArrayList<>(out.subList(0, org.eftlm.stylish.rl.RlActEvent.MAX_SKILL_SLOTS));
         }
         return out;
+    }
+
+    /**
+     * 动画键 → {@link ResourceLocation}（带缓存，非法键返回 null）。
+     * P1 修复（2026-09-10）：决策点会对每个技能槽解析动画键，旧实现每次
+     * {@code ResourceLocation.parse}（字符串解析+分配）；160TPS × 每决策 53 槽下是可观开销。
+     */
+    private static final Map<String, ResourceLocation> LOCATION_CACHE = new HashMap<>();
+
+    public static ResourceLocation locationOf(String animKey) {
+        if (animKey == null) {
+            return null;
+        }
+        ResourceLocation cached = LOCATION_CACHE.get(animKey);
+        if (cached != null) {
+            return cached;
+        }
+        try {
+            ResourceLocation rl = ResourceLocation.parse(animKey);
+            LOCATION_CACHE.put(animKey, rl);
+            return rl;
+        } catch (RuntimeException ex) {
+            return null; // 非法动画键：调用方按"不限制/不掩码"处理
+        }
     }
 
     /** 动画键 -> AnimationManager 解析（未注册返回 null） */

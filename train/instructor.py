@@ -28,6 +28,8 @@ from collections import Counter
 
 import numpy as np
 
+from traj_io import load as load_trajectory
+
 # 薄弱点 → 建议标靶（arena.properties entity 逗号分隔）/ 参数覆盖
 WEAKNESS_PRESETS = {
     "hurt_high": {
@@ -69,28 +71,16 @@ WEAKNESS_PRESETS = {
 }
 
 
-def load_bin(path):
-    """v1/v2 轨迹读取（与 train_ppo.load_bin 一致），损坏/截断返回 None。"""
-    try:
-        with open(path, "rb") as f:
-            first = struct.unpack(">i", f.read(4))[0]
-            if first in (1, 2):
-                version = first
-                n, sd, na = struct.unpack(">iii", f.read(12))
-            else:
-                version = 1
-                n, sd, na = first, *struct.unpack(">ii", f.read(8))
-            if version >= 2:
-                n_labels = struct.unpack(">i", f.read(4))[0]
-                for _ in range(n_labels):
-                    (ln,) = struct.unpack(">h", f.read(2))
-                    f.read(ln)
-            states = np.frombuffer(f.read(n * sd * 4), dtype=">f4").reshape(n, sd).astype(np.float32)
-            actions = np.frombuffer(f.read(n * 4), dtype=">i4").astype(np.int64)
-            rewards = np.frombuffer(f.read(n * 4), dtype=">f4").astype(np.float32)
-        return states, actions, rewards
-    except Exception:
+def load_bin(path: str):
+    """统一轨迹读取（P0 修复 2026-09-10：转发到 traj_io 唯一实现）。
+
+    返回 (states, actions, rewards, numActions)；损坏/不支持的文件返回 None。
+    奖励已由 traj_io 完成 v1/v2 → v3 的一步平移补偿，与 train_ppo 口径一致。
+    """
+    t = load_trajectory(path)
+    if t is None:
         return None
+    return t.states, t.actions, t.rewards, t.num_actions
 
 
 def analyze(data_dir, min_steps=30):
@@ -104,7 +94,13 @@ def analyze(data_dir, min_steps=30):
         parsed = load_bin(f)
         if parsed is None:
             continue
-        s, a, r = parsed
+        # 2026-09-11 修复：load_bin 的签名是 4 元组 (states, actions, rewards, labels)
+        # （v2/v3 轨迹带语义标签；v1 的 labels 为 None 但仍是第 4 项）。这里原本按
+        # 3 元组解包 → 对**任何**轨迹都抛 ValueError: too many values to unpack →
+        # instructor 每轮都崩、course.json 从此不再更新。实测后果：课程配置冻结在
+        # 2026-09-09（rejected_rate 0.9665 的"96% 拒绝率时代"），而迭代完成通知仍读
+        # 这份陈旧 course.json 汇报弱点 → 通知里的弱点描述与当前数据无关。
+        s, a, r = parsed[0], parsed[1], parsed[2]
         if len(s) < min_steps:
             continue
         agg["trajs"] += 1

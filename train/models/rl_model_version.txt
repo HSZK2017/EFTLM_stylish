@@ -1,3 +1,3 @@
-version=47
-file=rl_model_v47.bin
-time=2026-08-25 20:58:48
+version=82
+file=rl_model_v82.bin
+time=2026-09-11 21:48:55

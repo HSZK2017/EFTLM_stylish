@@ -2,6 +2,8 @@ package org.eftlm.stylish.rl;
 
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.EFTLM.EF.Capability.MaidPatch;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.phys.Vec3;
@@ -41,6 +43,8 @@ import java.util.UUID;
  */
 public final class ReactiveLayer {
 
+    private static final Logger LOGGER = LogManager.getLogger("eftlm_stylish");
+
     /** 抢占后让 RL 决策跳过的 tick 数（防双系统抢动画） */
     static final int BUSY_TICKS = 6;
     /** 反应冷却（防连续触发刷动画 / 耐力耗尽） */
@@ -63,8 +67,21 @@ public final class ReactiveLayer {
 
     /**
      * 每 tick 调用（在 RL 决策之前）。返回 true = 反应层接管了本 tick 动作。
+     * <p>
+     * P1 修复（2026-09-10）：整体加异常兜底——反应层跑在 `MaidTick → RlBrain.tick` 之内，
+     * 任何未捕获异常都会打断服务器 tick（改动画池 / 第三方动画异常都可能触发）。
+     * 反应层失败只应"这一 tick 不防守"，绝不能升级为服务器故障。
      */
     public static boolean tick(MaidPatch<?> patch, EntityMaid maid) {
+        try {
+            return tickInternal(patch, maid);
+        } catch (Throwable t) {
+            LOGGER.error("[RL] reactive layer threw, skip this tick (maid={})", maid.getUUID(), t);
+            return false;
+        }
+    }
+
+    private static boolean tickInternal(MaidPatch<?> patch, EntityMaid maid) {
         int tick = maid.tickCount;
         UUID id = maid.getUUID();
         MaidState st = STATES.computeIfAbsent(id, k -> new MaidState(-100, 0, false, 0));
@@ -180,6 +197,11 @@ public final class ReactiveLayer {
             return; // 耐力不足：硬吃（格挡姿态尝试兜底）
         }
         List<AnimationManager.AnimationAccessor<? extends StaticAnimation>> dodges = AnimKit.dodgeMoves();
+        if (dodges.size() < 4) {
+            // P1 修复：索引 0前/1后/2左/3右，池异常时直接放弃本 tick（旧实现会 IndexOutOfBounds）
+            LOGGER.warn("[RL] dodge animation pool too small ({}), skip reactive dodge", dodges.size());
+            return;
+        }
         // P5：优先闪向安全侧（危险区规避；0=两侧危险退化为随机）
         int prefer = maid.getRandom().nextBoolean() ? 0 : 1;
         int side = SpatialMap.safeDodgeSide(maid, prefer, 2.0);

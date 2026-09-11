@@ -24,6 +24,8 @@ import java.nio.file.Path;
 public final class RlModel {
 
     private static final Logger LOGGER = LogManager.getLogger("eftlm_stylish");
+    /** 参数量上限（P1 修复）：损坏/伪造的模型文件不再能请求任意大小堆分配 */
+    private static final long MAX_PARAMS = 2_000_000L;
 
     private final int inputDim;
     private final int outputDim;
@@ -57,6 +59,24 @@ public final class RlModel {
                     throw new IOException("invalid size[" + i + "]: " + sizes[i]);
                 }
             }
+            // P1 修复（2026-09-10）：分配之前先校验规模与文件长度。
+            // 旧实现只限制单维 ≤4096，伪造/损坏文件可让 new float[out][in] 申请数百 MB 堆（OOM，
+            // 而不是"加载失败回退规则策略"）。
+            long expected = 4L + 4L * (numLayers + 1);
+            long params = 0L;
+            for (int i = 0; i < numLayers; i++) {
+                long inDimL = sizes[i];
+                long outDimL = sizes[i + 1];
+                params += inDimL * outDimL + outDimL;
+                expected += 4L * inDimL * outDimL + 4L * outDimL;
+            }
+            if (params > MAX_PARAMS) {
+                throw new IOException("model too large: " + params + " params (limit " + MAX_PARAMS + ")");
+            }
+            long actual = Files.size(file);
+            if (actual < expected) {
+                throw new IOException("truncated model: file=" + actual + " bytes, header expects " + expected);
+            }
             float[][][] weights = new float[numLayers][][];
             float[][] biases = new float[numLayers][];
             for (int i = 0; i < numLayers; i++) {
@@ -76,7 +96,8 @@ public final class RlModel {
             LOGGER.info("[RL] model loaded: sizes={} dims={}->{}", java.util.Arrays.toString(sizes), sizes[0], sizes[numLayers]);
             return new RlModel(sizes[0], sizes[numLayers], weights, biases);
         } catch (IOException e) {
-            LOGGER.error("[RL] failed to load model {}: {}", file, e.toString());
+            // P1 修复：带栈输出（旧实现只打 e.toString()，排障时看不到失败点）
+            LOGGER.error("[RL] failed to load model {}: {}", file, e.toString(), e);
             return null;
         }
     }

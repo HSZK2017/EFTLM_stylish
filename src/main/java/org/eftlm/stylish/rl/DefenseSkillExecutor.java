@@ -32,15 +32,27 @@ public final class DefenseSkillExecutor implements RlActionExecutor {
         return ID;
     }
 
+    /**
+     * 防守技能可用性（2026-09-10）：冷却中以 {@code null} 占位。
+     * 旧实现无条件提供两个槽位，而 {@link #canExecute} 又会因冷却拒绝 → 实测
+     * dodge_step 16/16 全被拒；这些步仍按"模型选择"进入训练（rejected_high 的一部分）。
+     * 注意必须占位而非跳过：{@code RlActionRegistry.buildLayout} 按顺序写入稳定防守槽。
+     */
     @Override
     public List<RlActionSlot> available(MaidPatch<?> patch, int tick) {
         List<RlActionSlot> slots = new ArrayList<>(2);
-        slots.add(RlActionSlot.skill(ID, 0,
+        EntityMaid maid = (EntityMaid) patch.getOriginal();
+        // 2026-09-10：dodge_step 走的是 CombatActions.dodgeFromAttack，它会因**耐力不足**直接失败
+        // （现场实测 37/37 被拒）——可用性判定必须与执行条件一致，否则又是"提供了却执行不了"。
+        boolean dodgeReady = tick - StyleState.getTick(maid, StyleState.LAST_DODGE) >= DODGE_COOLDOWN
+                && CombatActions.canDodge(patch);
+        boolean clashReady = tick - StyleState.getTick(maid, StyleState.LAST_DEFENSE_SKILL) >= BLADE_CLASH_COOLDOWN;
+        slots.add(dodgeReady ? RlActionSlot.skill(ID, 0,
                 new SkillSpec("dodge_step", "ef_tlm:dodge_step", DODGE_COOLDOWN, 1,
-                        SkillSpec.Condition.NONE, SkillSpec.Gate.NONE)));
-        slots.add(RlActionSlot.skill(ID, 1,
+                        SkillSpec.Condition.NONE, SkillSpec.Gate.NONE)) : null);
+        slots.add(clashReady ? RlActionSlot.skill(ID, 1,
                 new SkillSpec("blade_clash", "ef_tlm:blade_clash", BLADE_CLASH_COOLDOWN, 1,
-                        SkillSpec.Condition.NONE, SkillSpec.Gate.NONE)));
+                        SkillSpec.Condition.NONE, SkillSpec.Gate.NONE)) : null);
         return slots;
     }
 

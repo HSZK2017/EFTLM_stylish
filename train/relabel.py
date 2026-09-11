@@ -23,6 +23,8 @@ import struct
 
 import numpy as np
 
+from traj_io import load as load_trajectory
+
 STATE_DIM = 18
 NUM_ACTIONS = 64
 
@@ -36,12 +38,15 @@ FANCY_DISTINCT = 4
 
 
 def load_bin(path: str):
-    with open(path, "rb") as f:
-        n, sd, na = struct.unpack(">iii", f.read(12))
-        states = np.frombuffer(f.read(n * sd * 4), dtype=">f4").reshape(n, sd).astype(np.float32)
-        actions = np.frombuffer(f.read(n * 4), dtype=">i4").astype(np.int64)
-        rewards = np.frombuffer(f.read(n * 4), dtype=">f4").astype(np.float32)
-    return states, actions, rewards, na
+    """统一轨迹读取（P0 修复 2026-09-10：转发到 traj_io 唯一实现）。
+
+    返回 (states, actions, rewards, numActions)；损坏/不支持的文件返回 None。
+    奖励已由 traj_io 完成 v1/v2 → v3 的一步平移补偿，与 train_ppo 口径一致。
+    """
+    t = load_trajectory(path)
+    if t is None:
+        return None
+    return t.states, t.actions, t.rewards, t.num_actions
 
 
 def per_weight(actions: np.ndarray, start: int) -> float:
@@ -65,7 +70,10 @@ def relabel(data_dir: str, out_path: str, min_steps=30):
     all_s, all_a, all_r, all_w = [], [], [], []
     relabel_count = 0
     for f in files:
-        s, a, r, na = load_bin(f)
+        parsed = load_bin(f)
+        if parsed is None:
+            continue
+        s, a, r, na = parsed
         if na == 27:
             # 旧 v13 布局：动态技能槽(11-26)语义无法映射到 64 布局，仅保留 generic 0-10
             keep = a <= GENERIC_MAX

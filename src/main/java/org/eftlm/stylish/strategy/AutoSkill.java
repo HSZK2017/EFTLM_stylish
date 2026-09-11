@@ -236,7 +236,10 @@ public final class AutoSkill {
         if (EfnSkillCatalog.release(patch, best)) {
             EfnSkillCatalog.markUsed(maid, best, tick);
             if (best.id().contains("drive")) {
-                RlDataRecorder.addReward(maid, 10); // 突进使用鼓励（Gap-Closing 行为先验）
+                // 突进使用鼓励（Gap-Closing 行为先验）。P0 修复（2026-09-10）：这是"刚刚发生的
+                // 动作"的塑形奖励（规则层在本次动作点给的先验），归入本步奖励池，
+                // 不再进"后果奖励"池（后者会被回填到上一步，时序不符）。
+                RlDataRecorder.addStepReward(maid, 10);
             }
         }
     }

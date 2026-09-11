@@ -230,6 +230,7 @@ Sorting
 Writing Output: E:\program\JAVA\EFTLM-example\build\reobfJar\output.jar
   META-INF/
   META-INF/MANIFEST.MF
+  META-INF/mixin-connector.json
   META-INF/mods.toml
   assets/
   assets/eftlm_stylish/
@@ -261,6 +262,7 @@ Writing Output: E:\program\JAVA\EFTLM-example\build\reobfJar\output.jar
   org/eftlm/stylish/EF/Extension/StylishMaidExtension.class
   org/eftlm/stylish/EF/Skill/
   org/eftlm/stylish/EF/Skill/StylishCombatSkill.class
+  org/eftlm/stylish/EFTLMStylish$ServerLifecycle.class
   org/eftlm/stylish/EFTLMStylish.class
   org/eftlm/stylish/arena/
   org/eftlm/stylish/arena/AutoArena.class
@@ -317,7 +319,10 @@ Writing Output: E:\program\JAVA\EFTLM-example\build\reobfJar\output.jar
   org/eftlm/stylish/compat/wom/WomSkillChecks.class
   org/eftlm/stylish/mixin/
   org/eftlm/stylish/mixin/EFNAnimationsMixin.class
+  org/eftlm/stylish/mixin/EftlmMixinConnector.class
+  org/eftlm/stylish/mixin/MaidBreathTaskMixin.class
   org/eftlm/stylish/mixin/NullEntityMixin.class
+  org/eftlm/stylish/mixin/TickrateMixin.class
   org/eftlm/stylish/rl/
   org/eftlm/stylish/rl/BlockWeaponRegistry$BlockWeaponSpec.class
   org/eftlm/stylish/rl/BlockWeaponRegistry.class
@@ -330,6 +335,7 @@ Writing Output: E:\program\JAVA\EFTLM-example\build\reobfJar\output.jar
   org/eftlm/stylish/rl/EfnSkillExecutor.class
   org/eftlm/stylish/rl/GenericCombatExecutor.class
   org/eftlm/stylish/rl/ItemCombat$ItemState.class
+  org/eftlm/stylish/rl/ItemCombat$TempBlock.class
   org/eftlm/stylish/rl/ItemCombat.class
   org/eftlm/stylish/rl/ProjectilePerception$Kind.class
   org/eftlm/stylish/rl/ProjectilePerception$Threat.class
@@ -371,4 +377,7 @@ Writing Output: E:\program\JAVA\EFTLM-example\build\reobfJar\output.jar
   org/eftlm/stylish/util/
   org/eftlm/stylish/util/AnimKit$1.class
   org/eftlm/stylish/util/AnimKit.class
+  org/eftlm/stylish/util/AutoTicker.class
+  org/eftlm/stylish/util/StartupSelfCheck.class
+  org/eftlm/stylish/util/TickAccelerator.class
   pack.mcmeta

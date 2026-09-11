@@ -1,7 +1,6 @@
 modLoader="javafml"
 loaderVersion="[47,)"
 license="All Rights Reserved"
-mixinConfigs=["eftlm_stylish.mixins.json"]
 
 [[mods]]
 modId="eftlm_stylish"

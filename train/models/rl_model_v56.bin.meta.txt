@@ -1,0 +1,12 @@
+file=rl_model_v56.bin
+time=2026-08-29 06:37:26
+state_dim=32
+action_dim=64
+samples=590690
+layout=E:\program\JAVA\EFTLM-example\train\models\layout.json
+data=E:\program\JAVA\EFTLM-example\train\backup\data\session_20260829_063246
+zombie_dir=E:\program\JAVA\touhou little maid - unknow sky area\prod_server\config\eftlm_stylish\trajectories_zombie
+init=E:\program\JAVA\EFTLM-example\train\models\rl_model_v55.bin
+eval_acc=0.887
+eval_nll=0.6074
+elapsed_sec=226.6

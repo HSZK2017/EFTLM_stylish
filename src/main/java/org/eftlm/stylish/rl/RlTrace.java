@@ -153,6 +153,11 @@ public final class RlTrace {
         push(q, id, last + execCtx);
     }
 
+    /** 追踪是否开启（P1：热路径调用方据此短路字符串拼接） */
+    public static boolean isEnabled() {
+        return RlConfig.traceEnabled;
+    }
+
     /** 事件行（战斗事件 / 硬约束修正等），tick 为当前游戏 tick */
     public static void event(EntityMaid maid, String type, String detail) {
         if (!RlConfig.traceEnabled) {

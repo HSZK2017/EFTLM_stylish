@@ -697,6 +697,9 @@ public class StylishCombatSkill extends MaidSkill {
         org.eftlm.stylish.rl.RlDataRecorder.addReward(maid, 100); // 击杀奖励
         org.eftlm.stylish.rl.RlTrace.event(maid, "kill", "target=" + event.getKilledEntity().getType().getDescriptionId());
         StyleState.setInt(maid, StyleState.COMBO_END, 0);
+        // 2026-09-11：击杀归属改由此处上报（MaidKilledEvent 是可靠来源；原先按"伤害来源实体"
+        // 归属会漏掉技能/弹道击杀，实测低估约 19 倍）
+        org.eftlm.stylish.arena.AutoArena.reportMaidKill(maid);
         org.eftlm.stylish.arena.AutoArena.requestSpawn(); // 击杀后立即补标靶（避免 20 秒空窗）
         org.apache.logging.log4j.LogManager.getLogger("eftlm_stylish")
                 .info("[SKILL] KILL detected: {} by {} source={}", event.getKilledEntity().getType().getDescriptionId(),

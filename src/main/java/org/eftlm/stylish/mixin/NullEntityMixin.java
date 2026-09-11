@@ -15,20 +15,19 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
  * EpicFight patch 缺失防护。
  * <p>
  * 部署验证 2026-08-26 崩溃（crash-2026-08-25_17.44.37）：`NullEntity.m_6075_`
- * （= Entity.travel 的 SRG 名，NullEntity.java:511）中
+ * （SRG 名，无参 = {@code aiStep}，反编译 NullEntity.java:575 起）中
  * `!this.getLivingEntityPatch().isStunned()` 对 {@code getLivingEntityPatch() == null}
  * 无空检查 → NPE（实体 patch 偶发缺失，与模组加载时序/实体生成时机相关）。
  * 依据其开源许可做防御性修复：{@code m_6075_} 开头检查 patch 缺失 → 取消本 tick 的
- * travel（实体保持存活与 tick，patch 恢复后自然恢复），避免整个实体崩溃服务器。
+ * aiStep（实体保持存活与 tick，patch 恢复后自然恢复），避免整个实体崩溃服务器。
  * <p>
- * 映射机制（2026-08-25 修复注入失败）：Forge 1.20.1 生产环境以 <b>SRG 名</b>运行
- * （本体 server-...-srg.jar + 模组 reobf 后 SRG 字节码，崩溃栈证实方法名为
- * {@code m_6075_}）。mixin 应用时看到的就是 SRG 名字节码，因此原版方法（travel）
- * 必须写 SRG 名 {@code m_6075_} + remap=false；此前的 official 名 {@code travel}
- * 导致 "could not find any targets matching 'travel'" 注入失败（防御静默失效）。
- * 模组自定义方法无 SRG 名（运行时保持原名），不受此规则影响。
+ * 映射与签名（2026-08-26 修正）：Forge 1.20.1 生产环境以 SRG 名运行（mixin 处理
+ * SRG 字节码），method 写 {@code m_6075_} + remap=false；javap 实证
+ * {@code public void m_6075_()}（无参，非 travel）——处理器签名必须为
+ * {@code (CallbackInfo)}。此前误带 {@code Vec3} 导致 "Invalid descriptor:
+ * Expected (CallbackInfo)V" 注入失败（防御静默失效，已修复）。
  * <p>
- * 目标类为第三方闭源模组：{@code targets} 字符串 + {@link Pseudo}
+ * 目标类为第三方模组：{@code targets} 字符串 + {@link Pseudo}
  * （AV 未安装时静默跳过，配合 mixins.json {@code required:false}）。
  */
 @Pseudo
@@ -36,12 +35,12 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 public abstract class NullEntityMixin {
 
     @Inject(method = "m_6075_", at = @At("HEAD"), cancellable = true, remap = false)
-    private void eftlm$guardMissingEpicFightPatch(Vec3 vec3, CallbackInfo ci) {
+    private void eftlm$guardMissingEpicFightPatch(CallbackInfo ci) {
         LivingEntity self = (LivingEntity) (Object) this;
         LivingEntityPatch<?> patch = EpicFightCapabilities.getEntityPatch(self, LivingEntityPatch.class);
         if (patch == null) {
-            // 跳过本 tick travel（内含多处无条件 patch 解引用）；
-            // 不主动打断实体：下 tick patch 恢复后移动自然恢复
+            // 跳过本 tick aiStep（内含多处无条件 patch 解引用）；
+            // 不主动打断实体：下 tick patch 恢复后行为自然恢复
             ci.cancel();
         }
     }

@@ -37,7 +37,7 @@ public final class CombatActions {
     /**
      * 弹反：播放 ACTIVE 格挡动画并记录弹反窗口（窗口内命中全额取消伤害）。
      */
-    public static void parry(MaidPatch<?> patch) {
+    public static boolean parry(MaidPatch<?> patch) {
         EntityMaid maid = (EntityMaid) patch.getOriginal();
         WeaponCategory category = AnimKit.categoryOf(patch);
         patch.playAnimationSynchronized(AnimKit.parry(category), 0F);
@@ -45,6 +45,7 @@ public final class CombatActions {
         StyleState.setTick(maid, StyleState.LAST_HIT, maid.tickCount);
         maid.getNavigation().stop();
         maid.getMoveControl().strafe(-1.0F, 0.0F);
+        return true;
     }
 
     /**
@@ -84,12 +85,12 @@ public final class CombatActions {
     /**
      * 随机方向闪避（RL 行动用），消耗耐力。
      */
-    public static void dodgeRandom(MaidPatch<?> patch) {
+    public static boolean dodgeRandom(MaidPatch<?> patch) {
         EntityMaid maid = (EntityMaid) patch.getOriginal();
         AttributeInstance weight = maid.getAttribute(EpicFightAttributes.WEIGHT.get());
         float cost = weight == null ? 2.0F : (float) (weight.getValue() * 0.1F);
         if (patch.getStamina() < cost) {
-            return;
+            return false; // P1 修复：耐力不足时如实返回失败（旧实现仍被记为 EXECUTED）
         }
         List<AnimationManager.AnimationAccessor<? extends StaticAnimation>> dodges = AnimKit.dodgeMoves();
         int index = RANDOM.nextBoolean() ? 2 : 3; // 左右
@@ -97,6 +98,7 @@ public final class CombatActions {
         patch.playAnimationSynchronized(dodges.get(index), 0F);
         StyleState.setTick(maid, StyleState.BLOCK_START, maid.tickCount - 100);
         StyleState.setTick(maid, StyleState.LAST_DODGE, maid.tickCount);
+        return true;
     }
 
     /**
@@ -121,25 +123,23 @@ public final class CombatActions {
 
     /**
      * 举盾格挡（RL 行动用）：播放格挡动画并开启格挡窗口。
+     *
+     * @return 是否已播放格挡动画（当前实现恒 true，保留返回值以便调用方如实上报执行结果）
      */
-    public static void block(MaidPatch<?> patch) {
+    public static boolean block(MaidPatch<?> patch) {
         EntityMaid maid = (EntityMaid) patch.getOriginal();
-        WeaponCategory category = AnimKit.categoryOf(patch);
-        patch.playAnimationSynchronized(AnimKit.guardHit(category), 0F);
-        StyleState.setTick(maid, StyleState.BLOCK_START, maid.tickCount);
-        maid.getNavigation().stop();
-        maid.getMoveControl().strafe(-1.0F, 0.0F);
+        return block(patch, maid);
     }
 
     /**
      * 释放武器技能大招（RL 行动用）：播放类别大招动画、清空技能层数、设置物品冷却。
      */
-    public static void releaseUltimate(MaidPatch<?> patch) {
+    public static boolean releaseUltimate(MaidPatch<?> patch) {
         EntityMaid maid = (EntityMaid) patch.getOriginal();
         WeaponCategory category = AnimKit.categoryOf(patch);
         var pool = AnimKit.swordmasterMoves(category);
         if (pool.isEmpty()) {
-            return;
+            return false; // P1 修复：无可用大招动画时如实返回失败
         }
         patch.playAnimationSynchronized(pool.get(0), 0F);
         StyleState.setSkillStack(maid, 0);
@@ -147,31 +147,97 @@ public final class CombatActions {
         if (!stack.isEmpty()) {
             maid.getCooldowns().addCooldown(stack.getItem(), 60);
         }
+        return true;
     }
 
-    private static void block(MaidPatch<?> patch, EntityMaid maid) {
+    /** 唯一实现（P1 修复 2026-09-10：此前 public 版与 private 版是两份重复代码） */
+    /**
+     * 可用性判定（2026-09-10 新增）：与 {@link #dodgeRandom} 使用同一套资源条件，
+     * 供 {@code GenericCombatExecutor.available()} 决定"是否把该行动提供给 RL"。
+     * 否则模型会反复选择耐力不足/冷却中的行动，被执行器拒绝（实测 dodge 100%、roll 99% 被拒），
+     * 而这些步仍按"模型选择"进入训练——instructor 的 rejected_high 弱点的另一半根因。
+     */
+    public static boolean canDodge(MaidPatch<?> patch) {
+        EntityMaid maid = (EntityMaid) patch.getOriginal();
+        AttributeInstance weight = maid.getAttribute(EpicFightAttributes.WEIGHT.get());
+        float cost = weight == null ? 2.0F : (float) (weight.getValue() * 0.1F);
+        return patch.getStamina() >= cost;
+    }
+
+    /**
+     * 弹反/格挡冷却（tick）。2026-09-10 新增：这两个动作此前**没有任何冷却**，
+     * 于是策略可以每 5 tick 重播一次防守动画形成"原地弹反"吸收态——现场实测
+     * action=5(parry) 占比 ~100%、奖励恒 0（无命中/无受伤/无距离惩罚）、
+     * 正是"打不出命中"的另一种表现。加冷却后同一动作最多每 3 个决策点一次，
+     * 反滥用窗口（50 决策 >8 次）重新生效，迫使策略在防守之外做出进攻选择。
+     */
+    public static final int PARRY_COOLDOWN = 15;
+    public static final int BLOCK_COOLDOWN = 15;
+
+    /** 弹反可用性（供 available() 使用；反应层直放不受限） */
+    public static boolean canParry(EntityMaid maid) {
+        return maid.tickCount - StyleState.getTick(maid, StyleState.LAST_PARRY) >= PARRY_COOLDOWN;
+    }
+
+    /** 格挡可用性（格挡以 BLOCK_START 计时） */
+    public static boolean canBlock(EntityMaid maid) {
+        return maid.tickCount - StyleState.getTick(maid, StyleState.BLOCK_START) >= BLOCK_COOLDOWN;
+    }
+
+    /** 翻滚可用性：被击倒时恒可（起身是硬约束），否则需脱离冷却且耐力足够 */
+    public static boolean canRoll(MaidPatch<?> patch) {
+        EntityMaid maid = (EntityMaid) patch.getOriginal();
+        if (patch.getEntityState().knockDown()) {
+            return true;
+        }
+        if (maid.tickCount - StyleState.getTick(maid, StyleState.LAST_ROLL) < 40) {
+            return false;
+        }
+        return canDodge(patch);
+    }
+
+    /** 轮换武器可用性：脱离换装冷却且背包里存在可换的近战候选 */
+    public static boolean canCycleWeapon(MaidPatch<?> patch) {
+        EntityMaid maid = (EntityMaid) patch.getOriginal();
+        if (maid.tickCount - StyleState.getTick(maid, StyleState.LAST_MELEE_SWAP) < WeaponArsenal.SWAP_COOLDOWN) {
+            return false;
+        }
+        ItemStack current = maid.getMainHandItem();
+        var backpack = maid.getAvailableBackpackInv();
+        for (int i = 0; i < backpack.getSlots(); i++) {
+            ItemStack stack = backpack.getStackInSlot(i);
+            if (!stack.isEmpty() && WeaponArsenal.classify(stack) == WeaponArsenal.Kind.MELEE
+                    && WeaponArsenal.isEfWeapon(stack) && !ItemStack.isSameItem(stack, current)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean block(MaidPatch<?> patch, EntityMaid maid) {
         WeaponCategory category = AnimKit.categoryOf(patch);
         patch.playAnimationSynchronized(AnimKit.guardHit(category), 0F);
         StyleState.setTick(maid, StyleState.BLOCK_START, maid.tickCount);
         maid.getNavigation().stop();
         maid.getMoveControl().strafe(-1.0F, 0.0F);
+        return true;
     }
 
     /**
      * 被击倒翻滚起身（仿玩家按闪避键起身）。
      */
-    public static void rollRecovery(MaidPatch<?> patch) {
+    public static boolean rollRecovery(MaidPatch<?> patch) {
         EntityMaid maid = (EntityMaid) patch.getOriginal();
         boolean knocked = patch.getEntityState().knockDown();
         // 被击倒属于紧急起身：忽略冷却和耐力限制，保证一定能翻滚起来；
         // 非倒地（RL 主动翻滚）仍保留冷却/耐力消耗，避免滥用。
         if (!knocked && maid.tickCount - StyleState.getTick(maid, StyleState.LAST_ROLL) < 40) {
-            return;
+            return false; // P1 修复：冷却中如实返回失败
         }
         AttributeInstance weight = maid.getAttribute(EpicFightAttributes.WEIGHT.get());
         float cost = weight == null ? 2.0F : (float) (weight.getValue() * 0.1F);
         if (!knocked && patch.getStamina() < cost) {
-            return;
+            return false; // P1 修复：耐力不足如实返回失败
         }
         LivingEntity target = patch.getTarget();
         AnimationManager.AnimationAccessor<? extends StaticAnimation> roll = Animations.BIPED_ROLL_FORWARD;
@@ -186,6 +252,7 @@ public final class CombatActions {
         patch.playAnimationSynchronized(roll, 0F);
         StyleState.setTick(maid, StyleState.LAST_ROLL, maid.tickCount);
         StyleState.addFlair(maid, 4.0F);
+        return true;
     }
 
     // ==================================================================

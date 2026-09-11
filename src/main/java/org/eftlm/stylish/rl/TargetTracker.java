@@ -82,14 +82,21 @@ public final class TargetTracker {
             t.onSeen(maid, e, tick);
         }
 
-        // 幽灵目标维护：未扫到的目标保留并外推（脱锁记忆），置信度衰减
+        // 幽灵目标维护：本帧未扫到的目标保留并外推（脱锁记忆），置信度按脱锁时长衰减。
+        // P0 修复（2026-09-10）：旧实现用 ghost 标志当"本帧已扫到"的代理——
+        //   if (!t.ghost && t.entity != null && t.entity.isAlive()) return;
+        // 而 ghost 只能由 onNotSeen() 置位、onNotSeen() 又被同一分支挡住，
+        // 于是 ghost 恒 false、confidence 恒 1.0：幽灵化/置信度衰减/位置外推全部不可达，
+        // 脱锁目标永久驻留且陈旧快照每 tick 被写回 ATTACK_TARGET（设计报告 3.2.1 的能力实际不存在）。
+        // 现改为"本帧是否扫到"用 lastSeenTick 判定。
         targets.forEach((uuid, t) -> {
-            if (!t.ghost && t.entity != null && t.entity.isAlive()) {
-                return;
+            if (t.entity == null || !t.entity.isAlive()) {
+                return; // 死亡/失效 → 交给下面的 removeIf
             }
-            if (t.entity != null && t.entity.isAlive()) {
-                t.onNotSeen(tick);
+            if (t.lastSeenTick == tick) {
+                return; // 本帧已扫到（onSeen 已刷新全部字段）
             }
+            t.onNotSeen(maid, tick);
         });
         // 删除死亡 / 置信度归零的目标
         targets.entrySet().removeIf(entry -> {
@@ -246,10 +253,19 @@ public final class TargetTracker {
         return false;
     }
 
-    /** Avalon 技能弹道实体识别（mod id 匹配，无编译期依赖；供 ProjectilePerception 复用） */
+    /**
+     * Avalon 技能弹道实体识别（mod id 匹配，无编译期依赖；供 ProjectilePerception 复用）。
+     * P1 修复（2026-09-10）：结果按 EntityType 缓存——本方法在每 tick 的 64³ 盒扫描谓词里
+     * 对盒内每个实体调用一次，旧实现每次都做注册表查找。
+     */
+    private static final Map<net.minecraft.world.entity.EntityType<?>, Boolean> AVALON_TYPE_CACHE =
+            new java.util.concurrent.ConcurrentHashMap<>();
+
     public static boolean isAvalonProjectile(LivingEntity e) {
-        var key = ForgeRegistries.ENTITY_TYPES.getKey(e.getType());
-        return key != null && "epic_fight_avalon".equals(key.getNamespace());
+        return AVALON_TYPE_CACHE.computeIfAbsent(e.getType(), t -> {
+            var key = ForgeRegistries.ENTITY_TYPES.getKey(t);
+            return key != null && "epic_fight_avalon".equals(key.getNamespace());
+        });
     }
 
     private static boolean isHostile(EntityMaid maid, LivingEntity e) {
@@ -298,6 +314,8 @@ public final class TargetTracker {
         private int lastSeenTick;
         /** 最近扫描位置（幽灵外推的基准） */
         private Vec3 position;
+        /** 最后一次真实看到的位置（幽灵外推漂移上限的锚点） */
+        private Vec3 lastSeenPos;
         /** 平滑速度估计（格/tick，EMA） */
         private Vec3 velocity = Vec3.ZERO;
         /** 置信度 [0,1]：扫描到=1；脱锁后每 tick 衰减 */
@@ -332,6 +350,7 @@ public final class TargetTracker {
             this.entity = e;
             this.lastSeenTick = tick;
             this.position = now;
+            this.lastSeenPos = now;
             this.confidence = 1.0F;
             this.ghost = false;
             this.distance = maid.distanceTo(e);
@@ -369,14 +388,32 @@ public final class TargetTracker {
                     + (this.hyperarmor ? 1.5F : 0.0F);
         }
 
-        /** 本 tick 未被扫描到：幽灵化 + 位置外推 + 置信度衰减 */
-        private void onNotSeen(int tick) {
+        /**
+         * 本 tick 未被扫描到：幽灵化 + 位置外推 + 置信度衰减。
+         * <p>
+         * 注意两个时间语义的区分（P0 修复时一并修正）：
+         * <ul>
+         *     <li><b>置信度</b>按"距上次真实看到的 tick 数"衰减（missed 次幂，单次调用即补偿全部漏扫），
+         *         因此即使中间有几帧没调用也不会漏衰减；</li>
+         *     <li><b>位置外推</b>每调用一次前进<b>一个</b>速度步（本方法由 {@link #update} 每 tick 调用一次），
+         *         不能用 dt 步——否则同一段脱锁时间里会被重复外推（1+2+3… 步）。</li>
+         * </ul>
+         */
+        private void onNotSeen(EntityMaid maid, int tick) {
             this.ghost = true;
-            int dt = Math.max(1, tick - this.lastSeenTick);
-            this.confidence *= (float) Math.pow(GHOST_DECAY, dt);
-            // 预期位置外推：pos + velocity × dt（限幅防飞越）
-            this.position = this.position.add(this.velocity.scale(Math.min(dt, 20)));
-            this.distance = this.distance + (float) this.velocity.horizontalDistance() * Math.min(dt, 20);
+            int missed = Math.max(1, tick - this.lastSeenTick);
+            this.confidence *= (float) Math.pow(GHOST_DECAY, missed);
+            // 位置外推（每 tick 一个速度步）；总漂移限制在扫描半径内，防速度噪声把预测点甩飞
+            if (this.position != null && this.velocity.lengthSqr() > 1.0E-6) {
+                Vec3 next = this.position.add(this.velocity);
+                if (this.lastSeenPos == null || next.distanceTo(this.lastSeenPos) <= SCAN_RANGE) {
+                    this.position = next;
+                }
+            }
+            // 距离按女仆当前位置到（外推）目标位置实时计算，避免旧实现"距离只增不减"的漂移
+            if (this.position != null) {
+                this.distance = (float) maid.position().distanceTo(this.position);
+            }
             // 脱锁后技能阶段信息降级（保守按 IDLE，等待重锁）
             this.phase = 0;
             this.attacking = false;

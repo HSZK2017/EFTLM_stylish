@@ -80,9 +80,9 @@ public final class ItemCombat {
     /** 每女仆道具战斗状态 */
     record ItemState(int blockParryUntil, int wallUntil, int pillarUntil,
                      int waterUntil, int pearlUntil,
-                     List<BlockPos> tempBlocks, int tempUntil, int lastWaterCheck) {
-        ItemState withTemp(List<BlockPos> blocks, int until) {
-            List<BlockPos> merged = new ArrayList<>(this.tempBlocks);
+                     List<TempBlock> tempBlocks, int tempUntil, int lastWaterCheck) {
+        ItemState withTemp(List<TempBlock> blocks, int until) {
+            List<TempBlock> merged = new ArrayList<>(this.tempBlocks);
             merged.addAll(blocks);
             return new ItemState(blockParryUntil, wallUntil, pillarUntil, waterUntil, pearlUntil,
                     merged, Math.max(this.tempUntil, until), lastWaterCheck);
@@ -114,6 +114,46 @@ public final class ItemCombat {
         }
     }
 
+    /**
+     * P5.8 临时方块记录：位置 + 方块类型 + 是否消耗自背包。
+     * consumed=true（受击/垫高用背包方块）→ 3 tick 临时方块消失后自动补回女仆背包库存
+     * （用户需求：放置的临时方块消失后重新补充方块库存，如 2 黑曜石→放 2→消失→重新有 2）。
+     */
+    record TempBlock(BlockPos pos, net.minecraft.world.level.block.Block block, boolean consumed) {
+    }
+
+    /** 构造 TempBlock 列表（placed 全部同类型；bw==null 表示消耗背包） */
+    private static List<TempBlock> toTemp(List<BlockPos> placed,
+                                          net.minecraft.world.level.block.state.BlockState state, boolean consumed) {
+        List<TempBlock> out = new ArrayList<>(placed.size());
+        for (BlockPos p : placed) {
+            out.add(new TempBlock(p, state.getBlock(), consumed));
+        }
+        return out;
+    }
+
+    /** P5.8 临时方块消失后补回背包：优先合并同物品栈，其次空槽 */
+    private static void giveBackBlock(EntityMaid maid, net.minecraft.world.level.block.Block block) {
+        if (!maid.isAlive() || maid.isRemoved()) {
+            return;
+        }
+        var inv = maid.getAvailableBackpackInv();
+        ItemStack give = new ItemStack(block);
+        for (int i = 0; i < inv.getSlots(); i++) {
+            ItemStack s = inv.getStackInSlot(i);
+            if (!s.isEmpty() && s.is(give.getItem()) && s.getCount() < s.getMaxStackSize()) {
+                s.grow(1);
+                return;
+            }
+        }
+        for (int i = 0; i < inv.getSlots(); i++) {
+            if (inv.getStackInSlot(i).isEmpty()) {
+                inv.setStackInSlot(i, give);
+                return;
+            }
+        }
+    }
+
     private static final Map<UUID, ItemState> STATES = new HashMap<>();
 
     private ItemCombat() {
@@ -122,15 +162,24 @@ public final class ItemCombat {
     /** 每 tick 调用：临时方块/水清理 + 水桶灭火检查（节流）+ 危险区清理 */
     public static void tick(EntityMaid maid) {
         int tick = maid.tickCount;
-        SpatialMap.prune(tick); // P5：危险区过期清理
+        // P2-6：危险区时钟改为维度游戏刻（原先传入本女仆的 tickCount，与登记方女仆的
+        // tickCount 不同源 → 跨女仆比较，条目会异常滞留或瞬间过期）
+        SpatialMap.prune(maid);
         UUID id = maid.getUUID();
         ItemState st = STATES.computeIfAbsent(id, k -> empty());
-        // 临时方块/水/垫高柱移除
+        // 临时方块/水/垫高柱移除（P5.8：消耗自背包的方块消失后补回库存）
+        // P0 修复（2026-09-10）：旧实现是 `if (is(WATER) || !isAir()) setBlockAndUpdate(pos, AIR)`，
+        // 条件等价于"只要该格不是空气就无条件置空气"——会把玩家/其他模组/敌方技能在这 3 tick 内
+        // 放到同一格的方块一起删掉（静默的世界破坏）。现在只清理"仍然是我们放下的那个方块"的格子，
+        // 且只有真正清理了才补回库存。
         if (!st.tempBlocks().isEmpty() && tick >= st.tempUntil()) {
-            for (BlockPos pos : st.tempBlocks()) {
-                if (maid.level().getBlockState(pos).is(Blocks.WATER)
-                        || !maid.level().getBlockState(pos).isAir()) {
+            for (TempBlock tb : st.tempBlocks()) {
+                BlockPos pos = tb.pos();
+                if (maid.level().getBlockState(pos).is(tb.block())) {
                     maid.level().setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                    if (tb.consumed()) {
+                        giveBackBlock(maid, tb.block());
+                    }
                 }
             }
             STATES.put(id, new ItemState(st.blockParryUntil(), st.wallUntil(), st.pillarUntil(),
@@ -169,20 +218,24 @@ public final class ItemCombat {
         // ---- 一级：Herobrine 式放墙（朝攻击方向，方块武器主手优先/黑曜石优先） ----
         if (tick >= st.wallUntil()) {
             ItemStack block = bw != null ? maid.getMainHandItem() : findBlock(maid, true);
-            if (!block.isEmpty()) {
+            // V54 追加（12:28 crash 实证）：主手/背包物品可能非 BlockItem（AirItem 等，
+            // 黑曜石耗尽/物品切换瞬间），强转前必须 instanceof 保护，否则 ClassCastException 崩服
+            if (!block.isEmpty() && block.getItem() instanceof BlockItem blockItem) {
                 int rows = bw != null ? bw.wallRows() : 2;
                 int height = bw != null ? bw.wallHeight() : 2;
-                List<BlockPos> placed = placeWall(maid, attacker, ((BlockItem) block.getItem()).getBlock().defaultBlockState(), rows, height);
+                List<BlockPos> placed = placeWall(maid, attacker, blockItem.getBlock().defaultBlockState(), rows, height);
                 if (!placed.isEmpty()) {
-                    if (bw == null) {
+                    boolean consumed = bw == null;
+                    if (consumed) {
                         block.shrink(1); // 背包方块消耗；方块武器不消耗（仿克隆体）
                     }
                     // P5：登记墙为危险区（阻挡弹道/接近的障碍地形）
+                    // P2-6：改传"存活时长"，时钟由 SpatialMap 内部按维度游戏刻盖章
                     for (BlockPos p : placed) {
-                        SpatialMap.registerHazard(p, 1, tick + TEMP_BLOCK_TICKS);
+                        SpatialMap.registerHazard(maid, p, 1, TEMP_BLOCK_TICKS);
                     }
                     int wallCd = bw != null ? bw.wallCooldown() : WALL_COOLDOWN;
-                    STATES.put(id, st.withTemp(placed, tick + TEMP_BLOCK_TICKS)
+                    STATES.put(id, st.withTemp(toTemp(placed, blockItem.getBlock().defaultBlockState(), consumed), tick + TEMP_BLOCK_TICKS)
                             .withWall(tick + wallCd));
                     RlTrace.event(maid, "item_wall_parry",
                             "wall=" + placed.size() + " blocks, dir=" + directionTo(maid, attacker)
@@ -196,19 +249,20 @@ public final class ItemCombat {
         // ---- 二级：Steve 式速搭（脚下放方块挡伤害） ----
         if (tick >= st.blockParryUntil()) {
             ItemStack block = bw != null ? maid.getMainHandItem() : findBlock(maid, false);
-            if (!block.isEmpty()) {
+            if (!block.isEmpty() && block.getItem() instanceof BlockItem blockItem) {
                 BlockPos pos = maid.blockPosition();
-                BlockState state = ((BlockItem) block.getItem()).getBlock().defaultBlockState();
+                BlockState state = blockItem.getBlock().defaultBlockState();
                 maid.level().setBlockAndUpdate(pos, state);
-                if (bw == null) {
+                boolean consumed = bw == null;
+                if (consumed) {
                     block.shrink(1);
                 }
                 // P5：登记危险区（格挡方块视为短暂危险地形，闪避方向规避）
-                SpatialMap.registerHazard(pos, 1, tick + TEMP_BLOCK_TICKS);
+                SpatialMap.registerHazard(maid, pos, 1, TEMP_BLOCK_TICKS);
                 List<BlockPos> placed = new ArrayList<>();
                 placed.add(pos);
                 int parryCd = bw != null ? bw.blockParryCooldown() : BLOCK_PARRY_COOLDOWN;
-                STATES.put(id, st.withTemp(placed, tick + TEMP_BLOCK_TICKS)
+                STATES.put(id, st.withTemp(toTemp(placed, state, consumed), tick + TEMP_BLOCK_TICKS)
                         .withBlockParry(tick + parryCd));
                 RlTrace.event(maid, "item_block_parry",
                         "block=" + state.getBlock().getDescriptionId() + " attacker="
@@ -221,14 +275,19 @@ public final class ItemCombat {
         // ---- 三级：垫高 pillar（脚下叠柱抬升，脱离地面攻击判定） ----
         if (tick >= st.pillarUntil()) {
             ItemStack block = bw != null ? maid.getMainHandItem() : findBlock(maid, false);
-            if (!block.isEmpty() && (bw != null || block.getCount() >= PILLAR_HEIGHT)) {
-                List<BlockPos> placed = placePillar(maid, ((BlockItem) block.getItem()).getBlock().defaultBlockState());
+            // V54 追加：instanceof 保护（同 12:28 crash 修复）
+            if (!block.isEmpty() && block.getItem() instanceof BlockItem blockItem
+                    && (bw != null || block.getCount() >= PILLAR_HEIGHT)) {
+                List<BlockPos> placed = placePillar(maid, blockItem.getBlock().defaultBlockState());
                 if (!placed.isEmpty()) {
-                    if (bw == null) {
+                    boolean consumed = bw == null;
+                    if (consumed) {
                         block.shrink(PILLAR_HEIGHT);
                     }
                     int pillarCd = bw != null ? bw.pillarCooldown() : PILLAR_COOLDOWN;
-                    STATES.put(id, st.withTemp(placed, tick + TEMP_BLOCK_TICKS + 4)
+                    STATES.put(id, st.withTemp(
+                                    toTemp(placed, blockItem.getBlock().defaultBlockState(), consumed),
+                                    tick + TEMP_BLOCK_TICKS + 4)
                             .withPillar(tick + pillarCd));
                     RlTrace.event(maid, "item_pillar_parry",
                             "pillar=" + PILLAR_HEIGHT + " blocks, attacker="
@@ -264,17 +323,23 @@ public final class ItemCombat {
             return false;
         }
         ItemStack block = maid.getMainHandItem();
+        // V54 追加：instanceof 保护（同 12:28 crash 修复；主手方块武器 spec 非空但物品可能已变）
+        if (!(block.getItem() instanceof BlockItem blockItem)) {
+            return false;
+        }
         List<BlockPos> placed = placeWall(maid, target,
-                ((BlockItem) block.getItem()).getBlock().defaultBlockState(),
+                blockItem.getBlock().defaultBlockState(),
                 bw.wallRows(), bw.wallHeight());
         if (placed.isEmpty()) {
             return false;
         }
         // 方块武器不消耗；登记危险区 + 临时清理 + 冷却（与受击墙共用 wallUntil）
         for (BlockPos p : placed) {
-            SpatialMap.registerHazard(p, 1, tick + TEMP_BLOCK_TICKS);
+            SpatialMap.registerHazard(maid, p, 1, TEMP_BLOCK_TICKS);
         }
-        STATES.put(id, st.withTemp(placed, tick + TEMP_BLOCK_TICKS)
+        STATES.put(id, st.withTemp(
+                        toTemp(placed, blockItem.getBlock().defaultBlockState(), false),
+                        tick + TEMP_BLOCK_TICKS)
                 .withWall(tick + bw.wallCooldown()));
         RlTrace.event(maid, "item_block_weapon_wall",
                 "active wall=" + placed.size() + " blocks toward "
@@ -333,8 +398,9 @@ public final class ItemCombat {
         maid.clearFire();
         List<BlockPos> placed = new ArrayList<>();
         placed.add(pos);
+        // 放水不补回（水非方块库存；水桶已消耗）
         STATES.put(id, st.withWater(tick + WATER_COOLDOWN_MIN + maid.getRandom().nextInt(WATER_COOLDOWN_RAND), tick)
-                .withTemp(placed, tick + TEMP_BLOCK_TICKS));
+                .withTemp(toTemp(placed, Blocks.WATER.defaultBlockState(), false), tick + TEMP_BLOCK_TICKS));
         RlTrace.event(maid, "item_water_extinguish", "self extinguish with water bucket");
     }
 

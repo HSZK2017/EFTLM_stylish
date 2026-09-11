@@ -104,9 +104,15 @@ def main():
     ap.add_argument("--server-dir", required=True)
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=25575)
-    ap.add_argument("--password", default="maidpilot123")
+    ap.add_argument("--password", default=None,
+                    help="RCON 密码（默认：环境变量 EFTLM_RCON_PASSWORD → tools/rcon_password.txt；不再硬编码）")
     ap.add_argument("--timeout", type=int, default=180)
     args = ap.parse_args()
+
+    # RCON 凭据（P0 修复 2026-09-10）：fail closed，不再有硬编码默认值
+    from rcon_password import require as _require_rcon_password
+    args.password = _require_rcon_password(
+        args.password, os.path.dirname(os.path.abspath(__file__)))
 
     pids = find_server_pids()
     if not pids:

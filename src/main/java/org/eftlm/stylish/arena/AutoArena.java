@@ -44,11 +44,83 @@ public class AutoArena {
     private static final Logger LOGGER = LogManager.getLogger("eftlm_stylish");
 
     private static boolean enabled = true;
-    private static String[] entityIds = {
-            "annoyingvillagers:alex",
+    /**
+     * 默认标靶（P0 修复 2026-09-10）：**不再包含 `annoyingvillagers:alex`**。
+     * 该实体在 V54 事故中实证会导致 `BowLineOfSightGoal.findClearShotPosition` →
+     * 全图寻路 → `WalkNodeEvaluator` 节点缓存爆炸（单 tick 4290 秒）→ ServerWatchdog 强杀。
+     * 旧默认值把它放在列表首位、而黑名单默认为空，等于"开箱即复现已实证的炸服路径"。
+     */
+    private static final String[] DEFAULT_ENTITY_IDS = {
             "annoyingvillagers:angry_steve",
             "annoyingvillagers:aegis_herobrine"
     };
+    /** 默认黑名单：仅 alex（要重新启用需显式把它从 entity_blacklist 移除） */
+    private static final String[] DEFAULT_ENTITY_BLACKLIST = {
+            "annoyingvillagers:alex"
+    };
+    private static String[] entityIds = DEFAULT_ENTITY_IDS.clone();
+    /**
+     * 目标实体黑名单（arena.properties entity_blacklist，逗号分隔）：
+     * V54 追加（2026-08-28 09:23 crash 实证）：AV 弓箭手（alex）的
+     * BowLineOfSightGoal.findClearShotPosition → repath 全图寻路 → WalkNodeEvaluator
+     * 节点缓存计算爆炸（单 tick 4290 秒）→ ServerWatchdog 强杀。
+     * 黑名单目标不生成（course.json suggested_entities 同样过滤）。
+     */
+    private static String[] entityBlacklist = DEFAULT_ENTITY_BLACKLIST.clone();
+    /**
+     * 是否"本存档归竞技场所有"（arena.properties own_world，**默认 false**）：
+     * 只有它为 true 时才执行启动清场（discard 出生点周围全部女仆与生物）。
+     * P0 修复 2026-09-10：该清场逻辑对训练专用服是"清理残留"，但对普通存档是**不可恢复的丢档**，
+     * 因此默认关闭；训练服请在 arena.properties 显式写 own_world=true。
+     */
+    private static boolean ownWorld = false;
+
+    /** 标靶类型判定缓存（键 = EntityType；entityIds 变化时清空）。P1：热路径避免每个实体每 tick 注册表查找 */
+    private static final Map<net.minecraft.world.entity.EntityType<?>, Boolean> ARENA_TARGET_CACHE =
+            new java.util.concurrent.ConcurrentHashMap<>();
+
+    /** 统一设置标靶列表（P1 修复 2026-09-10：任何赋值都经此，保证类型判定缓存失效） */
+    private static void setEntityIds(String[] ids) {
+        entityIds = ids;
+        ARENA_TARGET_CACHE.clear();
+    }
+
+    /**
+     * 过滤黑名单目标（保留非空且不在黑名单中的 id）。
+     * P0 修复（2026-09-10）：过滤后若为空（例如 entity 与 entity_blacklist 写了同一个 id），
+     * 旧实现会把空数组交给下游，`spawnTarget` 的 `entityIds[targetCursor % entityIds.length]`
+     * 随即除零 → 异常抛进 ServerTickEvent → 崩服。现在回退默认列表并 ERROR 告警。
+     */
+    private static String[] filterBlacklist(String[] ids) {
+        if (ids == null || ids.length == 0) {
+            return ids;
+        }
+        var out = new java.util.ArrayList<String>();
+        for (String id : ids) {
+            id = id.trim();
+            if (id.isEmpty()) {
+                continue;
+            }
+            boolean banned = false;
+            for (String b : entityBlacklist) {
+                if (b != null && b.trim().equals(id)) {
+                    banned = true;
+                    break;
+                }
+            }
+            if (!banned) {
+                out.add(id);
+            }
+        }
+        if (out.isEmpty()) {
+            LOGGER.error("[Arena] entity list is EMPTY after blacklist filter (entity=[{}] blacklist=[{}]) "
+                            + "→ fallback to default targets {} (check arena.properties)",
+                    String.join(",", ids), String.join(",", entityBlacklist),
+                    String.join(",", DEFAULT_ENTITY_IDS));
+            return DEFAULT_ENTITY_IDS.clone();
+        }
+        return out.toArray(new String[0]);
+    }
     private static int count = 1;
     private static int interval = 600;
     private static int spawnDistance = 12;
@@ -57,6 +129,8 @@ public class AutoArena {
     private static String maidMelee2 = "epicfight:greatsword";
     /** 背包远程兜底（如 EnderBlaster）：距离切换时会被 RL/规则策略发现使用；可空 */
     private static String maidRanged = "wom:ender_blaster";
+    /** P5.7 开局多样化开关：主女仆 spawn 时随机副手武器/额外增益/金苹果/黑曜石（增加状态多样性） */
+    private static boolean randomOpenings = true;
     /** 竞技场中心（女仆活动范围中心） */
     private static int centerX = 0;
     private static int centerY = -60;
@@ -78,6 +152,9 @@ public class AutoArena {
     private static int cageGrowthMinutes = 30;
     /** 斗兽场半径上限 */
     private static final int CAGE_MAX_RADIUS = 20;
+    /** course.json 单次下发标靶数量上限与斗兽场半径上限（P1：外部输入边界） */
+    private static final int MAX_COURSE_ENTITIES = 16;
+    private static final int MAX_CAGE_RADIUS = 64;
     /** 按键战技测试模式（V12：验证 EFN 键技在女仆身上可用） */
     private static boolean testSkills = false;
 
@@ -112,6 +189,10 @@ public class AutoArena {
     private static int statsKills = 0;
     private static int statsDeaths = 0;
     private static int statsRevives = 0;
+    // P1 修复（2026-09-10）：胜率按角色分桶。旧实现 kills 计入"任意女仆击杀"（含影子/对手），
+    // deaths 只由绀珠之药耐久推断 → 未触发复活的死亡不计入分母，win_rate 同时被高估与低估。
+    private static int statsKillsMain = 0;      // 主女仆击杀
+    private static int statsDeathsMain = 0;     // 主女仆真实死亡（LivingDeathEvent）
     private static int respawnTimer = 0;
     private static int targetCursor = 0;
     /** 绀珠之药剩余耐久（6=满，减少 = 女仆死过一次被复活） */
@@ -188,6 +269,24 @@ public class AutoArena {
         spawnNow = true;
     }
 
+    /**
+     * 击杀上报（2026-09-11 新增）：由 {@code StylishCombatSkill.onKillTarget}（TLM 的
+     * MaidKilledEvent，可靠）调用，按角色计入胜率统计。
+     * <p>
+     * 为什么需要它：原先只在 {@code LivingDeathEvent} 里按"伤害来源实体"归属击杀，
+     * 而技能/弹道伤害的来源常常不是女仆实体本身 → 统计严重低估（实测同一时段日志
+     * {@code [SKILL] KILL detected} 约 150 次，而 {@code /arena stats} 只记到 8 次，差 ~19 倍）。
+     */
+    public static void reportMaidKill(EntityMaid killer) {
+        if (killer == null) {
+            return;
+        }
+        statsKills++;
+        if (isArenaMaid(killer)) {
+            statsKillsMain++;
+        }
+    }
+
     /** P5 胜率统计命令：/arena stats（权限 2） */
     @SubscribeEvent
     public static void onRegisterCommands(net.minecraftforge.event.RegisterCommandsEvent event) {
@@ -195,12 +294,17 @@ public class AutoArena {
                 net.minecraft.commands.Commands.literal("arena")
                         .requires(src -> src.hasPermission(2))
                         .then(net.minecraft.commands.Commands.literal("stats").executes(ctx -> {
-                            float winRate = statsKills + statsDeaths > 0
+                            // 角色口径胜率（主女仆击杀 / 主女仆死亡）；旧聚合口径保留在括号里对照
+                            float winRateMain = statsKillsMain + statsDeathsMain > 0
+                                    ? 100.0F * statsKillsMain / (statsKillsMain + statsDeathsMain) : 0.0F;
+                            float winRateAll = statsKills + statsDeaths > 0
                                     ? 100.0F * statsKills / (statsKills + statsDeaths) : 0.0F;
                             ctx.getSource().sendSuccess(() -> net.minecraft.network.chat.Component.literal(
-                                    "[arena] kills=" + statsKills + " deaths=" + statsDeaths
+                                    "[arena] main: kills=" + statsKillsMain + " deaths=" + statsDeathsMain
+                                            + String.format(" win_rate=%.1f%%", winRateMain)
+                                            + " | all-maids: kills=" + statsKills + " deaths=" + statsDeaths
                                             + " revives=" + statsRevives
-                                            + String.format(" win_rate=%.1f%%", winRate)
+                                            + String.format(" win_rate=%.1f%%", winRateAll)
                                             + " shadow=" + (shadowMaidId >= 0 ? "on" : "off")
                                             + " shadow_ai=" + shadowAi
                                             + " selfplay=" + (selfplayEnabled ? "on" : "off")
@@ -223,11 +327,22 @@ public class AutoArena {
                 break;
             }
         }
+        // P1 修复：主女仆真实死亡计数（与"绀珠之药复活次数"分开）；同时清理游离计时表，防无界增长
+        if (event.getEntity() instanceof EntityMaid deadMaid) {
+            STRAY_TICKS.remove(deadMaid.getUUID());
+            if (isArenaMaid(deadMaid)) {
+                statsDeathsMain++;
+            }
+        }
+        STRAY_TICKS.remove(event.getEntity().getUUID());
         if (isTarget) {
             spawnNow = true;
-            // P5 胜率统计：标靶死亡且击杀者为主/影子女仆 → kills++
-            if (event.getSource() != null && event.getSource().getEntity() instanceof EntityMaid) {
+            // P5 胜率统计：标靶死亡且击杀者为主/影子女仆 → kills++（角色分桶见 statsKillsMain）
+            if (event.getSource() != null && event.getSource().getEntity() instanceof EntityMaid killerMaid) {
                 statsKills++;
+                if (isArenaMaid(killerMaid)) {
+                    statsKillsMain++;
+                }
             }
             String src = event.getSource() != null && event.getSource().getEntity() != null
                     ? event.getSource().getEntity().getType().getDescriptionId() : "null";
@@ -239,8 +354,11 @@ public class AutoArena {
         if (selfplayEnabled && event.getEntity() instanceof EntityMaid killed
                 && isAdaptiveMaid(killed)) {
             spawnNow = true;
-            if (event.getSource() != null && event.getSource().getEntity() instanceof EntityMaid) {
+            if (event.getSource() != null && event.getSource().getEntity() instanceof EntityMaid killerMaid) {
                 statsKills++;
+                if (isArenaMaid(killerMaid)) {
+                    statsKillsMain++;
+                }
             }
             LOGGER.info("[Arena] selfplay: adaptive maid killed by {}",
                     event.getSource() != null && event.getSource().getEntity() != null
@@ -305,12 +423,26 @@ public class AutoArena {
             if (root != null && root.has("suggested_entities")) {
                 var arr = root.getAsJsonArray("suggested_entities");
                 if (arr.size() > 0) {
-                    String[] next = new String[arr.size()];
-                    for (int i = 0; i < arr.size(); i++) {
-                        next[i] = arr.get(i).getAsString();
+                    // P1 修复（2026-09-10）：course.json 由训练脚本写入，属外部输入——
+                    // 逐项校验 id 合法性（非法 id 会在热路径反复抛解析异常）、限制条目数。
+                    int n = Math.min(arr.size(), MAX_COURSE_ENTITIES);
+                    java.util.List<String> ids = new java.util.ArrayList<>(n);
+                    for (int i = 0; i < n; i++) {
+                        String rawId = arr.get(i).getAsString();
+                        if (net.minecraft.resources.ResourceLocation.tryParse(rawId) == null) {
+                            LOGGER.warn("[Arena] course: skip invalid entity id '{}'", rawId);
+                            continue;
+                        }
+                        ids.add(rawId);
                     }
-                    if (!java.util.Arrays.equals(next, entityIds)) {
-                        entityIds = next;
+                    if (arr.size() > MAX_COURSE_ENTITIES) {
+                        LOGGER.warn("[Arena] course: suggested_entities truncated {} -> {}",
+                                arr.size(), MAX_COURSE_ENTITIES);
+                    }
+                    String[] next = ids.toArray(new String[0]);
+                    next = filterBlacklist(next); // V54：黑名单目标（如 AV 弓箭手）不加入课程
+                    if (next.length > 0 && !java.util.Arrays.equals(next, entityIds)) {
+                        setEntityIds(next);
                         changed = true;
                         LOGGER.info("[Arena] course: entities -> {}", String.join(",", entityIds));
                     }
@@ -318,8 +450,23 @@ public class AutoArena {
             }
             if (root != null && root.has("arena_overrides")) {
                 var ov = root.getAsJsonObject("arena_overrides");
+                // 2026-09-10：实现 arena_overrides.entity（course.json 一直在写这个键，但此前只支持
+                // cage_radius → 教官想换对手的意图被静默忽略）。非法 id 拒绝并告警。
+                if (ov.has("entity")) {
+                    String overrideId = ov.get("entity").getAsString();
+                    if (net.minecraft.resources.ResourceLocation.tryParse(overrideId) == null) {
+                        LOGGER.warn("[Arena] course: invalid arena_overrides.entity '{}', ignored", overrideId);
+                    } else {
+                        String[] next = filterBlacklist(new String[]{overrideId});
+                        if (!java.util.Arrays.equals(next, entityIds)) {
+                            setEntityIds(next);
+                            changed = true;
+                            LOGGER.info("[Arena] course: arena_overrides.entity -> {}", String.join(",", entityIds));
+                        }
+                    }
+                }
                 if (ov.has("cage_radius")) {
-                    int r = Math.max(4, ov.get("cage_radius").getAsInt());
+                    int r = Math.max(4, Math.min(MAX_CAGE_RADIUS, ov.get("cage_radius").getAsInt()));
                     if (r != cageRadius) {
                         cageRadius = r;
                         cageCurrentRadius = r;
@@ -346,18 +493,40 @@ public class AutoArena {
         }
     }
 
+    /**
+     * 解析配置/课程下发的实体 id（P0 修复 2026-09-10）。
+     * 旧代码在 9 处直接 `ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id))`：
+     * id 含大写/空格/非法字符时 parse 抛 ResourceLocationException，而其中多数调用点位于
+     * tick / 决策热路径，异常会直接打断服务器 tick 或行为表。统一改为 tryParse + null 跳过。
+     */
+    private static EntityType<?> resolveType(String id) {
+        var rl = ResourceLocation.tryParse(id);
+        return rl == null ? null : ForgeRegistries.ENTITY_TYPES.getValue(rl);
+    }
+
     /** 返回距离女仆最近的有效标靶（决策/状态采集的逻辑目标兜底，不限距离 64 格内） */
-    public static LivingEntity findNearestTarget(EntityMaid maid) {        if (!(maid.level() instanceof net.minecraft.server.level.ServerLevel serverLevel)) {
+    public static LivingEntity findNearestTarget(EntityMaid maid) {
+        if (!(maid.level() instanceof net.minecraft.server.level.ServerLevel serverLevel)) {
             return null;
         }
         LivingEntity nearest = null;
         double best = Double.MAX_VALUE;
         for (String id : entityIds) {
-            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+            // P0 修复（2026-09-10）：配置/课程下发的 id 可能非法（大写、空格、拼错）——
+            // ResourceLocation.parse 会抛 ResourceLocationException，而本方法处于
+            // 决策热路径（每 tick / 每决策点都会被调用），异常会直接打断行为表与 RL 链。
+            var rl = ResourceLocation.tryParse(id);
+            if (rl == null) {
+                continue;
+            }
+            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(rl);
             if (type == null) {
                 continue;
             }
             for (Entity e : serverLevel.getEntities(type, e -> e.isAlive())) {
+                if (!(e instanceof LivingEntity)) {
+                    continue; // 防 CCE：配置成非生物实体时跳过
+                }
                 double d = maid.distanceToSqr(e);
                 if (d < best) {
                     best = d;
@@ -373,13 +542,26 @@ public class AutoArena {
         if (entity == null) {
             return false;
         }
-        String id = net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(entity.getType()).toString();
-        for (String eid : entityIds) {
-            if (eid.equals(id)) {
-                return true;
+        // P0 修复（2026-09-10）：getKey 对未注册实体类型返回 null，旧实现对结果直接 toString()
+        // 会 NPE——而本方法在 TargetTracker 的扫描谓词里对每个实体每 tick 调用一次。
+        // P1 修复：按 EntityType 缓存判定结果（本方法在 TargetTracker 扫描谓词里对每个实体每 tick 调用）
+        Boolean cached = ARENA_TARGET_CACHE.get(entity.getType());
+        if (cached != null) {
+            return cached;
+        }
+        var key = net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
+        boolean hit = false;
+        if (key != null) {
+            String id = key.toString();
+            for (String eid : entityIds) {
+                if (eid.equals(id)) {
+                    hit = true;
+                    break;
+                }
             }
         }
-        return false;
+        ARENA_TARGET_CACHE.put(entity.getType(), hit);
+        return hit;
     }
 
     @SubscribeEvent
@@ -400,22 +582,30 @@ public class AutoArena {
         centerZ = spawn.getZ();
 
         // 清理竞技场附近所有女仆残留（竞技场专用服：无玩家，女仆全部为残留/竞技场生成）
-        net.minecraft.world.phys.AABB area = new net.minecraft.world.phys.AABB(
-                centerX - 512, centerY - 64, centerZ - 512,
-                centerX + 512, centerY + 64, centerZ + 512);
-        List<EntityMaid> leftovers = level.getEntitiesOfClass(EntityMaid.class, area);
-        for (EntityMaid maid : leftovers) {
-            maid.discard();
-        }
-        // 清理竞技场内所有敌对生物（重置标靶，防止旧 Boss 残留导致不刷新）
-        int clearedMobs = 0;
-        for (net.minecraft.world.entity.Mob mob : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, area)) {
-            if (!(mob instanceof EntityMaid)) {
-                mob.discard();
-                clearedMobs++;
+        // P0 修复（2026-09-10）：改为仅在 own_world=true（arena.properties）时执行。
+        // 旧行为是"enabled=true（默认）就无条件 discard 出生点 1024×128×1024 内的全部女仆与生物"，
+        // 对训练专用服是清理残留，但对任何普通存档都是不可恢复的丢档（玩家的女仆与生物被删除）。
+        if (!ownWorld) {
+            LOGGER.warn("[Arena] 跳过启动清场（own_world=false，默认）：不会 discard 任何实体。"
+                    + "若这是竞技场专用存档且需要清理残留女仆/生物，请在 config/eftlm_stylish/arena.properties 写 own_world=true");
+        } else {
+            net.minecraft.world.phys.AABB area = new net.minecraft.world.phys.AABB(
+                    centerX - 512, centerY - 64, centerZ - 512,
+                    centerX + 512, centerY + 64, centerZ + 512);
+            List<EntityMaid> leftovers = level.getEntitiesOfClass(EntityMaid.class, area);
+            for (EntityMaid maid : leftovers) {
+                maid.discard();
             }
+            // 清理竞技场内所有敌对生物（重置标靶，防止旧 Boss 残留导致不刷新）
+            int clearedMobs = 0;
+            for (net.minecraft.world.entity.Mob mob : level.getEntitiesOfClass(net.minecraft.world.entity.Mob.class, area)) {
+                if (!(mob instanceof EntityMaid)) {
+                    mob.discard();
+                    clearedMobs++;
+                }
+            }
+            LOGGER.info("[Arena] own_world=true: cleared {} leftover maids, {} leftover mobs", leftovers.size(), clearedMobs);
         }
-        LOGGER.info("[Arena] cleared {} leftover maids, {} leftover mobs", leftovers.size(), clearedMobs);
 
         // 强制加载中心区块（保证竞技场实体持续 tick）：±8 区块（128 格）
         // 覆盖空岛平台 + 坑区（瞬移 Boss 掉坑后仍在强制加载内，可被拉回）
@@ -431,6 +621,35 @@ public class AutoArena {
                 centerX, centerY, centerZ, String.join(",", entityIds), count, interval);
     }
 
+    /**
+     * 关服时释放强制加载的区块（P1 修复 2026-09-10）。
+     * 旧实现只在启动时 {@code setChunkForced(true)}（289 个区块）、从无对应释放：
+     * 该状态会写入存档 ForcedChunksSavedData，即使之后 arena 关闭也继续生效。
+     */
+    @SubscribeEvent
+    public static void onServerStopping(net.minecraftforge.event.server.ServerStoppingEvent event) {
+        if (!enabled) {
+            return;
+        }
+        try {
+            ServerLevel level = event.getServer().overworld();
+            if (level == null) {
+                return;
+            }
+            int released = 0;
+            for (int dx = -8; dx <= 8; dx++) {
+                for (int dz = -8; dz <= 8; dz++) {
+                    if (level.setChunkForced((centerX >> 4) + dx, (centerZ >> 4) + dz, false)) {
+                        released++;
+                    }
+                }
+            }
+            LOGGER.info("[Arena] forced chunks released on server stop: {}", released);
+        } catch (Throwable t) {
+            LOGGER.warn("[Arena] failed to release forced chunks", t);
+        }
+    }
+
     private static void loadConfig() {
         try {
             var path = net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get().resolve("eftlm_stylish").resolve("arena.properties");
@@ -444,7 +663,12 @@ public class AutoArena {
                     String v = kv[1].trim();
                     switch (k) {
                         case "enabled" -> enabled = Boolean.parseBoolean(v);
-                        case "entity" -> entityIds = v.split(",");
+                        case "own_world" -> ownWorld = Boolean.parseBoolean(v);
+                        case "entity" -> setEntityIds(filterBlacklist(v.split(",")));
+                        case "entity_blacklist" -> {
+                            entityBlacklist = v.split(",");
+                            setEntityIds(filterBlacklist(entityIds));
+                        }
                         case "count" -> count = Math.max(1, Integer.parseInt(v));
                         case "interval" -> interval = Math.max(100, Integer.parseInt(v));
                         case "spawn_distance" -> spawnDistance = Math.max(4, Integer.parseInt(v));
@@ -472,6 +696,7 @@ public class AutoArena {
                         }
                         case "shadow_ai" -> shadowAi = v;
                         case "selfplay" -> selfplayEnabled = Boolean.parseBoolean(v);
+                        case "random_openings" -> randomOpenings = Boolean.parseBoolean(v);
                         default -> {
                         }
                     }
@@ -517,11 +742,14 @@ public class AutoArena {
                 LivingEntity nearest = null;
                 double best = Double.MAX_VALUE;
                 for (String id : entityIds) {
-                    EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+                    EntityType<?> type = resolveType(id);
                     if (type == null) {
                         continue;
                     }
                     for (Entity e : level.getEntities(type, e -> e.isAlive())) {
+                        if (!(e instanceof LivingEntity)) {
+                            continue;
+                        }
                         double d = maid.distanceToSqr(e);
                         if (d < best) {
                             best = d;
@@ -532,12 +760,16 @@ public class AutoArena {
                 if (nearest != null && best < 64.0 * 64.0) {
                     maid.setTarget(nearest);
                     maid.getBrain().setMemory(net.minecraft.world.entity.ai.memory.MemoryModuleType.ATTACK_TARGET, nearest);
-                    LivingEntity t = maid.getTarget();
-                    if (t != null && maid.tickCount % 200 == 0) {
-                        LOGGER.info("[Arena] target locked: {} at {} blocks",
-                                nearest.getType().getDescriptionId(), String.format("%.1f", Math.sqrt(best)));
-                    } else if (t == null && maid.tickCount % 200 == 0) {
-                        LOGGER.info("[Arena] target lock FAILED: brain memory write did not stick");
+                    // 2026-09-10：日志节流——此前的 INFO 每 20 tick 一条（实测 3 分钟 33 条，
+                    // 因为 TLM 会持续清空 getTarget），改为每 600 tick 一条，保留可见性但不再刷屏。
+                    if (maid.tickCount % 600 == 0) {
+                        LivingEntity t = maid.getTarget();
+                        if (t != null) {
+                            LOGGER.info("[Arena] target lock active: {} at {} blocks",
+                                    nearest.getType().getDescriptionId(), String.format("%.1f", Math.sqrt(best)));
+                        } else {
+                            LOGGER.info("[Arena] target lock FAILED: brain memory write did not stick");
+                        }
                     }
                 }
             }
@@ -545,7 +777,7 @@ public class AutoArena {
             // 无玩家时不打女仆 → 女仆(只能受击反击)不攻击 → Boss despawn 循环无击杀。
             // 让 Boss 每 20 tick 锁定女仆为攻击目标，激活女仆的反击链。
             for (String id : entityIds) {
-                EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+                EntityType<?> type = resolveType(id);
                 if (type == null) {
                     continue;
                 }
@@ -633,7 +865,7 @@ public class AutoArena {
                     centerX + 40, centerY + 64, centerZ + 40);
             int excess = alive - count;
             for (String id : entityIds) {
-                EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+                EntityType<?> type = resolveType(id);
                 if (type == null) {
                     continue;
                 }
@@ -666,7 +898,7 @@ public class AutoArena {
                     centerX + 40, centerY + 64, centerZ + 40);
             int cleared = 0;
             for (String id : entityIds) {
-                EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+                EntityType<?> type = resolveType(id);
                 if (type == null) {
                     continue;
                 }
@@ -726,7 +958,7 @@ public class AutoArena {
             LOGGER.info("[Arena] cage: maid pulled back inside (r={})", r);
         }
         for (String id : entityIds) {
-            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+            EntityType<?> type = resolveType(id);
             if (type == null) {
                 continue;
             }
@@ -804,7 +1036,49 @@ public class AutoArena {
         }
         // 活动范围：FightModeTask.farAway 用 restrictRadius 判目标有效性，
         // 无主人女仆默认 -1 → 任何目标都被判"太远"清除 → 强制锁定也立刻失效
-        maid.restrictTo(new BlockPos(centerX, centerY, centerZ), 200);
+        // V54 教训：restrictTo(200) 过宽——AV 实体瞬移到平台外虚空时女仆寻路到虚空
+        // （A* 无限扩展）→ PathFinder 卡死 80 秒+（watchdog 强杀，06:28 事故实证）。
+        // 限制在平台内（CAGE_MAX_RADIUS+4）：目标出平台即判无效 → 不寻路 → 拉回机制接管。
+        // （当前线上组合：v52 + 弱目标 + restrictTo 24 已稳定，勿回退 200）
+        maid.restrictTo(new BlockPos(centerX, centerY, centerZ), CAGE_MAX_RADIUS + 4);
+
+        // P5.8 审查修复①：全天工作模式（默认 DAY 夜间不工作会浪费一半采集时间，
+        // 7× 加速下昼夜循环飞快——必须显式 ALL）
+        maid.setSchedule(com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.MaidSchedule.ALL);
+        // P5.8 审查修复②：大背包 36 槽（默认 EmptyBackpack 仅 6 槽，
+        // 武器 0/1/2 + 补给 3/4 后几乎无余量；BigBackpack 保证武器库/补给轮换空间）
+        maid.setMaidBackpackType(new com.github.tartaricacid.touhoulittlemaid.entity.backpack.BigBackpack());
+
+        // P5.7 开局多样化（仅主女仆，shadow/adaptive 保持固定配置作对照）：
+        // 副手武器/额外增益/金苹果/黑曜石随机化 → 增加状态与行为多样性（entropy_low 对策）。
+        // 主手保持 yamato（技能槽布局以主手为锚，训练标签重映射不受影响）。
+        String melee = maidMelee;
+        String melee2 = maidMelee2;
+        java.util.List<net.minecraft.world.effect.MobEffect> extraEffects = new java.util.ArrayList<>();
+        int goldenApples = 0;
+        int obsidian = 0;
+        if (!shadow && !adaptive && randomOpenings) {
+            var ids = new java.util.ArrayList<>(org.eftlm.stylish.compat.efn.EfnSkillCatalog.allItemIds());
+            ids.remove(maidMain);
+            if (ids.size() >= 2) {
+                java.util.Collections.shuffle(ids);
+                melee = ids.get(0);
+                melee2 = ids.get(1);
+            }
+            var effects = new java.util.ArrayList<net.minecraft.world.effect.MobEffect>();
+            effects.add(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED);
+            effects.add(net.minecraft.world.effect.MobEffects.JUMP);
+            effects.add(net.minecraft.world.effect.MobEffects.ABSORPTION);
+            effects.add(net.minecraft.world.effect.MobEffects.FIRE_RESISTANCE);
+            effects.add(net.minecraft.world.effect.MobEffects.HEALTH_BOOST);
+            java.util.Collections.shuffle(effects);
+            int n = level.random.nextInt(3); // 0~2 个额外增益
+            for (int i = 0; i < n; i++) {
+                extraEffects.add(effects.get(i));
+            }
+            goldenApples = level.random.nextInt(4);   // 0~3 个金苹果
+            obsidian = level.random.nextInt(17);      // 0~16 个黑曜石（放墙战技使用）
+        }
 
         // 主手：WOM EnderBlaster（唯一真枪：远程射击 + 近战体术）
         ItemStack main = item(maidMain);
@@ -822,12 +1096,21 @@ public class AutoArena {
                 new ItemStack(net.minecraft.world.item.Items.DIAMOND_BOOTS));
         // 背包：近战轮换武器 + 远程兜底（EnderBlaster 视情况被距离切换发现使用）
         var backpack = maid.getAvailableBackpackInv();
-        ItemStack melee1 = item(maidMelee);
+        ItemStack melee1 = item(melee);
         if (!melee1.isEmpty()) backpack.setStackInSlot(0, melee1);
-        ItemStack melee2 = item(maidMelee2);
-        if (!melee2.isEmpty()) backpack.setStackInSlot(1, melee2);
+        ItemStack melee2s = item(melee2);
+        if (!melee2s.isEmpty()) backpack.setStackInSlot(1, melee2s);
         ItemStack ranged = item(maidRanged);
         if (!ranged.isEmpty()) backpack.setStackInSlot(2, ranged);
+        // P5.7 开局补给：金苹果（受击回血）与黑曜石（放墙战技）随机数量
+        if (!shadow && !adaptive && randomOpenings && backpack.getSlots() > 3) {
+            if (goldenApples > 0) {
+                backpack.setStackInSlot(3, new ItemStack(net.minecraft.world.item.Items.GOLDEN_APPLE, goldenApples));
+            }
+            if (obsidian > 0 && backpack.getSlots() > 4) {
+                backpack.setStackInSlot(4, new ItemStack(net.minecraft.world.item.Items.OBSIDIAN, obsidian));
+            }
+        }
 
         // 切换到战斗模式（FightModeTask）
         IMaidTask fightTask = TaskManager.findTask(ResourceLocation.fromNamespaceAndPath("ef_tlm", "fight_mode_task")).orElse(null);
@@ -841,6 +1124,13 @@ public class AutoArena {
             patch.addLearnedSkill(ResourceLocation.fromNamespaceAndPath(EFTLMStylish.MODID, "stylish_combat"));
         }
 
+        // V54 根治（2026-08-28 crash 实证）：TLM 呼吸任务（MaidBreathAirTask）在虚空平台
+        // 反复触发（氧气<100 即启动）→ findAirPosition → canPathReach 全图寻路
+        // （PathFinder BFS + VoxelShape 碰撞）→ 单 tick 490 秒卡死（07:39:43 ServerWatchdog FATAL）。
+        // 无限水下呼吸效果 → MobEffectUtil.hasWaterBreathing 恒 true → 呼吸任务永不启动。
+        // 无限时长（tick=-1）不受 tick 消耗影响；生成路径每次生效，复活（绀珠药原地复活）不重建实体。
+        maid.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                net.minecraft.world.effect.MobEffects.WATER_BREATHING, -1, 0, false, false));
         // 力量 II：打破与 Boss 的僵持（Boss 金苹果回血 / 高血量，无加成打不死）
         maid.addEffect(new net.minecraft.world.effect.MobEffectInstance(
                 net.minecraft.world.effect.MobEffects.DAMAGE_BOOST, 20 * 1800, 1, false, false));
@@ -849,6 +1139,10 @@ public class AutoArena {
         // 抗性 II（长期）：V9 斗兽场 Boss 贴脸，短期抗性 III 撑不住学习期
         maid.addEffect(new net.minecraft.world.effect.MobEffectInstance(
                 net.minecraft.world.effect.MobEffects.DAMAGE_RESISTANCE, 20 * 1800, 1, false, false));
+        // P5.7 开局多样化：随机 0~2 个额外增益（在基础三件套之上）
+        for (net.minecraft.world.effect.MobEffect effect : extraEffects) {
+            maid.addEffect(new net.minecraft.world.effect.MobEffectInstance(effect, 20 * 1800, 1, false, false));
+        }
         // 出生无敌保护标记（技能 MaidAttack 中 200 tick 内免伤，防 Boss 秒杀循环）
         // 存储值必须 > 0（MaidAttack 以 spawnTick > 0 判定保护是否启用，新建实体 tickCount=0）
         maid.getPersistentData().putInt("eftlm_stylish:spawn_tick", Math.max(1, maid.tickCount));
@@ -859,11 +1153,16 @@ public class AutoArena {
             lastElixirDur = 6;
         }
 
-        LOGGER.info("[Arena] maid{} spawned at {} id={} main={} melee={}/{} task={} patch={}",
+        java.util.List<String> extraNames = new java.util.ArrayList<>();
+        for (net.minecraft.world.effect.MobEffect e : extraEffects) {
+            extraNames.add(e.getDescriptionId());
+        }
+        LOGGER.info("[Arena] maid{} spawned at {} id={} main={} melee={}/{} task={} patch={} extras={} apples={} obsidian={}",
                 adaptive ? " (adaptive)" : shadow ? " (shadow)" : "",
-                pos, adaptive ? adaptiveMaidId : shadow ? shadowMaidId : arenaMaidId, maidMain, maidMelee, maidMelee2,
+                pos, adaptive ? adaptiveMaidId : shadow ? shadowMaidId : arenaMaidId, maidMain, melee, melee2,
                 fightTask != null ? fightTask.getUid() : "NULL",
-                patch != null ? "OK" : "NULL");
+                patch != null ? "OK" : "NULL",
+                String.join(",", extraNames), goldenApples, obsidian);
     }
 
     // ------------------------------------------------------------------
@@ -889,7 +1188,7 @@ public class AutoArena {
             return; // 女仆未生成（启动首 tick / 重生间隙）：无可拉对象
         }
         for (String id : entityIds) {
-            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+            EntityType<?> type = resolveType(id);
             if (type == null) {
                 continue;
             }
@@ -923,7 +1222,7 @@ public class AutoArena {
                 centerX + 40, centerY + 64, centerZ + 40);
         int alive = 0;
         for (String id : entityIds) {
-            EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+            EntityType<?> type = resolveType(id);
             if (type == null) {
                 continue;
             }
@@ -933,9 +1232,15 @@ public class AutoArena {
     }
 
     private static void spawnTarget(ServerLevel level, EntityMaid maid) {
+        // P0 修复（2026-09-10）：空列表保护——旧实现在 entityIds 为空时
+        // `targetCursor % entityIds.length` 直接 ArithmeticException 打进 tick 事件。
+        if (entityIds.length == 0) {
+            LOGGER.error("[Arena] entityIds is empty, skip target spawn (check arena.properties entity/entity_blacklist)");
+            return;
+        }
         String id = entityIds[targetCursor % entityIds.length];
         targetCursor++;
-        EntityType<?> type = ForgeRegistries.ENTITY_TYPES.getValue(ResourceLocation.parse(id));
+        EntityType<?> type = resolveType(id);
         if (type == null) {
             LOGGER.warn("[Arena] unknown entity type: {}", id);
             return;

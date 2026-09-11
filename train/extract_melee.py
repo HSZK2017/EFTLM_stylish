@@ -26,6 +26,8 @@ import struct
 
 import numpy as np
 
+from traj_io import load as load_trajectory
+
 NUM_ACTIONS = 64
 MELEE = set(range(1, 5)) | set(range(11, 64))  # 近战攻击 + 技能槽
 RANGED = {10}
@@ -34,12 +36,15 @@ MIN_STEPS = 30
 
 
 def load_bin(path: str):
-    with open(path, "rb") as f:
-        n, sd, na = struct.unpack(">iii", f.read(12))
-        states = np.frombuffer(f.read(n * sd * 4), dtype=">f4").reshape(n, sd).astype(np.float32)
-        actions = np.frombuffer(f.read(n * 4), dtype=">i4").astype(np.int64)
-        rewards = np.frombuffer(f.read(n * 4), dtype=">f4").astype(np.float32)
-    return states, actions, rewards, na
+    """统一轨迹读取（P0 修复 2026-09-10：转发到 traj_io 唯一实现）。
+
+    返回 (states, actions, rewards, numActions)；损坏/不支持的文件返回 None。
+    奖励已由 traj_io 完成 v1/v2 → v3 的一步平移补偿，与 train_ppo 口径一致。
+    """
+    t = load_trajectory(path)
+    if t is None:
+        return None
+    return t.states, t.actions, t.rewards, t.num_actions
 
 
 def extract(data_dir: str, out_path: str, dist_thresh=0.25):
@@ -50,7 +55,10 @@ def extract(data_dir: str, out_path: str, dist_thresh=0.25):
     kept = 0
     skipped = 0
     for f in files:
-        s, a, r, na = load_bin(f)
+        parsed = load_bin(f)
+        if parsed is None:
+            continue
+        s, a, r, na = parsed
         if len(s) < MIN_STEPS:
             continue
         if na == 27:
@@ -74,6 +82,11 @@ def extract(data_dir: str, out_path: str, dist_thresh=0.25):
             kept += 1
     if not all_s:
         raise RuntimeError("no melee-style trajectories found!")
+    # 维度归一化：历史 v1（18 维）与 v2（32 维）轨迹并存，统一补零到最大维度
+    max_sd = max(s.shape[1] for s in all_s)
+    if any(s.shape[1] != max_sd for s in all_s):
+        all_s = [np.pad(s, ((0, 0), (0, max_sd - s.shape[1])), mode="constant") if s.shape[1] < max_sd else s for s in all_s]
+        print(f"[extract] padded trajectory states to dim {max_sd}")
     states = np.concatenate(all_s)
     actions = np.concatenate(all_a)
     print(f"[extract] files checked: {len(files)}, kept melee-style: {kept}, skipped(unsupported/too-short): {skipped}")

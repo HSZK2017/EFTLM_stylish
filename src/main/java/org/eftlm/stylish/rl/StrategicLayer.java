@@ -52,6 +52,18 @@ public final class StrategicLayer {
         int tickSinceSwap = tick - StyleState.getTick(maid, StyleState.LAST_SWAP);
 
         // ---- 0. P5.5 方块武器：主手方块=方块武器（仿 AV Him克隆），不参与武器轮换 ----
+        // P5.8 道具层：主手为空（被 AV 钩剑缴械打飞 / 武器耐久耗尽）→ 立即从背包恢复近战武器
+        // （AV RecoverWeaponInCombatGoal 三源恢复的简化版：缓存主手 → 背包扫描）
+        if (maid.getMainHandItem().isEmpty()) {
+            var melee = WeaponArsenal.scanMelee(maid);
+            if (!melee.isEmpty()) {
+                WeaponArsenal.forceHand(maid, melee.get(0));
+                StyleState.setTick(maid, StyleState.LAST_SWAP, tick);
+                RlTrace.event(maid, "strategic_weapon_recover",
+                        "main hand empty, recovered: " + melee.get(0).getHoverName().getString());
+                return;
+            }
+        }
         boolean blockWeapon = BlockWeaponRegistry.isHoldingBlockWeapon(maid.getMainHandItem());
         if (blockWeapon && t.getDistance() <= ItemCombat.ACTIVE_WALL_RANGE) {
             if (ItemCombat.tryActiveBlockWall(maid, t.getEntity())) {

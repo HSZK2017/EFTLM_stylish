@@ -6,7 +6,9 @@
   "refmap": "eftlm_stylish.refmap.json",
   "mixins": [
     "EFNAnimationsMixin",
-    "NullEntityMixin"
+    "MaidBreathTaskMixin",
+    "NullEntityMixin",
+    "TickrateMixin"
   ],
   "injectors": {
     "defaultRequire": 1

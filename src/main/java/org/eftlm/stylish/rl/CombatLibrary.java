@@ -67,8 +67,20 @@ public final class CombatLibrary {
     private static final int MAX_DIST_BIN = 8;
     /** 命中判定 Y 差容忍（格） */
     private static final double HIT_Y_TOLERANCE = 2.0;
-    /** 命中经验：动画注册名 → 命中桶列表（去重计数） */
-    private static final Map<ResourceLocation, List<HitBin>> HIT_EXP = new HashMap<>();
+    /**
+     * 命中经验：作用域键 → 动画注册名 → 命中桶列表（去重计数）。
+     * <p>
+     * P2-6 修复（2026-09-11，审查报告 AR-9）：原实现是单一
+     * {@code Map<ResourceLocation, List<HitBin>>}，进程内所有女仆/对手/影子评估臂
+     * 共享同一份命中经验，而它直接驱动 {@link #shouldMaskSlot} 的动作掩码与
+     * {@link #expScore} 的规则调度排序 —— 一个女仆打出来的经验会静默改写另一个
+     * 女仆的动作空间，使"影子 A/B 对照"混入共享学习带来的同质化，不能作为模型
+     * 优劣证据。现在按女仆 UUID 隔离；{@code hit_exp_scope=global} 可退回旧行为
+     * （对照组/复现旧实验用）。
+     */
+    private static final Map<UUID, Map<ResourceLocation, List<HitBin>>> HIT_EXP = new HashMap<>();
+    /** global 作用域下所有女仆共用这一把键 */
+    private static final UUID GLOBAL_SCOPE_KEY = new UUID(0L, 0L);
 
     /** 节奏观察节流（tick） */
     private static final int OBSERVE_INTERVAL = 10;
@@ -141,10 +153,10 @@ public final class CombatLibrary {
         }
     }
 
-    /** 规则控制判定：自适应影子女仆（shadow_ai=adaptive）或自我博弈对手女仆 */
+    /** 规则控制判定：自适应影子女仆（shadow_ai=adaptive）。
+     *  P5.8：selfplay 对手女仆不再走规则控制（改为模型池驱动，见 RlBrain.ensureOpponentModel）。 */
     public static boolean isRuleControlled(EntityMaid maid) {
-        return org.eftlm.stylish.arena.AutoArena.isAdaptiveShadow(maid)
-                || org.eftlm.stylish.arena.AutoArena.isAdaptiveMaid(maid);
+        return org.eftlm.stylish.arena.AutoArena.isAdaptiveShadow(maid);
     }
 
     // ------------------------------------------------------------------
@@ -187,9 +199,12 @@ public final class CombatLibrary {
             }
             st.lastAttackTick = tick;
             st.lastAnim = key;
-            RlTrace.event(maid, "copy_learn",
-                    "enemy_anim=" + key + " avg_gap=" + String.format("%.0f", st.avgGap)
-                            + "t streak=" + st.streak + " combing=" + isEnemyCombing(maid));
+            // P1 修复：热路径日志懒构造（trace 关闭时不再拼字符串）
+            if (RlTrace.isEnabled()) {
+                RlTrace.event(maid, "copy_learn",
+                        "enemy_anim=" + key + " avg_gap=" + String.format("%.0f", st.avgGap)
+                                + "t streak=" + st.streak + " combing=" + isEnemyCombing(maid));
+            }
         } catch (Throwable ignored) {
             // 第三方动画结构异常不影响战斗
         }
@@ -291,10 +306,13 @@ public final class CombatLibrary {
                 return;
             }
             ResourceLocation key = real.get().getRegistryName();
-            boolean added = recordHit(key, st.attackStartPos, st.attackStartYRot, target.position());
+            boolean added = recordHit(maid, key, st.attackStartPos, st.attackStartYRot, target.position());
             if (added) {
+                Map<ResourceLocation, List<HitBin>> table = expTable(maid);
+                List<HitBin> bins = table == null ? null : table.get(key);
                 RlTrace.event(maid, "hitgrid",
-                        "anim=" + key + " bins=" + HIT_EXP.get(key).size());
+                        "anim=" + key + " bins=" + (bins == null ? 0 : bins.size())
+                                + " scope=" + RlConfig.hitExpScope);
             }
             st.attackStartPos = null; // 同一出招只结算一次
         } catch (Throwable ignored) {
@@ -302,8 +320,22 @@ public final class CombatLibrary {
         }
     }
 
+    /** 命中经验作用域键：默认按女仆隔离，{@code hit_exp_scope=global} 时全服共用 */
+    private static UUID expScope(EntityMaid maid) {
+        if (maid == null || "global".equalsIgnoreCase(RlConfig.hitExpScope)) {
+            return GLOBAL_SCOPE_KEY;
+        }
+        return maid.getUUID();
+    }
+
+    /** 该女仆的命中经验表（不创建） */
+    private static Map<ResourceLocation, List<HitBin>> expTable(EntityMaid maid) {
+        return HIT_EXP.get(expScope(maid));
+    }
+
     /** 命中点 → 桶（去重计数）：距离档 = 水平距离取整；扇区 = 相对朝向角 / 45° */
-    private static boolean recordHit(ResourceLocation key, Vec3 startPos, float startYRot, Vec3 targetPos) {
+    private static boolean recordHit(EntityMaid maid, ResourceLocation key, Vec3 startPos,
+                                     float startYRot, Vec3 targetPos) {
         double dx = targetPos.x - startPos.x;
         double dz = targetPos.z - startPos.z;
         int dist = (int) Math.round(Math.sqrt(dx * dx + dz * dz));
@@ -323,7 +355,9 @@ public final class CombatLibrary {
             angle += 360.0;
         }
         int sector = (int) (angle / (360.0 / SECTORS)) % SECTORS;
-        List<HitBin> bins = HIT_EXP.computeIfAbsent(key, k -> new ArrayList<>());
+        // 桶上限：距离 0..MAX_DIST_BIN × 扇区 SECTORS，天然有界（≤ (MAX_DIST_BIN+1)*SECTORS）
+        List<HitBin> bins = HIT_EXP.computeIfAbsent(expScope(maid), k -> new HashMap<>())
+                .computeIfAbsent(key, k -> new ArrayList<>());
         for (HitBin b : bins) {
             if (b.dist() == dist && b.sector() == sector) {
                 return false; // 已有该桶
@@ -335,7 +369,8 @@ public final class CombatLibrary {
 
     /** 目标当前位置是否落在该动画的历史命中桶（Y 差 ≤2；桶为空 = 无经验，不限制） */
     public static boolean canReach(EntityMaid maid, ResourceLocation key, LivingEntity target) {
-        List<HitBin> bins = HIT_EXP.get(key);
+        Map<ResourceLocation, List<HitBin>> table = expTable(maid);
+        List<HitBin> bins = table == null ? null : table.get(key);
         if (bins == null || bins.isEmpty() || target == null) {
             return true;
         }
@@ -382,7 +417,10 @@ public final class CombatLibrary {
             return false;
         }
         try {
-            ResourceLocation key = ResourceLocation.parse(slot.skill().animKey());
+            ResourceLocation key = EfnSkillCatalog.locationOf(slot.skill().animKey());
+            if (key == null) {
+                return false; // 非法动画键：不掩码
+            }
             if (!canReach(maid, key, target)) {
                 return true;
             }
@@ -406,8 +444,12 @@ public final class CombatLibrary {
     private static int expScore(EntityMaid maid, SkillSpec spec, LivingEntity target) {
         int score = 0;
         try {
-            ResourceLocation key = ResourceLocation.parse(spec.animKey());
-            List<HitBin> bins = HIT_EXP.get(key);
+            ResourceLocation key = EfnSkillCatalog.locationOf(spec.animKey());
+            if (key == null) {
+                return isEnemyComboEnded(maid) ? 2 : 0; // 非法键：只保留"空窗大技能"加成
+            }
+            Map<ResourceLocation, List<HitBin>> table = expTable(maid);
+            List<HitBin> bins = table == null ? null : table.get(key);
             if (bins != null) {
                 score += Math.min(bins.size(), 5); // 桶丰富度 0~5
             }
@@ -460,14 +502,18 @@ public final class CombatLibrary {
         int tick = maid.tickCount;
         MaidState st = STATES.computeIfAbsent(maid.getUUID(), k -> new MaidState());
         Comparator<SkillSpec> byScore = Comparator.comparingDouble((SkillSpec s) -> {
-            ResourceLocation key = ResourceLocation.parse(s.animKey());
-            return expScore(maid, s, target) * heatFactor(st, key, tick);
+            ResourceLocation key = EfnSkillCatalog.locationOf(s.animKey());
+            float heat = key == null ? 1.0F : heatFactor(st, key, tick);
+            return expScore(maid, s, target) * heat;
         }).reversed();
         candidates.sort(byScore);
         SkillSpec play = candidates.get(0);
         if (EfnSkillCatalog.release(patch, play)) {
             EfnSkillCatalog.markUsed(maid, play, tick);
-            st.lastUsed.put(ResourceLocation.parse(play.animKey()), (long) tick);
+            ResourceLocation playedKey = EfnSkillCatalog.locationOf(play.animKey());
+            if (playedKey != null) {
+                st.lastUsed.put(playedKey, (long) tick);
+            }
             markAttack(maid);
             RlTrace.event(maid, "adaptive_dispatch",
                     "skill=" + play.id()
@@ -487,23 +533,32 @@ public final class CombatLibrary {
         sb.append("\n  learn=").append(RlConfig.adaptiveLearn)
                 .append(" hitgrid=").append(RlConfig.adaptiveHitgrid)
                 .append(" buff_steal=").append(RlConfig.buffSteal)
+                .append(" hit_exp_scope=").append(RlConfig.hitExpScope)
                 .append(" shadow_ai=").append(org.eftlm.stylish.arena.AutoArena.shadowAiMode())
                 .append(" selfplay=").append(org.eftlm.stylish.arena.AutoArena.selfplayMode());
-        sb.append("\n  hit_bins=").append(HIT_EXP.size());
+        // P2-6：命中经验按作用域（女仆/global）分表存储 → 统计跨表汇总
+        int anims = 0;
         int total = 0;
-        for (List<HitBin> bins : HIT_EXP.values()) {
-            total += bins.size();
+        for (Map<ResourceLocation, List<HitBin>> table : HIT_EXP.values()) {
+            anims += table.size();
+            for (List<HitBin> bins : table.values()) {
+                total += bins.size();
+            }
         }
-        sb.append(" anims, bins=").append(total);
+        sb.append("\n  scopes=").append(HIT_EXP.size())
+                .append(" hit_bins=").append(anims).append(" anims, bins=").append(total);
         return sb.toString();
     }
 
-    /** 女仆移除时清理状态 */
+    /** 女仆移除时清理状态（P2-6：命中经验同表清理，原实现只清 STATES → 命中桶永久驻留） */
     public static void forget(UUID id) {
         STATES.remove(id);
+        if (id != null) {
+            HIT_EXP.remove(id);
+        }
     }
 
-    /** 清空全局命中经验与状态（调试用） */
+    /** 清空全局命中经验与状态（调试用；由 RlMemoryCleanup/关服路径可达） */
     public static synchronized void reset() {
         HIT_EXP.clear();
         STATES.clear();

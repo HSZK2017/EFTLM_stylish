@@ -15,6 +15,9 @@ import java.util.List;
  */
 public final class EfnSkillExecutor implements RlActionExecutor {
 
+    private static final org.apache.logging.log4j.Logger LOGGER =
+            org.apache.logging.log4j.LogManager.getLogger("eftlm_stylish");
+
     public static final String ID = "efn_skill";
 
     @Override
@@ -66,9 +69,9 @@ public final class EfnSkillExecutor implements RlActionExecutor {
         EntityMaid maid = (EntityMaid) patch.getOriginal();
         if (EfnSkillCatalog.release(patch, spec)) {
             EfnSkillCatalog.markUsed(maid, spec, maid.tickCount);
-            // 技能执行观测日志（[EFN-SKILL] executed: {技能id}）
-            org.apache.logging.log4j.LogManager.getLogger("eftlm_stylish")
-                    .info("[EFN-SKILL] executed: {}", spec.id());
+            // 技能执行观测日志（P1 修复：降为 DEBUG——旧实现每次出招打一行 INFO，
+            // 160TPS 加速训练下会造成持续日志放大）
+            LOGGER.debug("[EFN-SKILL] executed: {}", spec.id());
             return RlExecResult.EXECUTED;
         }
         return RlExecResult.FAILED;

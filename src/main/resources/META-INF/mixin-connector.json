@@ -1,0 +1,4 @@
+{
+  "modId": "eftlm_stylish",
+  "connector": "org.eftlm.stylish.mixin.EftlmMixinConnector"
+}

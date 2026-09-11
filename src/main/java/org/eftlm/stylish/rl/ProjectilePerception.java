@@ -69,10 +69,11 @@ public final class ProjectilePerception {
         Vec3 maidPos = maid.position();
         Vec3 maidVel = maid.getDeltaMovement();
 
-        // 非 LivingEntity 弹道（原版体系）
+        // 非 LivingEntity 弹道（原版体系 + AV 钩枪钩子）
         for (Entity e : level.getEntitiesOfClass(Entity.class, box,
                 e -> e instanceof AbstractArrow || e instanceof AbstractHurtingProjectile
-                        || e instanceof ThrowableProjectile || e instanceof FishingHook)) {
+                        || e instanceof ThrowableProjectile || e instanceof FishingHook
+                        || isHookGunHook(e))) {
             Kind kind = classify(e);
             if (kind == null) {
                 continue;
@@ -108,6 +109,9 @@ public final class ProjectilePerception {
         if (e instanceof FishingHook) {
             return Kind.HOOK;
         }
+        if (isHookGunHook(e)) {
+            return Kind.HOOK; // P5.8 道具层：AV 钩枪钩子 = 拉近威胁（不可格挡，闪避应对）
+        }
         if (e instanceof AbstractArrow) {
             return Kind.ARROW;
         }
@@ -118,6 +122,17 @@ public final class ProjectilePerception {
             return Kind.THROWN;
         }
         return null;
+    }
+
+    /** P5.8 AV 钩枪钩子识别（不能引用 AV 类，按实体注册 id 判断） */
+    private static boolean isHookGunHook(Entity e) {
+        try {
+            var rl = net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(e.getType());
+            return rl != null && "annoyingvillagers".equals(rl.getNamespace())
+                    && rl.getPath().contains("hook");
+        } catch (Throwable ignored) {
+            return false;
+        }
     }
 
     /** 相对速度法判定是否即将命中并加入威胁列表 */

@@ -62,7 +62,12 @@ public final class CommitmentCatalog {
         }
     }
 
-    /** 技能 id → 帧数据缓存（启动/技能目录加载时惰性构建） */
+    /**
+     * **动画键** → 帧数据缓存（惰性构建）。
+     * P1 修复（2026-09-10）：键此前是 {@code spec.id()}，而目录内 id 不唯一
+     * （同一武器的 slash_lr_down 等在不同动画上重复）→ 会把 A 动画的前摇/判定/后摇
+     * 返回给 B 动画。改用唯一的 animKey 后语义正确。
+     */
     private static final Map<String, SkillFrameData> CACHE = new HashMap<>();
 
     /** 动画即将结束阈值（tick）：剩余帧 ≤ 该值视为可执行 */
@@ -73,7 +78,7 @@ public final class CommitmentCatalog {
 
     /** 查询技能帧数据（惰性构建缓存） */
     public static SkillFrameData of(SkillSpec spec) {
-        return CACHE.computeIfAbsent(spec.id(), k -> read(spec));
+        return CACHE.computeIfAbsent(spec.animKey(), k -> read(spec));
     }
 
     /** 缓存条目数（诊断用） */
